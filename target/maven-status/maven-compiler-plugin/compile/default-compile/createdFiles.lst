@@ -1,0 +1,8 @@
+model\Categoria.class
+model\Movimentacao.class
+controller\EntradaController.class
+controller\SaidaController.class
+controller\ProdutoController.class
+model\Produto.class
+controller\MovimentacaoController.class
+controller\CategoriaController.class
