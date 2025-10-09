@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package view;
+package principal;
 
 import java.awt.Color; //cores
 import java.sql.Connection;
-import persisted.ModuloConexao;
+import conexion.ModuloConexao;
 import controller.CategoriaController;
 import controller.ProdutoController;
 import controller.MovimentacaoController;
@@ -14,6 +14,10 @@ import java.awt.Component;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import view.TelaCategoria;
+import view.TelaMovimentacao;
+import view.TelaProduto;
+import view.TelaRelatorio;
 
 
 /**

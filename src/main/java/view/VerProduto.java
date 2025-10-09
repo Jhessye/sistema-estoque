@@ -4,6 +4,7 @@
  */
 package view;
 
+import principal.TelaInicial;
 import javax.swing.table.DefaultTableModel;
 import controller.ProdutoController;
 import java.sql.SQLException;

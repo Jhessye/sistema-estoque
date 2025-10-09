@@ -4,6 +4,7 @@
  */
 package persisted;
 
+import conexion.ModuloConexao;
 import model.Categoria;
 import java.sql.*;
 import java.util.*;

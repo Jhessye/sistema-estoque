@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+import principal.TelaInicial;
 import model.Produto;
 import model.Categoria;
 import controller.CategoriaController;

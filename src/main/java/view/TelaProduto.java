@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+import principal.TelaInicial;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
