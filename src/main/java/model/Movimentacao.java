@@ -14,8 +14,7 @@ public class Movimentacao {
     private String tipo;
     private LocalDate data;
     private double valor;
-
-    // ✅ Construtor que recebe a data como String e converte para LocalDate
+    
     public Movimentacao(int quantidade, int idProduto, String tipo, String data, double valor) {
         this.quantidade = quantidade;
         this.idProduto = idProduto;
@@ -23,12 +22,10 @@ public class Movimentacao {
         this.valor = valor;
 
         try {
-            // Formato que você espera (exemplo: "09/10/2025")
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             this.data = LocalDate.parse(data, formatter);
         } catch (DateTimeParseException e) {
-            System.err.println("⚠️ Erro ao converter a data: " + data);
-            this.data = LocalDate.now(); // coloca a data atual como fallback
+            System.err.println("Erro ao converter a data");
         }
     }
 
@@ -69,12 +66,16 @@ public class Movimentacao {
     }
 
     public LocalDate getData() {
-        return data;
+        if (data == null){
+            return null;
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return data.format(formatter);
     }
 
     public void setData(String data) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             this.data = LocalDate.parse(data, formatter);
         } catch (DateTimeParseException e) {
             System.err.println("Erro ao converter a data");
