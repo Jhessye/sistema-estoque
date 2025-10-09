@@ -1,4 +1,4 @@
--- Remove tabelas existentes (se houver)
+-- Remove tabelas existentes
 
 DROP TABLE IF EXISTS movimentacoes CASCADE;
 DROP TABLE IF EXISTS produtos CASCADE;
