@@ -34,7 +34,7 @@ public class MovimentacaoDAO {
                 m.setIdMovimentacao(rs.getInt("id_movimentacoes"));
                 m.setTipo(rs.getString("tipo"));
                 m.setQuantidade(rs.getInt("quantidade"));
-                m.setData(rs.getString("data"));
+                m.setData(rs.getDate("data").toLocalDate());
                 m.setValor(rs.getDouble("valor"));
                 m.setIdProduto(rs.getInt("id_produto"));
                 listaMovimentacoes.add(m);
@@ -62,7 +62,7 @@ public class MovimentacaoDAO {
             
             executa.setString(1, movimentacao.getTipo());
             executa.setInt(2, movimentacao.getQuantidade());
-            executa.setString(3, movimentacao.getData());
+            executa.setDate(3, java.sql.Date.valueOf(movimentacao.getData())); //faz a conversão correta do tipo Java moderno (LocalDate) para o tipo que o JDBC entende java.sql.Date
             executa.setDouble(4, movimentacao.getValor());
 
             int linhasAfetadas = executa.executeUpdate();
@@ -105,7 +105,7 @@ public class MovimentacaoDAO {
             switch(atributo) {
                 case "tipo" -> executa.setString(1, movimentacao.getTipo());
                 case "quantidade" -> executa.setInt(1, movimentacao.getQuantidade());
-                case "data" -> executa.setString(1, movimentacao.getData());
+                case "data" -> executa.setDate(1, java.sql.Date.valueOf(movimentacao.getData()));
                 case "valor" -> executa.setDouble(1, movimentacao.getValor());
                 
             }
@@ -171,7 +171,7 @@ public class MovimentacaoDAO {
                 m.setIdMovimentacao(rs.getInt("id_movimentacoes"));
                 m.setTipo(rs.getString("tipo"));
                 m.setQuantidade(rs.getInt("quantidade"));
-                m.setData(rs.getString("data"));
+                m.setData(rs.getDate("data").toLocalDate());
                 m.setValor(rs.getDouble("valor"));
                 m.setIdProduto(rs.getInt("id_produto"));
                 movimentacoes.add(m);
