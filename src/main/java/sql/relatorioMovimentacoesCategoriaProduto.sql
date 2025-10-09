@@ -1,10 +1,10 @@
-SELECT m.IdMovimentacao,
-       m.Tipo,
-       m.Quantidade,
-       m.Data,
-       m.Valor,
-       p.Nome AS Produto,
-       c.Nome AS Categoria
+SELECT m.id_movimentacao,
+       m.tipo,
+       m.quantidade,
+       m.data,
+       m.valor,
+       p.nome AS Produto,
+       c.nome AS Categoria
 FROM movimentacao m
-JOIN produto p ON p.IdProduto = m.IdProduto
-JOIN categoria c ON c.IdCategoria = p.IdCategoria;
+JOIN produto p ON p.id_produto = m.id_produto
+JOIN categoria c ON c.id_categoria = p.id_categoria;
