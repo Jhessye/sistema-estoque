@@ -66,11 +66,7 @@ public class Movimentacao {
     }
 
     public LocalDate getData() {
-        if (data == null){
-            return null;
-        }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return data.format(formatter);
+        return data;
     }
 
     public void setData(String data) {
