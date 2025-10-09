@@ -1,25 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  *
  * @author Jhessye Lorrayne
  */
 public class Movimentacao {
-    
+
     private int idMovimentacao, quantidade, idProduto;
-    private String tipo, data;
+    private String tipo;
+    private LocalDate data;
     private double valor;
 
+    // ✅ Construtor que recebe a data como String e converte para LocalDate
     public Movimentacao(int quantidade, int idProduto, String tipo, String data, double valor) {
         this.quantidade = quantidade;
         this.idProduto = idProduto;
         this.tipo = tipo;
-        this.data = data;
         this.valor = valor;
+
+        try {
+            // Formato que você espera (exemplo: "09/10/2025")
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            this.data = LocalDate.parse(data, formatter);
+        } catch (DateTimeParseException e) {
+            System.err.println("⚠️ Erro ao converter a data: " + data);
+            this.data = LocalDate.now(); // coloca a data atual como fallback
+        }
     }
 
     public Movimentacao() {
@@ -58,12 +68,17 @@ public class Movimentacao {
         this.tipo = tipo;
     }
 
-    public String getData() {
+    public LocalDate getData() {
         return data;
     }
 
     public void setData(String data) {
-        this.data = data;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            this.data = LocalDate.parse(data, formatter);
+        } catch (DateTimeParseException e) {
+            System.err.println("Erro ao converter a data");
+        }
     }
 
     public double getValor() {
@@ -75,8 +90,8 @@ public class Movimentacao {
     }
 
     @Override
-    public String toString() {
-        return "Movimentacao{" + "idMovimentacao=" + idMovimentacao + ", quantidade=" + quantidade + ", tipo=" + tipo + ", data=" + data + ", valor=" + valor + '}';
+    public String toString() { 
+        return "Movimentacao{" + "idMovimentacao=" + idMovimentacao + ", quantidade=" + quantidade +
+        ", tipo=" + tipo + ", data=" + data + ", valor=" + valor + '}'; 
     }
-    
 }
