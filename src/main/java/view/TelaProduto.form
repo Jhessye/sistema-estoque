@@ -80,7 +80,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="97" max="32767" attributes="0"/>
+                  <EmptySpace pref="98" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="bntInserirP" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       <Component id="bntAlterarP" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
@@ -170,6 +170,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="EXCLUIR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntExcluirPActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bntVerP">
           <Properties>

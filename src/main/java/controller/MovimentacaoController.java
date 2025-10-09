@@ -13,6 +13,9 @@ import persisted.MovimentacaoDAO;
  * @author Jhessye Lorrayne
  */
 public class MovimentacaoController{
+
+    public MovimentacaoController() {
+    }
     
     public boolean inserirMovimentacao(Movimentacao movimentacao) throws SQLException{
        
@@ -36,7 +39,7 @@ public class MovimentacaoController{
         return daoM.removerMovimentacao(movimentacao);
     }
     
-    public LinkedList<Movimentacao> mostrarMovimentacoes(String escolha) throws SQLException{
+    public static LinkedList<Movimentacao> mostrarMovimentacoes(String escolha) throws SQLException{
         
         MovimentacaoDAO daoM = new MovimentacaoDAO();
         
@@ -45,6 +48,13 @@ public class MovimentacaoController{
         } else {
             return daoM.verMovimentacoesLista();
         }
+    }
+    
+    public static int totalRegistrosMovimentacoes() throws SQLException{
+        
+        MovimentacaoDAO daoM = new MovimentacaoDAO();
+        
+        return daoM.quantidadeRegistrosMovimentacao();
     }
     
 }

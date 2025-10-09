@@ -22,7 +22,7 @@ public class MovimentacaoDAO {
     
     private void carregarLista() throws SQLException{
         listaMovimentacoes.clear();
-        String sql = "SELECT * FROM movimentacao";
+        String sql = "SELECT * FROM movimentacoes";
         
         try (Connection conector = ModuloConexao.conector();
             PreparedStatement executa = conector.prepareStatement(sql);
@@ -30,11 +30,12 @@ public class MovimentacaoDAO {
             
             while (rs.next()) {
                 Movimentacao m = new Movimentacao();
-                m.setIdMovimentacao(rs.getInt("id_movimentacao"));
+                m.setIdMovimentacao(rs.getInt("id_movimentacoes"));
                 m.setTipo(rs.getString("tipo"));
                 m.setQuantidade(rs.getInt("quantidade"));
                 m.setData(rs.getString("data"));
                 m.setValor(rs.getDouble("valor"));
+                m.setIdProduto(rs.getInt("id_produto"));
                 listaMovimentacoes.add(m);
             }
             
@@ -45,7 +46,7 @@ public class MovimentacaoDAO {
     
     public boolean inserirMovimentacao(Movimentacao movimentacao){
         
-        String sql = "INSERT INTO movimentacao (tipo, quantidade, data, valor) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO movimentacoes (tipo, quantidade, data, valor) VALUES (?,?,?,?)";
 
         try (Connection conector = ModuloConexao.conector();
             PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -86,10 +87,10 @@ public class MovimentacaoDAO {
         String sql = null;
 
         switch(atributo) {
-            case "tipo" -> sql = "UPDATE movimentacao SET tipo=? WHERE id_movimentacao=?";
-            case "quantidade" -> sql = "UPDATE movimentacao SET quantidade=? WHERE id_movimentacao=?";
-            case "data" -> sql = "UPDATE movimentacao SET data=? WHERE id_movimentacao=?";
-            case "valor" -> sql = "UPDATE movimentacao SET valor=? WHERE id_movimentacao=?";
+            case "tipo" -> sql = "UPDATE movimentacoes SET tipo=? WHERE id_movimentacoes=?";
+            case "quantidade" -> sql = "UPDATE movimentacoes SET quantidade=? WHERE id_movimentacoes=?";
+            case "data" -> sql = "UPDATE movimentacoes SET data=? WHERE id_movimentacoes=?";
+            case "valor" -> sql = "UPDATE movimentacoes SET valor=? WHERE id_movimentacoes=?";
             
             default -> {
                 JOptionPane.showMessageDialog(null, "Atributo inválido!");
@@ -133,7 +134,7 @@ public class MovimentacaoDAO {
     }
     
     public boolean removerMovimentacao(Movimentacao movimentacao) {
-        String sql = "DELETE FROM movimentacao WHERE id_movimentacao=?";
+        String sql = "DELETE FROM movimentacoes WHERE id_movimentacoes=?";
 
         try (Connection con = ModuloConexao.conector();
              PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -158,7 +159,7 @@ public class MovimentacaoDAO {
     
     public LinkedList<Movimentacao> verMovimentacoesSQL() throws SQLException {
         LinkedList<Movimentacao> movimentacoes = new LinkedList<>();
-        String sql = "SELECT * FROM movimentacao";
+        String sql = "SELECT * FROM movimentacoes";
         
         try (Connection conector = ModuloConexao.conector();
              PreparedStatement executa = conector.prepareStatement(sql);
@@ -166,11 +167,12 @@ public class MovimentacaoDAO {
             
             while (rs.next()) {
                 Movimentacao m = new Movimentacao();
-                m.setIdMovimentacao(rs.getInt("id_movimentacao"));
+                m.setIdMovimentacao(rs.getInt("id_movimentacoes"));
                 m.setTipo(rs.getString("tipo"));
                 m.setQuantidade(rs.getInt("quantidade"));
                 m.setData(rs.getString("data"));
                 m.setValor(rs.getDouble("valor"));
+                m.setIdProduto(rs.getInt("id_produto"));
                 movimentacoes.add(m);
             }
         } catch (SQLException e) {
@@ -181,4 +183,23 @@ public class MovimentacaoDAO {
         return movimentacoes;
     }
     
+    public int quantidadeRegistrosMovimentacao() throws SQLException{
+        
+        int totalLinhas = 0;
+        String sql = "SELECT COUNT(*) AS total_linhas FROM movimentacoes";
+
+        try (Connection conector = ModuloConexao.conector(); 
+             PreparedStatement executa = conector.prepareStatement(sql);
+             ResultSet rs = executa.executeQuery()) {
+
+            while (rs.next()) {
+                totalLinhas = rs.getInt("total_linhas");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao pegar registros de movimentacoes: " + e.getMessage());
+            throw e;
+        }
+        
+        return totalLinhas;
+    }
 }

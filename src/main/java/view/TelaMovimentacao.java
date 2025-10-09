@@ -4,6 +4,10 @@
  */
 package view;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jhessye Lorrayne
@@ -139,7 +143,12 @@ public class TelaMovimentacao extends javax.swing.JFrame {
 
     private void bntVoltarMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarMActionPerformed
         // TODO add your handling code here:
-        TelaInicial telaInicial = new TelaInicial();
+        TelaInicial telaInicial = null;
+        try {
+            telaInicial = new TelaInicial();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMovimentacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         telaInicial.setVisible(true);
         this.setVisible(false);

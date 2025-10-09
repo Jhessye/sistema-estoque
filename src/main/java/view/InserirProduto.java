@@ -4,6 +4,8 @@
  */
 package view;
 import model.Produto;
+import model.Categoria;
+import controller.CategoriaController;
 import controller.ProdutoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -21,9 +23,24 @@ public class InserirProduto extends javax.swing.JFrame {
      */
     public InserirProduto() throws SQLException {
         initComponents();
+        carregarListaCategorias();
+        
         this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
         this.setResizable(false); // ← Impede redimensionamento
         this.setTitle("Cadastrar Produto");  // Título personalizado
+    }
+    
+    public void carregarListaCategorias(){
+        try {
+            listaCategoriaP.removeAllItems();
+            // Adiciona todas as categorias do ArrayList no JComboBox
+            for (Categoria categoria : CategoriaController.mostrarCategorias("Lista")) {
+                listaCategoriaP.addItem(categoria.getNome());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar categorias: " + ex.getMessage());
+        }
     }
     
     public boolean cadastrarProduto() throws SQLException{
@@ -32,8 +49,15 @@ public class InserirProduto extends javax.swing.JFrame {
         String descricao = textDescricaoP.getText().trim();
         String marca = textMarcaP.getText().trim();
         String preco = textPrecoP.getText().trim();
+        Categoria categoriaP = new Categoria();
         
-        if (nome.isEmpty() || descricao.isEmpty() || marca.isEmpty() || preco.isEmpty()) {
+        for (int i = 0; i<= listaCategoriaP.getSelectedIndex(); i++){
+            if(i == listaCategoriaP.getSelectedIndex()){
+                categoriaP = CategoriaController.mostrarCategorias("Lista").get(i);
+            }
+        }
+        
+        if (nome.isEmpty() || descricao.isEmpty() || marca.isEmpty() || preco.isEmpty() || categoriaP == null ) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         return false;
         }
@@ -47,7 +71,7 @@ public class InserirProduto extends javax.swing.JFrame {
                 return false;
             }
 
-            Produto produto = new Produto(nome, descricao, marca, precoP); //cria o produto
+            Produto produto = new Produto(nome, descricao, marca, precoP, categoriaP.getIdCategoria()); //cria o produto
             return ProdutoController.inserirProduto(produto);//insere
 
         } catch (NumberFormatException e) {
@@ -80,6 +104,8 @@ public class InserirProduto extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         textPrecoP = new javax.swing.JTextField();
         bntOkP = new javax.swing.JButton();
+        listaCategoriaP = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,7 +155,7 @@ public class InserirProduto extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Preço");
+        jLabel5.setText("Categoria");
 
         textPrecoP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,64 +173,81 @@ public class InserirProduto extends javax.swing.JFrame {
             }
         });
 
+        listaCategoriaP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaCategoriaP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaCategoriaPActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Preço");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(332, 332, 332)
+                .addComponent(jLabel1)
+                .addContainerGap(358, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bntOkP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(212, 212, 212)
-                .addComponent(bntVoltarP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
+                            .addComponent(textPrecoP, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel4)
+                                .addComponent(listaCategoriaP, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel5)
                                 .addComponent(textNomeP)
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel3)
-                                .addComponent(jScrollPane1)
-                                .addComponent(textMarcaP, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(textPrecoP, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(332, 332, 332)
-                        .addComponent(jLabel1)))
-                .addContainerGap(224, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4))
+                            .addComponent(jLabel6)
+                            .addComponent(textMarcaP, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(bntOkP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(229, 229, 229)))
+                .addComponent(bntVoltarP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(textNomeP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(textMarcaP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(textPrecoP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(bntVoltarP, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(63, 63, 63))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textNomeP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(listaCategoriaP, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textMarcaP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(textPrecoP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(bntOkP, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))))
+                        .addGap(24, 24, 24))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -223,9 +266,15 @@ public class InserirProduto extends javax.swing.JFrame {
 
     private void bntVoltarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarPActionPerformed
         // TODO add your handling code here:
-        TelaInicial telaInicial = new TelaInicial();
+        TelaInicial telaInicial = null;
+        try {
+            telaInicial = new TelaInicial();
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         telaInicial.setVisible(true);
+        limparCampos();
         this.setVisible(false);
     }//GEN-LAST:event_bntVoltarPActionPerformed
 
@@ -270,6 +319,10 @@ public class InserirProduto extends javax.swing.JFrame {
             Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bntOkPActionPerformed
+
+    private void listaCategoriaPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaCategoriaPActionPerformed
+      
+    }//GEN-LAST:event_listaCategoriaPActionPerformed
 
     private void limparCampos() {
         textNomeP.setText("");
@@ -323,8 +376,10 @@ public class InserirProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> listaCategoriaP;
     private javax.swing.JTextArea textDescricaoP;
     private javax.swing.JTextField textMarcaP;
     private javax.swing.JTextField textNomeP;

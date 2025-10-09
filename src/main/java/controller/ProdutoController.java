@@ -34,7 +34,7 @@ public class ProdutoController{
         return daoP.removerProduto(produto);
     }
     
-    public LinkedList<Produto> mostrarPordutos(String escolha) throws SQLException{
+    public static LinkedList<Produto> mostrarPordutos(String escolha) throws SQLException{
         
         ProdutoDAO daoP = new ProdutoDAO();
         
@@ -43,6 +43,13 @@ public class ProdutoController{
         } else {
             return daoP.verProdutosLista();
         }
+    }
+    
+    public static int totalRegistrosProduto() throws SQLException{
+        
+        ProdutoDAO daoP = new ProdutoDAO();
+        
+        return daoP.quantidadeRegistrosProdutos();
     }
     
 }

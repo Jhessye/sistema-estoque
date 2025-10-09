@@ -13,10 +13,19 @@ public class Categoria {
     private int idCategoria;
     private String nome, descricao;
 
+    public Categoria(String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
+    public Categoria() {
+    }
+    
     public int getIdCategoria() {
         return idCategoria;
     }
 
+    //FK
     public void setIdCategoria(int idCategoria) {
         this.idCategoria = idCategoria;
     }

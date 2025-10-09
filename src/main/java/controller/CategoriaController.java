@@ -35,7 +35,7 @@ public class CategoriaController{
         return daoC.removerCategoria(categoria);
     }
 
-    public LinkedList<Categoria> mostrarCategorias(String escolha) throws SQLException{
+    public static LinkedList<Categoria> mostrarCategorias(String escolha) throws SQLException{
 
         CategoriaDAO daoC = new CategoriaDAO();
 
@@ -44,6 +44,13 @@ public class CategoriaController{
         } else {
             return daoC.verCategoriasLista();
         }
+    }
+    
+    public static int totalRegistrosCategoria() throws SQLException{
+        
+        CategoriaDAO daoC = new CategoriaDAO();
+        
+        return daoC.quantidadeRegistrosCategoria();
     }
     
 }

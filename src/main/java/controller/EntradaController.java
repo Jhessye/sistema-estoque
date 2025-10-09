@@ -12,6 +12,10 @@ import persisted.MovimentacaoDAO;
  * @author Jhessye Lorrayne
  */
 public class EntradaController extends MovimentacaoController {
+
+    public EntradaController() {
+        super();
+    }
     
     @Override
     public boolean inserirMovimentacao(Movimentacao movimentacao) throws SQLException {

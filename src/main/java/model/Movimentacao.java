@@ -10,9 +10,29 @@ package model;
  */
 public class Movimentacao {
     
-    private int idMovimentacao, quantidade;
+    private int idMovimentacao, quantidade, idProduto;
     private String tipo, data;
     private double valor;
+
+    public Movimentacao(int quantidade, int idProduto, String tipo, String data, double valor) {
+        this.quantidade = quantidade;
+        this.idProduto = idProduto;
+        this.tipo = tipo;
+        this.data = data;
+        this.valor = valor;
+    }
+
+    public Movimentacao() {
+    }
+
+    public int getIdProduto() {
+        return idProduto;
+    }
+
+    //FK
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
+    }
 
     public int getIdMovimentacao() {
         return idMovimentacao;

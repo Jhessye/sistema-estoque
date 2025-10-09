@@ -10,19 +10,19 @@ package model;
  */
 public class Produto {
     
-    private int idProduto;
+    private int idProduto, idCategoriaP;
     private String nome, descricao, marca;
     private double preco;
 
-    public Produto(String nome, String descricao, String marca, double preco) {
+    public Produto(String nome, String descricao, String marca, double preco, int idCategoriaP) {
         this.nome = nome;
         this.descricao = descricao;
         this.marca = marca;
         this.preco = preco;
+        this.idCategoriaP = idCategoriaP;
     }
 
     public Produto() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getIdProduto() {
@@ -32,7 +32,16 @@ public class Produto {
     public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
     }
+    
+    public int getIdCategoriaP() {
+        return idCategoriaP;
+    }
 
+    //FK
+    public void setIdCategoriaP(int idCategoriaP) {
+        this.idCategoriaP = idCategoriaP;
+    }
+    
     public String getNome() {
         return nome;
     }

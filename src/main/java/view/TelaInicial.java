@@ -7,6 +7,14 @@ package view;
 import java.awt.Color; //cores
 import java.sql.Connection;
 import persisted.ModuloConexao;
+import controller.CategoriaController;
+import controller.ProdutoController;
+import controller.MovimentacaoController;
+import java.awt.Component;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -16,10 +24,12 @@ public class TelaInicial extends javax.swing.JFrame {
 Connection conexao = null;
     /**
      * Creates new form TelaInicial
+     * @throws java.sql.SQLException
      */
-    public TelaInicial() {
+    public TelaInicial() throws SQLException {
         initComponents();
         conexao = ModuloConexao.conector(); //inicia a conexao
+        carregarResgistrosTela();
         
         this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
         this.setResizable(false); // ← Impede redimensionamento
@@ -30,6 +40,20 @@ Connection conexao = null;
         }else{
             System.out.println("NÃO CONECTADO");
         }
+    }
+    
+    private void carregarResgistrosTela() throws SQLException{
+        
+        int totalProduto = ProdutoController.totalRegistrosProduto();
+        int totalCategoria = CategoriaController.totalRegistrosCategoria();
+        int totalMovimentacao = MovimentacaoController.totalRegistrosMovimentacoes();
+        
+        textoTotalRegistros.setText("PRODUTOS = " + totalProduto + "\n" +
+                            "CATEGORIAS = " + totalCategoria + "\n" +
+                            "MOVIMENTAÇÕES = " + totalMovimentacao);
+        textoTotalRegistros.setEditable(false);
+        textoTotalRegistros.setOpaque(false); // transparente
+        textoTotalRegistros.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
     /**
@@ -52,6 +76,7 @@ Connection conexao = null;
         professores = new javax.swing.JLabel();
         disciplinas = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        textoTotalRegistros = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +107,7 @@ Connection conexao = null;
         bntCategoria.setText("CATEGORIA");
         bntCategoria.setToolTipText("");
         bntCategoria.setBorder(null);
+        bntCategoria.setBorderPainted(false);
         bntCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         bntCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -101,6 +127,8 @@ Connection conexao = null;
         bntProduto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bntProduto.setForeground(new java.awt.Color(255, 255, 255));
         bntProduto.setText("PRODUTOS");
+        bntProduto.setBorder(null);
+        bntProduto.setBorderPainted(false);
         bntProduto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 bntProdutoMouseEntered(evt);
@@ -153,6 +181,10 @@ Connection conexao = null;
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("TOTAL DE REGISTROS EXISTENTES");
 
+        textoTotalRegistros.setColumns(20);
+        textoTotalRegistros.setRows(5);
+        textoTotalRegistros.setBorder(null);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -178,13 +210,14 @@ Connection conexao = null;
                 .addContainerGap(67, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(314, 314, 314))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(372, 372, 372))))
+                .addComponent(jLabel1)
+                .addGap(314, 314, 314))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(360, 360, 360)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(textoTotalRegistros))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,9 +232,11 @@ Connection conexao = null;
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 241, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(textoTotalRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
                 .addComponent(criado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(disciplinas)
@@ -214,9 +249,7 @@ Connection conexao = null;
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,7 +368,11 @@ Connection conexao = null;
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new TelaInicial().setVisible(true);
+            try {
+                new TelaInicial().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
@@ -351,5 +388,6 @@ Connection conexao = null;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel professores;
+    private javax.swing.JTextArea textoTotalRegistros;
     // End of variables declaration//GEN-END:variables
 }

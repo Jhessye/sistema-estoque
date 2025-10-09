@@ -22,7 +22,7 @@ public class ProdutoDAO {
     
     private void carregarLista() throws SQLException{
         listaProdutos.clear();
-        String sql = "SELECT * FROM produto";
+        String sql = "SELECT * FROM produtos";
         
         try (Connection conector = ModuloConexao.conector(); //conecta com o banco
             PreparedStatement executa = conector.prepareStatement(sql);
@@ -35,6 +35,7 @@ public class ProdutoDAO {
                 p.setDescricao(rs.getString("descricao"));
                 p.setMarca(rs.getString("marca"));
                 p.setPreco(rs.getDouble("preco"));
+                p.setIdCategoriaP(rs.getInt("id_categoria"));
                 listaProdutos.add(p);
             }
             
@@ -49,7 +50,7 @@ public class ProdutoDAO {
             JOptionPane.showMessageDialog(null, "Esse produto ja existe");
             return false;
         }else{
-            String sql = "INSERT INTO produto (nome, descricao, marca, preco) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO produtos (nome, descricao, marca, preco, id_categoria) VALUES (?,?,?,?,?)";
 
             try (Connection conector = ModuloConexao.conector(); //conecta com o banco
                 PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -58,6 +59,7 @@ public class ProdutoDAO {
                 executa.setString(2, produto.getDescricao());
                 executa.setString(3, produto.getMarca());
                 executa.setDouble(4, produto.getPreco());
+                executa.setInt(5, produto.getIdCategoriaP());
 
                 int linhasAfetadas = executa.executeUpdate();
 
@@ -82,13 +84,13 @@ public class ProdutoDAO {
         String sql = null;
 
         switch(atributo) {
-            case "nome" -> sql = "UPDATE produto SET nome=? WHERE id_produto=?";
+            case "nome" -> sql = "UPDATE produtos SET nome=? WHERE id_produto=?";
         
-            case "descricao" -> sql = "UPDATE produto SET descricao=? WHERE id_produto=?";
+            case "descricao" -> sql = "UPDATE produtos SET descricao=? WHERE id_produto=?";
             
-            case "marca" -> sql = "UPDATE produto SET marca=? WHERE id_produto=?";
+            case "marca" -> sql = "UPDATE produtos SET marca=? WHERE id_produto=?";
             
-            case "preco" -> sql = "UPDATE produto SET preco=? WHERE id_produto=?";
+            case "preco" -> sql = "UPDATE produtos SET preco=? WHERE id_produto=?";
             
             default -> {
                 JOptionPane.showMessageDialog(null, "Atributo inválido!");
@@ -136,7 +138,7 @@ public class ProdutoDAO {
     }
     
     public boolean removerProduto(Produto produto) {
-        String sql = "DELETE FROM produto WHERE id_produto=?";
+        String sql = "DELETE FROM produtos WHERE id_produto=?";
 
         try (Connection conector = ModuloConexao.conector();
              PreparedStatement executa = conector.prepareStatement(sql)) {
@@ -163,7 +165,7 @@ public class ProdutoDAO {
     
     public LinkedList<Produto> verProdutosSQL() throws SQLException { //devolve em forma de lista
         LinkedList<Produto> produtos = new LinkedList<>();
-        String sql = "SELECT * FROM produto";
+        String sql = "SELECT * FROM produtos";
 
         try (Connection conector = ModuloConexao.conector(); 
              PreparedStatement executa = conector.prepareStatement(sql);
@@ -176,6 +178,7 @@ public class ProdutoDAO {
                 p.setDescricao(rs.getString("descricao"));
                 p.setMarca(rs.getString("marca"));
                 p.setPreco(rs.getDouble("preco"));
+                p.setIdCategoriaP(rs.getInt("id_categoria"));
                 produtos.add(p);
             }
         } catch (SQLException e) {
@@ -184,6 +187,26 @@ public class ProdutoDAO {
         }
 
         return produtos;
+    }
+    
+    public int quantidadeRegistrosProdutos() throws SQLException{
+        
+        int totalLinhas = 0;
+        String sql = "SELECT COUNT(*) AS total_linhas FROM produtos";
+
+        try (Connection conector = ModuloConexao.conector(); 
+             PreparedStatement executa = conector.prepareStatement(sql);
+             ResultSet rs = executa.executeQuery()) {
+
+            while (rs.next()) {
+                totalLinhas = rs.getInt("total_linhas");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao pegar registros de produtos: " + e.getMessage());
+            throw e;
+        }
+        
+        return totalLinhas;
     }
 }
 

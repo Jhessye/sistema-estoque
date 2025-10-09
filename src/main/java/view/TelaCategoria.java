@@ -4,6 +4,10 @@
  */
 package view;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jhessye Lorrayne
@@ -56,6 +60,11 @@ public class TelaCategoria extends javax.swing.JFrame {
         bntInserirC.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bntInserirC.setForeground(new java.awt.Color(255, 255, 255));
         bntInserirC.setText("INSERIR");
+        bntInserirC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntInserirCActionPerformed(evt);
+            }
+        });
 
         bntExcluirC.setBackground(new java.awt.Color(0, 0, 0));
         bntExcluirC.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -140,7 +149,12 @@ public class TelaCategoria extends javax.swing.JFrame {
 
     private void bntVoltarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarCActionPerformed
         // TODO add your handling code here:
-        TelaInicial telaInicial = new TelaInicial();
+        TelaInicial telaInicial = null;
+        try {
+            telaInicial = new TelaInicial();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         telaInicial.setVisible(true);
         this.setVisible(false);
@@ -149,6 +163,15 @@ public class TelaCategoria extends javax.swing.JFrame {
     private void bntVerCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVerCActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bntVerCActionPerformed
+
+    private void bntInserirCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntInserirCActionPerformed
+        // TODO add your handling code here:
+        InserirCategoria telaInserirCategoria = null;
+        telaInserirCategoria = new InserirCategoria();
+        
+        telaInserirCategoria.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bntInserirCActionPerformed
 
     /**
      * @param args the command line arguments

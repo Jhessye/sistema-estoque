@@ -22,7 +22,7 @@ public class CategoriaDAO {
     
     private void carregarLista() throws SQLException{
         listaCategorias.clear();
-        String sql = "SELECT * FROM categoria";
+        String sql = "SELECT * FROM categorias";
         
         try (Connection conector = ModuloConexao.conector(); //conecta com o banco
             PreparedStatement executa = conector.prepareStatement(sql);
@@ -47,7 +47,7 @@ public class CategoriaDAO {
             JOptionPane.showMessageDialog(null, "Esse produto ja existe");
             return false;
         }else{
-            String sql = "INSERT INTO categoria (nome, descricao) VALUES (?,?)";
+            String sql = "INSERT INTO categorias (nome, descricao) VALUES (?,?)";
 
             try (Connection conector = ModuloConexao.conector(); //conecta com o banco
                 PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
@@ -78,9 +78,9 @@ public class CategoriaDAO {
         String sql = null;
 
         switch(atributo) {
-            case "nome" -> sql = "UPDATE categoria SET nome=? WHERE id_categoria=?";
+            case "nome" -> sql = "UPDATE categorias SET nome=? WHERE id_categoria=?";
         
-            case "descricao" -> sql = "UPDATE categoria SET descricao=? WHERE id_categoria=?";
+            case "descricao" -> sql = "UPDATE categorias SET descricao=? WHERE id_categoria=?";
             
             default -> {
                 JOptionPane.showMessageDialog(null, "Atributo inválido!");
@@ -124,7 +124,7 @@ public class CategoriaDAO {
     }
     
     public boolean removerCategoria (Categoria categoria) {
-        String sql = "DELETE FROM categoria WHERE id_categoria=?";
+        String sql = "DELETE FROM categorias WHERE id_categoria=?";
 
         try (Connection conexao = ModuloConexao.conector();
              PreparedStatement executa = conexao.prepareStatement(sql)) {
@@ -140,19 +140,20 @@ public class CategoriaDAO {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao remover produto: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao remover categoria: " + e.getMessage());
         }
         return false;
     }
     
-    public LinkedList<Categoria> verCategoriasLista() {
+    public LinkedList<Categoria> verCategoriasLista() throws SQLException {
         //copia
-        return new LinkedList<>(listaCategorias);
+        carregarLista();
+        return new LinkedList<Categoria>(listaCategorias);
     }
     
     public LinkedList<Categoria> verCategoriasSQL() throws SQLException { //devolve em forma de lista
         LinkedList<Categoria> categorias = new LinkedList<>();
-        String sql = "SELECT * FROM categoria";
+        String sql = "SELECT * FROM categorias";
 
         try (Connection conector = ModuloConexao.conector(); 
              PreparedStatement executa = conector.prepareStatement(sql);
@@ -171,6 +172,26 @@ public class CategoriaDAO {
         }
 
         return categorias;
+    }
+    
+    public int quantidadeRegistrosCategoria() throws SQLException{
+        
+        int totalLinhas = 0;
+        String sql = "SELECT COUNT(*) AS total_linhas FROM categorias";
+
+        try (Connection conector = ModuloConexao.conector(); 
+             PreparedStatement executa = conector.prepareStatement(sql);
+             ResultSet rs = executa.executeQuery()) {
+
+            while (rs.next()) {
+                totalLinhas = rs.getInt("total_linhas");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao pegar registros de categorias: " + e.getMessage());
+            throw e;
+        }
+        
+        return totalLinhas;
     }
     
 }

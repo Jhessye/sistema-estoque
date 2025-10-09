@@ -78,6 +78,11 @@ public class TelaProduto extends javax.swing.JFrame {
         bntExcluirP.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bntExcluirP.setForeground(new java.awt.Color(255, 255, 255));
         bntExcluirP.setText("EXCLUIR");
+        bntExcluirP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntExcluirPActionPerformed(evt);
+            }
+        });
 
         bntVerP.setBackground(new java.awt.Color(0, 0, 0));
         bntVerP.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -120,7 +125,7 @@ public class TelaProduto extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bntInserirP, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntAlterarP, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -149,7 +154,12 @@ public class TelaProduto extends javax.swing.JFrame {
 
     private void bntVoltarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarPActionPerformed
         // TODO add your handling code here:
-        TelaInicial telaInicial = new TelaInicial();
+        TelaInicial telaInicial = null;
+        try {
+            telaInicial = new TelaInicial();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         telaInicial.setVisible(true);
         this.setVisible(false);
@@ -157,6 +167,15 @@ public class TelaProduto extends javax.swing.JFrame {
 
     private void bntVerPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVerPActionPerformed
         // TODO add your handling code here:
+        VerProduto telaVerProdutoDB = null;
+        try {
+            telaVerProdutoDB = new VerProduto();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        telaVerProdutoDB.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_bntVerPActionPerformed
 
     private void bntInserirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntInserirPActionPerformed
@@ -172,6 +191,15 @@ public class TelaProduto extends javax.swing.JFrame {
         telaInserirProduto.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_bntInserirPActionPerformed
+
+    private void bntExcluirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirPActionPerformed
+        // TODO add your handling code here:
+        ExcluirProduto telaExcluirProduto = null;
+        telaExcluirProduto = new ExcluirProduto();
+        
+        telaExcluirProduto.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bntExcluirPActionPerformed
 
     /**
      * @param args the command line arguments
