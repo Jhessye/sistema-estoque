@@ -13,7 +13,7 @@ README.MD explicando como executar o projeto no ambiente proposto (LINUX)
     - target: É utilizado pelo PostegreSQL.
     
 - [diagrams](diagrams)
-  - Nesse diretório está o [diagrama relacional](diagrams/Diagrama Relacional - banco de dados.pdf) do sistema e também o [diagrama de Classe](diagrams/Diagrama de Classe.png).
+  - Nesse diretório está o diagrama relacional do sistema e também o diagrama de Classe.
     * Existem cinco entidades: CATEGORIA, PRODUTO e MOVIMENTACOES.
       
 - [src/main/java](src/main/java)
@@ -35,6 +35,7 @@ README.MD explicando como executar o projeto no ambiente proposto (LINUX)
 # Contato
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)
 - [E-Mail](mailto:ljhessye@gmail.com)
+
 
 
 
