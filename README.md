@@ -1,41 +1,81 @@
-﻿# Sistema de Gerenciamento de Estoque
+# 🧰 Sistema de Gerenciamento de Estoque
 
-Esse sistema é composto por um conjunto de tabelas que representam movimentações de produtos em uma loja de manutenção de automovéis, contendo as seguintes tabelas: categoria, produto e movimentações.
-Integrado com banco de dados PostgreSQL rodando em um Docker. Feito em Java usando Netbeans.
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![NetBeans](https://img.shields.io/badge/NetBeans-1B6AC6?style=for-the-badge&logo=apache-netbeans-ide&logoColor=white)](https://netbeans.apache.org/)
 
-# Executando o projeto no Linux
+Este projeto é um **sistema de gerenciamento de estoque** desenvolvido para uma loja de manutenção de automóveis.  
+Ele permite o **controle de categorias, produtos e movimentações** de itens, oferecendo funcionalidades completas de **cadastro, atualização, exclusão e consulta**.  
+
+O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco de dados PostgreSQL** rodando em **Docker**.
+
+---
+
+## ⚙️ Executando o projeto no Linux
 README.MD explicando como executar o projeto no ambiente proposto (LINUX)
 
-# Organização
-- Banco de dados
-    - inserts: Scripts SQL para [criação das tabelas](Inserts/create.sql) e [inserção de dados](Inserts/insert.sql) utilizados pelo banco de dados (todos fictícios).
-    - postgres-init: Script SQL básico de inicialização com a junção da tabela de criação e inserção.
-    - target: É utilizado pelo PostegreSQL.
-    
-- [diagrams](diagrams)
-  - Nesse diretório está o diagrama relacional do sistema e também o diagrama de Classe.
-    * Existem cinco entidades: CATEGORIA, PRODUTO e MOVIMENTACOES.
-      
-- [src/main/java](src/main/java)
-  - Contém todo o Script do projeto, telas e a conexão com o banco.
-    * [conexion](src/main/java/conexion): Aqui está o [módulo de conexão](src/main/java/conexion/ModuloConexao.java) com o banco de dados.
-    * [controller](src/main/java/controller): Aqui, temos as classes controladoras, que fazem a inserção, alteração e exclusão dos registros.
-    * [model](src/main/java/model): Aqui, temos as entidades descritas no [diagrama relacional](diagrams/DIAGRAMA_RELACIONAL_PEDIDOS.pdf) em forma de classes.
-    * [reports](src/main/java/reports): Aqui encontamos a [classe](src/main/java/reports/Relatorios.java) responsável por gerar os dois relatórios no sistema.
-    * [sql](src/main/java/sql): Aqui, temos os scripts SQL usados na geração dos relatórios.
-    * [persisted](src/main/java/persisted): Scripts responsáveis por gerenciar toda a manupilação de dados e tratamentos para a inserção e coleta de informações do banco de dados para cada entidade.
-    * [principal](src/main/java/principal): Aqui, temos a tela principal do programa, o menu, onde o programa começa (e sempre retorna).
-    * [view](src/main/java/view): Scripts de interface de usuário, todas as telas do CRUD. Feito com o que é disponibilizado pelo Netbeans.
+---
 
-# Bibliotecas Utilizadas
-- `java.util.LinkedList`: Foi usado a biblioteca .util do Java para utilização de LinkedLists, que auxiliaram na mostragem e coleta de dados.
-- `java.sql.SQLException`: Com essa ferramenta, cuidamos de possíveis erros durante a utilização de comandos SQL no código.
-- `javax.swing.JOptionPane`: Auxiliou na criação de popups de continuação (sim/não) em cada interface.
+## 🗂️ Estrutura do Projeto
 
-# Contato
-- [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)
-- [E-Mail](mailto:ljhessye@gmail.com)
+### 🛢️ Banco de Dados
+- **inserts/**
+  - [`create.sql`](Inserts/create.sql): Script de **criação das tabelas**.
+  - [`insert.sql`](Inserts/insert.sql): Script de **inserção de dados fictícios**.
+- **postgres-init/**  
+  - Script unificado de **inicialização do banco**, contendo criação e inserção de dados.
+- **target/**  
+  - Diretório utilizado pelo PostgreSQL durante a execução do container.
 
+---
 
+### 🧩 Diagramas
+- **[diagrams/](diagrams)**  
+  Contém:
+  - **Diagrama Relacional** do banco de dados.  
+  - **Diagrama de Classes** do sistema.
+  
+  As principais entidades representadas são:
+  - `CATEGORIA`
+  - `PRODUTO`
+  - `MOVIMENTACOES`
 
+---
 
+### 💻 Código-Fonte
+- **[src/main/java/](src/main/java)**  
+  Estrutura principal do projeto Java:
+
+  | Diretório | Descrição |
+  |------------|------------|
+  | **conexion/** | Contém o módulo de conexão com o banco de dados → [`ModuloConexao.java`](src/main/java/conexion/ModuloConexao.java) |
+  | **controller/** | Classes **controladoras**, responsáveis pelas operações de inserção, alteração e exclusão. |
+  | **model/** | Classes de **entidades** (baseadas no [diagrama relacional](diagrams/DIAGRAMA_RELACIONAL_PEDIDOS.pdf)). |
+  | **reports/** | Contém a classe [`Relatorios.java`](src/main/java/reports/Relatorios.java), responsável pela **geração de relatórios** do sistema. |
+  | **sql/** | Scripts SQL utilizados para **geração dos relatórios**. |
+  | **persisted/** | Classes responsáveis pela **manipulação e tratamento de dados**, conectando as entidades ao banco. |
+  | **principal/** | Contém a **tela principal do sistema** (menu inicial). |
+  | **view/** | Interfaces gráficas (CRUDs), desenvolvidas com o **NetBeans GUI Builder**. |
+
+---
+
+## 📚 Bibliotecas Utilizadas
+
+- **`java.util.LinkedList`**  
+  Utilizada para armazenar e manipular listas dinâmicas de dados de forma eficiente.
+  
+- **`java.sql.SQLException`**  
+  Responsável por tratar **exceções SQL**, garantindo a estabilidade do sistema.
+  
+- **`javax.swing.JOptionPane`**  
+  Usada para criar **pop-ups interativos** (confirmações, mensagens e avisos) nas interfaces gráficas.
+
+---
+
+## 📬 Contato
+
+- 💼 [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
+- ✉️ [E-mail](mailto:ljhessye@gmail.com)
+
+---
