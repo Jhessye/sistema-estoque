@@ -7,17 +7,18 @@ Integrado com banco de dados PostgreSQL rodando em um Docker. Feito em Java usan
 README.MD explicando como executar o projeto no ambiente proposto (LINUX)
 
 # Organização
-- sql
-  - Códigos para [criação das tabelas](Inserts/create.sql) e [inserção de dados](Inserts/insert.sql) utilizados pelo banco de dados (todos fictícios).
+- Banco de dados
+    - inserts: Scripts SQL para [criação das tabelas](Inserts/create.sql) e [inserção de dados](Inserts/insert.sql) utilizados pelo banco de dados (todos fictícios).
+    - postgres-init: Script SQL básico de inicialização com a junção da tabela de criação e inserção.
+    - target: É utilizado pelo PostegreSQL.
+    
 - [diagrams](diagrams)
   - Nesse diretório está o [diagrama relacional](diagrams/Diagrama Relacional - banco de dados.pdf) do sistema e também o [diagrama de Classe](diagrams/Diagrama de Classe.png).
     * Existem cinco entidades: CATEGORIA, PRODUTO e MOVIMENTACOES.
+      
 - [src/main/java](src/main/java)
   - Contém todo o Script do projeto, telas e a conexão com o banco.
     * [conexion](src/main/java/conexion): Aqui está o [módulo de conexão](src/main/java/conexion/ModuloConexao.java) com o banco de dados.
-      - inserts
-      - target
-      - postgres-init
     * [controller](src/main/java/controller): Aqui, temos as classes controladoras, que fazem a inserção, alteração e exclusão dos registros.
     * [model](src/main/java/model): Aqui, temos as entidades descritas no [diagrama relacional](diagrams/DIAGRAMA_RELACIONAL_PEDIDOS.pdf) em forma de classes.
     * [reports](src/main/java/reports): Aqui encontamos a [classe](src/main/java/reports/Relatorios.java) responsável por gerar os dois relatórios no sistema.
@@ -34,5 +35,6 @@ README.MD explicando como executar o projeto no ambiente proposto (LINUX)
 # Contato
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)
 - [E-Mail](mailto:ljhessye@gmail.com)
+
 
 
