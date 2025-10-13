@@ -6,7 +6,8 @@ package controller;
 
 import java.sql.SQLException;
 import model.Movimentacao;
-import persisted.MovimentacaoDAO;
+import persisted.SaidaDAO;
+import model.Saida;
 /**
  *
  * @author Jhessye Lorrayne
@@ -23,8 +24,9 @@ public class SaidaController extends MovimentacaoController {
         double valorPositivo = movimentacao.getValor();
         movimentacao.setValor(-Math.abs(valorPositivo)); //negativo
         
-        MovimentacaoDAO daoM = new MovimentacaoDAO();
-        return daoM.inserirMovimentacao(movimentacao);
+        SaidaDAO daoS = new SaidaDAO();
+        Saida s = (Saida)movimentacao;
+        return daoS.inserirSaida(s);
     }
     
 }

@@ -16,7 +16,7 @@ public class MovimentacaoController{
 
     public MovimentacaoController() {
     }
-    
+    //pensar 
     public boolean inserirMovimentacao(Movimentacao movimentacao) throws SQLException{
        
         MovimentacaoDAO daoM = new MovimentacaoDAO();

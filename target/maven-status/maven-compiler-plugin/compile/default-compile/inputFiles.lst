@@ -1,3 +1,4 @@
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\conexion\ModuloConexao.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\controller\CategoriaController.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\controller\EntradaController.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\controller\MovimentacaoController.java
@@ -7,14 +8,15 @@ C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\jav
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\model\Movimentacao.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\model\Produto.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\persisted\CategoriaDAO.java
-C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\persisted\ModuloConexao.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\persisted\MovimentacaoDAO.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\persisted\ProdutoDAO.java
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\principal\TelaInicial.java
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\reports\Relatorios.java
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\view\AtualizarProduto.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\view\ExcluirProduto.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\view\InserirCategoria.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\view\InserirProduto.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\view\TelaCategoria.java
-C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\view\TelaInicial.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\view\TelaMovimentacao.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\view\TelaProduto.java
 C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java\view\TelaRelatorio.java

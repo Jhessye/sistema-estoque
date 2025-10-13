@@ -6,7 +6,8 @@ package controller;
 
 import java.sql.SQLException;
 import model.Movimentacao;
-import persisted.MovimentacaoDAO;
+import persisted.EntradaDAO;
+import model.Entrada;
 /**
  *
  * @author Jhessye Lorrayne
@@ -23,8 +24,9 @@ public class EntradaController extends MovimentacaoController {
         double valor = movimentacao.getValor();
         movimentacao.setValor(Math.abs(valor)); //positivo
         
-        MovimentacaoDAO daoM = new MovimentacaoDAO();
-        return daoM.inserirMovimentacao(movimentacao);
+        EntradaDAO daoE = new EntradaDAO();
+        Entrada e = (Entrada)movimentacao; //casting
+        return daoE.inserirEntrada(e);
     }
     
 }

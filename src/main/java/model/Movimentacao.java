@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
  *
  * @author Jhessye Lorrayne
  */
-public class Movimentacao {
+public abstract class Movimentacao {
 
     private int idMovimentacao, quantidade, idProduto;
     private String tipo;
