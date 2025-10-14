@@ -44,9 +44,9 @@ public class MovimentacaoController{
         MovimentacaoDAO daoM = new MovimentacaoDAO();
         
         if (escolha.equals("Banco de Dados")){
-            return daoM.verMovimentacoesSQL();
+            return daoM.verMovimentacaoSQL();
         } else {
-            return daoM.verMovimentacoesLista();
+            return daoM.verMovimentacaoLista();
         }
     }
     
