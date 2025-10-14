@@ -10,16 +10,19 @@ package model;
  */
 public class Produto {
     
-    private int idProduto, idCategoriaP;
+    private int idProduto, quantidade;
+    private Categoria categoria;
     private String nome, descricao, marca;
     private double preco;
 
-    public Produto(String nome, String descricao, String marca, double preco, int idCategoriaP) {
+    public Produto(int idProduto, int quantidade, Categoria categoria, String nome, String descricao, String marca, double preco) {
+        this.idProduto = idProduto;
+        this.quantidade = quantidade;
+        this.categoria = categoria;
         this.nome = nome;
         this.descricao = descricao;
         this.marca = marca;
         this.preco = preco;
-        this.idCategoriaP = idCategoriaP;
     }
 
     public Produto() {
@@ -32,14 +35,21 @@ public class Produto {
     public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
     }
-    
-    public int getIdCategoriaP() {
-        return idCategoriaP;
+
+    public int getQuantidade() {
+        return quantidade;
     }
 
-    //FK
-    public void setIdCategoriaP(int idCategoriaP) {
-        this.idCategoriaP = idCategoriaP;
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
     
     public String getNome() {
@@ -76,7 +86,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto{" + "idProduto=" + idProduto + ", nome=" + nome + ", descricao=" + descricao + ", marca=" + marca + ", preco=" + preco + '}';
+        return "Produto{" + "idProduto=" + idProduto + ", quantidade=" + quantidade + ", categoria=" + categoria + ", nome=" + nome + ", descricao=" + descricao + ", marca=" + marca + ", preco=" + preco + '}';
     }
     
 }

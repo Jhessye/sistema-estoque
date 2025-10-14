@@ -43,10 +43,10 @@ public class ExcluirProduto extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        bntVoltarP = new javax.swing.JButton();
+        bntVoltarExcluirProduto = new javax.swing.JButton();
         listaProduto = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        bntOkP = new javax.swing.JButton();
+        bntOkExcluirProduto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,13 +57,13 @@ public class ExcluirProduto extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("EXCLUIR PRODUTO");
 
-        bntVoltarP.setBackground(new java.awt.Color(0, 0, 0));
-        bntVoltarP.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bntVoltarP.setForeground(new java.awt.Color(255, 255, 255));
-        bntVoltarP.setText("VOLTAR");
-        bntVoltarP.addActionListener(new java.awt.event.ActionListener() {
+        bntVoltarExcluirProduto.setBackground(new java.awt.Color(0, 0, 0));
+        bntVoltarExcluirProduto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bntVoltarExcluirProduto.setForeground(new java.awt.Color(255, 255, 255));
+        bntVoltarExcluirProduto.setText("VOLTAR");
+        bntVoltarExcluirProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntVoltarPActionPerformed(evt);
+                bntVoltarExcluirProdutoActionPerformed(evt);
             }
         });
 
@@ -78,13 +78,13 @@ public class ExcluirProduto extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Selecione o produto");
 
-        bntOkP.setBackground(new java.awt.Color(0, 0, 0));
-        bntOkP.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bntOkP.setForeground(new java.awt.Color(255, 255, 255));
-        bntOkP.setText("OK");
-        bntOkP.addActionListener(new java.awt.event.ActionListener() {
+        bntOkExcluirProduto.setBackground(new java.awt.Color(0, 0, 0));
+        bntOkExcluirProduto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        bntOkExcluirProduto.setForeground(new java.awt.Color(255, 255, 255));
+        bntOkExcluirProduto.setText("OK");
+        bntOkExcluirProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntOkPActionPerformed(evt);
+                bntOkExcluirProdutoActionPerformed(evt);
             }
         });
 
@@ -94,7 +94,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bntVoltarP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bntVoltarExcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,7 +103,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(397, 397, 397)
-                        .addComponent(bntOkP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(bntOkExcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(116, 116, 116)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,9 +121,9 @@ public class ExcluirProduto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85)
-                .addComponent(bntOkP, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bntOkExcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
-                .addComponent(bntVoltarP, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bntVoltarExcluirProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
         );
 
@@ -141,7 +141,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bntVoltarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarPActionPerformed
+    private void bntVoltarExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarExcluirProdutoActionPerformed
         // TODO add your handling code here:
         TelaInicial telaInicial = null;
         try {
@@ -152,9 +152,9 @@ public class ExcluirProduto extends javax.swing.JFrame {
 
         telaInicial.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_bntVoltarPActionPerformed
+    }//GEN-LAST:event_bntVoltarExcluirProdutoActionPerformed
 
-    private void bntOkPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkPActionPerformed
+    private void bntOkExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkExcluirProdutoActionPerformed
         try {
             boolean excluir = true;
             
@@ -199,7 +199,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_bntOkPActionPerformed
+    }//GEN-LAST:event_bntOkExcluirProdutoActionPerformed
 
     
     public Produto excluir() throws SQLException{
@@ -269,8 +269,8 @@ public class ExcluirProduto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntOkP;
-    private javax.swing.JButton bntVoltarP;
+    private javax.swing.JButton bntOkExcluirProduto;
+    private javax.swing.JButton bntVoltarExcluirProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

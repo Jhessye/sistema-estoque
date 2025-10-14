@@ -9,5 +9,18 @@ package model;
  * @author Jhessye Lorrayne
  */
 public class Saida extends Movimentacao {
+
+    @Override
+    public boolean movimenta(Produto produto) {
+        if(produto.getQuantidade()>0){
+            int novaQuantidade = produto.getQuantidade()-1;
+            produto.setQuantidade(novaQuantidade);
+   
+        }else{
+            return false;
+        }
+        
+        return true;
+    }
     
 }

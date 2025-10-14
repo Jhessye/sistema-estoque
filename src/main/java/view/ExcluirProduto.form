@@ -48,7 +48,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="bntVoltarP" min="-2" pref="140" max="-2" attributes="0"/>
+                  <Component id="bntVoltarExcluirProduto" min="-2" pref="140" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
@@ -59,7 +59,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="397" max="-2" attributes="0"/>
-                          <Component id="bntOkP" min="-2" pref="140" max="-2" attributes="0"/>
+                          <Component id="bntOkExcluirProduto" min="-2" pref="140" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
@@ -83,9 +83,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="listaProduto" min="-2" pref="41" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                  <Component id="bntOkP" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="bntOkExcluirProduto" min="-2" pref="44" max="-2" attributes="0"/>
                   <EmptySpace pref="146" max="32767" attributes="0"/>
-                  <Component id="bntVoltarP" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="bntVoltarExcluirProduto" min="-2" pref="44" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -103,7 +103,7 @@
             <Property name="text" type="java.lang.String" value="EXCLUIR PRODUTO"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="bntVoltarP">
+        <Component class="javax.swing.JButton" name="bntVoltarExcluirProduto">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
@@ -117,7 +117,7 @@
             <Property name="text" type="java.lang.String" value="VOLTAR"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntVoltarPActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntVoltarExcluirProdutoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="listaProduto">
@@ -149,7 +149,7 @@
             <Property name="text" type="java.lang.String" value="Selecione o produto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="bntOkP">
+        <Component class="javax.swing.JButton" name="bntOkExcluirProduto">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
@@ -163,7 +163,7 @@
             <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntOkPActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntOkExcluirProdutoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

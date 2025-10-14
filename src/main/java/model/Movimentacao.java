@@ -10,35 +10,17 @@ import java.time.format.DateTimeParseException;
  */
 public abstract class Movimentacao {
 
-    private int idMovimentacao, quantidade, idProduto;
-    private String tipo;
+    private int idMovimentacao;
+    private Produto produto;
     private LocalDate data;
-    private double valor;
-    
-    public Movimentacao(int quantidade, int idProduto, String tipo, String data, double valor) {
-        this.quantidade = quantidade;
-        this.idProduto = idProduto;
-        this.tipo = tipo;
-        this.valor = valor;
 
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            this.data = LocalDate.parse(data, formatter);
-        } catch (DateTimeParseException e) {
-            System.err.println("Erro ao converter a data");
-        }
+    public Movimentacao(int idMovimentacao, Produto produto, LocalDate data) {
+        this.idMovimentacao = idMovimentacao;
+        this.produto = produto;
+        this.data = data;
     }
 
     public Movimentacao() {
-    }
-
-    public int getIdProduto() {
-        return idProduto;
-    }
-
-    //FK
-    public void setIdProduto(int idProduto) {
-        this.idProduto = idProduto;
     }
 
     public int getIdMovimentacao() {
@@ -49,22 +31,14 @@ public abstract class Movimentacao {
         this.idMovimentacao = idMovimentacao;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
+    
     public LocalDate getData() {
         return data;
     }
@@ -78,17 +52,15 @@ public abstract class Movimentacao {
         }
     }
 
-    public double getValor() {
-        return valor;
+    public double valor(Produto produto){ //saida é negativo
+        return this.produto.getQuantidade()*this.produto.getPreco();
     }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
+    
+    public abstract boolean movimenta(Produto produto);
 
     @Override
-    public String toString() { 
-        return "Movimentacao{" + "idMovimentacao=" + idMovimentacao + ", quantidade=" + quantidade +
-        ", tipo=" + tipo + ", data=" + data + ", valor=" + valor + '}'; 
+    public String toString() {
+        return "Movimentacao{" + "idMovimentacao=" + idMovimentacao + ", produto=" + produto + ", data=" + data + '}';
     }
+    
 }

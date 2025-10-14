@@ -9,10 +9,8 @@ import model.Categoria;
 import java.sql.*;
 import java.util.*;
 import javax.swing.JOptionPane;
-/**
- *
- * @author Jhessye Lorrayne
- */
+
+
 public class CategoriaDAO {
     
     private LinkedList<Categoria> listaCategorias = new LinkedList<>();
