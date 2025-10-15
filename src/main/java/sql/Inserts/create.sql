@@ -1,29 +1,28 @@
--- Remove tabelas existentes (se houver)
 
 DROP TABLE IF EXISTS movimentacoes CASCADE;
-DROP TABLE IF EXISTS produtos CASCADE;
-DROP TABLE IF EXISTS usuarios CASCADE;
+DROP TABLE IF EXISTS produto CASCADE;
+DROP TABLE IF EXISTS categoria CASCADE;
 
-CREATE TABLE IF NOT EXISTS categorias (
-    id_categoria SERIAL PRIMARY KEY,
+
+CREATE TABLE categoria (
+    id_categoria SERIAL NOT NULL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
-    descricao VARCHAR(150) NOT NULL DEFAULT 'none'
+    descricao VARCHAR(150) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS produtos (
-    id_produto SERIAL PRIMARY KEY,
+CREATE TABLE produto (
+    id_produto SERIAL NOT NULL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     descricao VARCHAR(255) NOT NULL,
     marca VARCHAR(255) NOT NULL,
-    preco NUMERIC(14,2) NOT NULL DEFAULT 0,
-    id_categoria BIGINT NOT NULL REFERENCES categorias(id_categoria)
+    quantidade NUMERIC NOT NULL,
+    preco NUMERIC(10,6) NOT NULL,
+    id_categoria INT NOT NULL REFERENCES categoria(id_categoria)
 );
 
-CREATE TABLE IF NOT EXISTS movimentacoes (
-    id_movimentacoes SERIAL PRIMARY KEY,
-    id_produto BIGINT NOT NULL REFERENCES produtos(id_produto),
-    tipo VARCHAR(255) NOT NULL,
-    quantidade BIGINT NOT NULL DEFAULT 0,
+CREATE TABLE movimentacoes (
+    id_movimentacoes SERIAL NOT NULL PRIMARY KEY,
     data DATE NOT NULL,
-    valor NUMERIC(14,2) NOT NULL
+    valor NUMERIC(15,5) NOT NULL,
+    id_produto INT NOT NULL REFERENCES produto(id_produto)
 );
