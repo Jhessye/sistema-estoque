@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 import model.Movimentacao;
 import model.Produto;
+import model.Entrada;
+import model.Saida;
 
 public class MovimentacaoDAO {
 
