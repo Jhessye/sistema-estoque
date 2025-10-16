@@ -48,32 +48,62 @@ public class MovimentacaoDAO {
         }
     }
     
-    public boolean inserirMovimentacao(Movimentacao movimentacao) {
+    public boolean inserirEntrada(Entrada entrada) {
         String sql = "INSERT INTO movimentacoes (data, valor, id_produto) VALUES (?,?,?)";
 
         try (Connection conector = ModuloConexao.conector();
              PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            double valorCalculado = movimentacao.valor(movimentacao.getProduto());
+            double valorCalculado = entrada.valor(entrada.getProduto());
 
-            executa.setDate(1, java.sql.Date.valueOf(movimentacao.getData()));
+            executa.setDate(1, java.sql.Date.valueOf(entrada.getData()));
             executa.setDouble(2, valorCalculado);
-            executa.setInt(3, movimentacao.getProduto().getIdProduto());
+            executa.setInt(3, entrada.getProduto().getIdProduto());
 
             int linhasAfetadas = executa.executeUpdate();
 
             if (linhasAfetadas > 0) {
                 try (ResultSet rs = executa.getGeneratedKeys()) {
                     if (rs.next()) {
-                        movimentacao.setIdMovimentacao(rs.getInt(1));
-                        listaMovimentacao.add(movimentacao);
+                        entrada.setIdMovimentacao(rs.getInt(1));
+                        listaMovimentacao.add(entrada);
                         return true;
                     }
                 }
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir movimentação: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao inserir entrada: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean inserirSaida(Saida saida) {
+        String sql = "INSERT INTO movimentacoes (data, valor, id_produto) VALUES (?,?,?)";
+
+        try (Connection conector = ModuloConexao.conector();
+             PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            double valorCalculado = saida.valor(saida.getProduto());
+
+            executa.setDate(1, java.sql.Date.valueOf(saida.getData()));
+            executa.setDouble(2, valorCalculado);
+            executa.setInt(3, saida.getProduto().getIdProduto());
+
+            int linhasAfetadas = executa.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                try (ResultSet rs = executa.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        saida.setIdMovimentacao(rs.getInt(1));
+                        listaMovimentacao.add(saida);
+                        return true;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao inserir saida: " + e.getMessage());
         }
         return false;
     }
