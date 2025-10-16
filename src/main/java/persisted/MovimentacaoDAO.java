@@ -2,9 +2,9 @@ package persisted;
 
 import conexion.ModuloConexao;
 import java.sql.*;
-import java.util.LinkedList;
+import java.util.LinkedList;  
 import javax.swing.JOptionPane;
-import model.Movimentacao;
+import model.Movimentacao;   
 import model.Produto;
 import model.Entrada;
 import model.Saida;
