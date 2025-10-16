@@ -45,7 +45,7 @@ public abstract class Movimentacao {
 
     public void setData(String data) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             this.data = LocalDate.parse(data, formatter);
         } catch (DateTimeParseException e) {
             System.err.println("Erro ao converter a data");

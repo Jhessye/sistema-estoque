@@ -2,18 +2,17 @@ package persisted;
 
 import conexion.ModuloConexao;
 import java.sql.*;
-import java.util.LinkedList;
+import java.util.LinkedList;  
 import javax.swing.JOptionPane;
-import model.Movimentacao;
+import model.Movimentacao;   
 import model.Produto;
+import model.Entrada;
+import model.Saida;
 
-/**
- *
- * @author Jhessye Lorrayne
- */
 public class MovimentacaoDAO {
 
     private LinkedList<Movimentacao> listaMovimentacao = new LinkedList<>();
+    private ProdutoDAO produtoDAO = new ProdutoDAO(); // precisamos dele para buscar o produto
 
     public MovimentacaoDAO() throws SQLException {
         carregarListaMovimentacao();
@@ -21,7 +20,7 @@ public class MovimentacaoDAO {
 
     private void carregarListaMovimentacao() throws SQLException {
         listaMovimentacao.clear();
-        String sql = "SELECT * FROM movimentacoes";
+        String sql = "SELECT id_movimentacoes, data, valor, id_produto FROM movimentacoes";
 
         try (Connection conector = ModuloConexao.conector();
              PreparedStatement executa = conector.prepareStatement(sql);
@@ -35,10 +34,8 @@ public class MovimentacaoDAO {
                     }
                 };
 
-                Produto p = new Produto();
-                p.setIdProduto(rs.getInt("id_produto"));
-                p.setQuantidade(rs.getInt("quantidade"));//errp
-                p.setPreco(rs.getDouble("valor"));
+                int idProduto = rs.getInt("id_produto");
+                Produto p = produtoDAO.buscarPorId(idProduto);
 
                 m.setIdMovimentacao(rs.getInt("id_movimentacoes"));
                 m.setProduto(p);
@@ -52,64 +49,91 @@ public class MovimentacaoDAO {
             throw e;
         }
     }
-
     
-    public boolean inserirMovimentacao(Movimentacao movimentacao) {
-        String sql = "INSERT INTO movimentacoes (quantidade, data, valor, id_produto) VALUES (?,?,?,?)";
+    public boolean inserirEntrada(Entrada entrada) {
+        String sql = "INSERT INTO movimentacoes (data, valor, id_produto) VALUES (?,?,?)";
 
         try (Connection conector = ModuloConexao.conector();
              PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            executa.setInt(1, movimentacao.getProduto().getQuantidade());
-            executa.setDate(2, java.sql.Date.valueOf(movimentacao.getData()));
-            executa.setDouble(3, movimentacao.getProduto().getPreco());
-            executa.setInt(4, movimentacao.getProduto().getIdProduto());
+            double valorCalculado = entrada.valor(entrada.getProduto());
+
+            executa.setDate(1, java.sql.Date.valueOf(entrada.getData()));
+            executa.setDouble(2, valorCalculado);
+            executa.setInt(3, entrada.getProduto().getIdProduto());
 
             int linhasAfetadas = executa.executeUpdate();
 
             if (linhasAfetadas > 0) {
                 try (ResultSet rs = executa.getGeneratedKeys()) {
                     if (rs.next()) {
-                        movimentacao.setIdMovimentacao(rs.getInt(1)); //pega o id
-                        listaMovimentacao.add(movimentacao);
+                        entrada.setIdMovimentacao(rs.getInt(1));
+                        listaMovimentacao.add(entrada);
                         return true;
                     }
                 }
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir movimentação: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao inserir entrada: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public boolean inserirSaida(Saida saida) {
+        String sql = "INSERT INTO movimentacoes (data, valor, id_produto) VALUES (?,?,?)";
+
+        try (Connection conector = ModuloConexao.conector();
+             PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            double valorCalculado = saida.valor(saida.getProduto());
+
+            executa.setDate(1, java.sql.Date.valueOf(saida.getData()));
+            executa.setDouble(2, valorCalculado);
+            executa.setInt(3, saida.getProduto().getIdProduto());
+
+            int linhasAfetadas = executa.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                try (ResultSet rs = executa.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        saida.setIdMovimentacao(rs.getInt(1));
+                        listaMovimentacao.add(saida);
+                        return true;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao inserir saida: " + e.getMessage());
         }
         return false;
     }
 
     
     public boolean atualizarMovimentacao(Movimentacao movimentacao, String atributo) {
-        String sql = null;
+        String sql = switch (atributo) {
+            case "data" -> "UPDATE movimentacoes SET data=? WHERE id_movimentacoes=?";
+            case "id_produto" -> "UPDATE movimentacoes SET id_produto=? WHERE id_movimentacoes=?";
+            default -> null;
+        };
 
-        switch (atributo) {
-            case "quantidade" -> sql = "UPDATE movimentacoes SET quantidade=? WHERE id_movimentacoes=?";
-            case "data" -> sql = "UPDATE movimentacoes SET data=? WHERE id_movimentacoes=?";
-            case "valor" -> sql = "UPDATE movimentacoes SET valor=? WHERE id_movimentacoes=?";
-            case "id_produto" -> sql = "UPDATE movimentacoes SET id_produto=? WHERE id_movimentacoes=?";
-            default -> {
-                JOptionPane.showMessageDialog(null, "Atributo inválido!");
-                return false;
-            }
+        if (sql == null) {
+            JOptionPane.showMessageDialog(null, "Atributo inválido!");
+            return false;
         }
 
         try (Connection conector = ModuloConexao.conector();
              PreparedStatement executa = conector.prepareStatement(sql)) {
 
             switch (atributo) {
-                case "quantidade" -> executa.setInt(1, movimentacao.getProduto().getQuantidade());
-                case "data" -> executa.setDate(1, java.sql.Date.valueOf(movimentacao.getData()));
-                case "valor" -> executa.setDouble(1, movimentacao.getProduto().getPreco());
-                case "id_produto" -> executa.setInt(1, movimentacao.getProduto().getIdProduto());
+                case "data" ->
+                    executa.setDate(1, java.sql.Date.valueOf(movimentacao.getData()));
+                case "id_produto" ->
+                    executa.setInt(1, movimentacao.getProduto().getIdProduto());
             }
 
             executa.setInt(2, movimentacao.getIdMovimentacao());
-
             int linhas = executa.executeUpdate();
 
             if (linhas > 0) {
@@ -131,7 +155,7 @@ public class MovimentacaoDAO {
             }
         }
     }
-
+   
     public boolean removerMovimentacao(Movimentacao movimentacao) {
         String sql = "DELETE FROM movimentacoes WHERE id_movimentacoes=?";
 
@@ -152,14 +176,10 @@ public class MovimentacaoDAO {
         return false;
     }
 
-    
-    public LinkedList<Movimentacao> verMovimentacaoLista() {
-        return new LinkedList<>(listaMovimentacao);
-    }
-
+  
     public LinkedList<Movimentacao> verMovimentacaoSQL() throws SQLException {
         LinkedList<Movimentacao> movimentacoes = new LinkedList<>();
-        String sql = "SELECT * FROM movimentacoes";
+        String sql = "SELECT id_movimentacoes, data, valor, id_produto FROM movimentacoes";
 
         try (Connection conector = ModuloConexao.conector();
              PreparedStatement executa = conector.prepareStatement(sql);
@@ -173,10 +193,8 @@ public class MovimentacaoDAO {
                     }
                 };
 
-                Produto p = new Produto();
-                p.setIdProduto(rs.getInt("id_produto"));
-                p.setQuantidade(rs.getInt("quantidade"));
-                p.setPreco(rs.getDouble("valor"));
+                int idProduto = rs.getInt("id_produto");
+                Produto p = produtoDAO.buscarPorId(idProduto);
 
                 m.setIdMovimentacao(rs.getInt("id_movimentacoes"));
                 m.setProduto(p);
@@ -192,7 +210,11 @@ public class MovimentacaoDAO {
         return movimentacoes;
     }
 
-    //tela inicial
+    public LinkedList<Movimentacao> verMovimentacaoLista() {
+        return new LinkedList<>(listaMovimentacao);//copia da lista
+    }
+
+    //tela inical
     public int quantidadeRegistrosMovimentacao() throws SQLException {
         int totalLinhas = 0;
         String sql = "SELECT COUNT(*) AS total_linhas FROM movimentacoes";

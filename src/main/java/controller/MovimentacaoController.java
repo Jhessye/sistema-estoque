@@ -6,7 +6,9 @@ package controller;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
+import model.Entrada;
 import model.Movimentacao;
+import model.Saida;
 import persisted.MovimentacaoDAO;
 /**
  *
@@ -17,14 +19,20 @@ public class MovimentacaoController{
     public MovimentacaoController() {
     }
     //pensar 
-    public boolean inserirMovimentacao(Movimentacao movimentacao) throws SQLException{
+    public boolean inserirEntrada(Entrada entrada) throws SQLException{
        
         MovimentacaoDAO daoM = new MovimentacaoDAO();
         
-        return daoM.inserirMovimentacao(movimentacao);
+        return daoM.inserirEntrada(entrada);
+    }
+    
+    public boolean inserirEntrada(Saida saida) throws SQLException{
+       
+        MovimentacaoDAO daoM = new MovimentacaoDAO();
+        
+        return daoM.inserirSaida(saida);
     }
    
-    
     public static boolean alterarMovimentacao(Movimentacao movimentacao, String atributo) throws SQLException{
         
         MovimentacaoDAO daoM = new MovimentacaoDAO();

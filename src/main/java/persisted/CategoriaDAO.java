@@ -73,6 +73,33 @@ public class CategoriaDAO {
         }
     }
     
+    public Categoria buscarPorId(int idCategoria) throws SQLException {
+        String sql = "SELECT * FROM categorias WHERE id_categoria = ?";
+        Categoria categoria = null;
+
+        try (Connection con = ModuloConexao.conector();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, idCategoria);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    categoria = new Categoria();
+                    categoria.setIdCategoria(rs.getInt("id_categoria"));
+                    categoria.setNome(rs.getString("nome"));
+                    categoria.setDescricao(rs.getString("descricao"));
+                }
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar categoria por ID: " + e.getMessage());
+            throw e;
+        }
+
+        return categoria;
+    }
+
+    
     public boolean atualizarCategoria(Categoria categoria, String atributo) {
         String sql = null;
 

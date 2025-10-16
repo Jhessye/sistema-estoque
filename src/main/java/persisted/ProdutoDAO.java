@@ -91,6 +91,40 @@ public class ProdutoDAO {
         return false;
     }
     
+    public Produto buscarPorId(int idProduto) throws SQLException {
+        String sql = "SELECT * FROM produtos WHERE id_produto = ?";
+        Produto produto = null;
+
+        try (Connection con = ModuloConexao.conector();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, idProduto);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    produto = new Produto();
+                    produto.setIdProduto(rs.getInt("id_produto"));
+                    produto.setNome(rs.getString("nome"));
+                    produto.setDescricao(rs.getString("descricao"));
+                    produto.setMarca(rs.getString("marca"));
+                    produto.setPreco(rs.getDouble("preco"));
+                    produto.setQuantidade(rs.getInt("quantidade"));
+
+                    //
+                    CategoriaDAO categoriaDAO = new CategoriaDAO();
+                    Categoria categoria = categoriaDAO.buscarPorId(rs.getInt("id_categoria"));
+                    produto.setCategoria(categoria);
+                }
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar produto por ID: " + e.getMessage());
+            throw e;
+        }
+
+        return produto;
+    }
+    
     public boolean atualizarProduto(Produto produto, String atributo) {
         String sql = switch (atributo) {
             case "nome" -> "UPDATE produtos SET nome=? WHERE id_produto=?";
