@@ -112,7 +112,6 @@ public class MovimentacaoDAO {
     public boolean atualizarMovimentacao(Movimentacao movimentacao, String atributo) {
         String sql = switch (atributo) {
             case "data" -> "UPDATE movimentacoes SET data=? WHERE id_movimentacoes=?";
-            case "valor" -> "UPDATE movimentacoes SET valor=? WHERE id_movimentacoes=?";
             case "id_produto" -> "UPDATE movimentacoes SET id_produto=? WHERE id_movimentacoes=?";
             default -> null;
         };
@@ -128,10 +127,6 @@ public class MovimentacaoDAO {
             switch (atributo) {
                 case "data" ->
                     executa.setDate(1, java.sql.Date.valueOf(movimentacao.getData()));
-                case "valor" -> {
-                    double valorCalculado = movimentacao.valor(movimentacao.getProduto());
-                    executa.setDouble(1, valorCalculado);
-                }
                 case "id_produto" ->
                     executa.setInt(1, movimentacao.getProduto().getIdProduto());
             }
