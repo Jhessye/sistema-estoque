@@ -197,6 +197,37 @@ public class ProdutoDAO {
 
         return produtos;
     }
+
+    public Produto buscarPorId(int idProduto) throws SQLException {
+        String sql = "SELECT * FROM produtos WHERE id_produto = ?";
+        Produto produto = null;
+    
+        try (Connection con = ModuloConexao.conector();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+    
+            stmt.setInt(1, idProduto);
+    
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    produto = new Produto();
+                    produto.setIdProduto(rs.getInt("id_produto"));
+                    produto.setNome(rs.getString("nome"));
+                    produto.setDescricao(rs.getString("descricao"));
+                    produto.setMarca(rs.getString("marca"));
+                    produto.setPreco(rs.getDouble("preco"));
+                    produto.setQuantidade(rs.getInt("quantidade"));
+                    produto.setIdCategoriaP(rs.getInt("id_categoria"));
+                }
+            }
+    
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar produto por ID: " + e.getMessage());
+            throw e;
+        }
+    
+        return produto;
+    }
+
     
     //tela inicial
     public int quantidadeRegistrosProdutos() throws SQLException {
