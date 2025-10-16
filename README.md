@@ -33,8 +33,8 @@ README.MD explicando como executar o projeto no ambiente proposto (LINUX)
 ### 🧩 Diagramas
 - **[diagrams/](diagrams)**  
   Contém:
-  - **[Diagrama Relacional](diagrams/Diagrama Relacional BD.png)** do banco de dados.  
-  - **[Diagrama de Classes](diagrams/Diagrama de Classes.png)** do sistema.
+  - **Diagrama Relacional** do banco de dados.  
+  - **Diagrama de Classes** do sistema.
   
   As entidades representadas são:
   - `CATEGORIA`
