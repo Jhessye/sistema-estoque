@@ -33,10 +33,10 @@ README.MD explicando como executar o projeto no ambiente proposto (LINUX)
 ### 🧩 Diagramas
 - **[diagrams/](diagrams)**  
   Contém:
-  - **Diagrama Relacional** do banco de dados.  
-  - **Diagrama de Classes** do sistema.
+  - **[Diagrama Relacional](diagrams/Diagrama Relacional BD.png)** do banco de dados.  
+  - **[Diagrama de Classes](diagrams/Diagrama de Classes.png)** do sistema.
   
-  As principais entidades representadas são:
+  As entidades representadas são:
   - `CATEGORIA`
   - `PRODUTO`
   - `MOVIMENTACOES`
@@ -79,4 +79,5 @@ README.MD explicando como executar o projeto no ambiente proposto (LINUX)
 - ✉️ [E-mail](mailto:ljhessye@gmail.com)
 
 ---
+
 
