@@ -54,12 +54,13 @@ public class InserirMovimentacao extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         listaProdutoM = new javax.swing.JComboBox<>();
-        textNovoValorM = new javax.swing.JTextField();
+        textDataM = new javax.swing.JTextField();
         bntOkNovaMovimentacao = new javax.swing.JButton();
         bntVoltarNovaMovimentacao = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        textNovoValorM1 = new javax.swing.JTextField();
+        textQuantidadeM = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,9 +81,9 @@ public class InserirMovimentacao extends javax.swing.JFrame {
             }
         });
 
-        textNovoValorM.addActionListener(new java.awt.event.ActionListener() {
+        textDataM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textNovoValorMActionPerformed(evt);
+                textDataMActionPerformed(evt);
             }
         });
 
@@ -110,31 +111,24 @@ public class InserirMovimentacao extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Quantidade");
 
-        textNovoValorM1.addActionListener(new java.awt.event.ActionListener() {
+        textQuantidadeM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textNovoValorM1ActionPerformed(evt);
+                textQuantidadeMActionPerformed(evt);
             }
         });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Data \"00/00/0000\"");
+        jLabel8.setText("Data \"00-00-0000\"");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel9.setText("** se for saída o valor é negativo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(161, 161, 161)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(textNovoValorM1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textNovoValorM, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 62, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,6 +147,18 @@ public class InserirMovimentacao extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(bntOkNovaMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(401, 401, 401))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(161, 161, 161)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel7)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(textQuantidadeM, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textDataM, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,9 +175,11 @@ public class InserirMovimentacao extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textNovoValorM1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textNovoValorM, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                    .addComponent(textQuantidadeM, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textDataM, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(bntOkNovaMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(bntVoltarNovaMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,9 +204,9 @@ public class InserirMovimentacao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_listaProdutoMActionPerformed
 
-    private void textNovoValorMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNovoValorMActionPerformed
+    private void textDataMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textDataMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textNovoValorMActionPerformed
+    }//GEN-LAST:event_textDataMActionPerformed
 
     private void bntOkNovaMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkNovaMovimentacaoActionPerformed
 
@@ -208,9 +216,9 @@ public class InserirMovimentacao extends javax.swing.JFrame {
 
     }//GEN-LAST:event_bntVoltarNovaMovimentacaoActionPerformed
 
-    private void textNovoValorM1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNovoValorM1ActionPerformed
+    private void textQuantidadeMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textQuantidadeMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textNovoValorM1ActionPerformed
+    }//GEN-LAST:event_textQuantidadeMActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,9 +262,10 @@ public class InserirMovimentacao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JComboBox<String> listaProdutoM;
-    private javax.swing.JTextField textNovoValorM;
-    private javax.swing.JTextField textNovoValorM1;
+    private javax.swing.JTextField textDataM;
+    private javax.swing.JTextField textQuantidadeM;
     // End of variables declaration//GEN-END:variables
 }

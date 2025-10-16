@@ -1,11 +1,11 @@
 -- CATEGORIAS
-INSERT INTO categoria (nome, descricao) VALUES
+INSERT INTO categorias (nome, descricao) VALUES
 ('Som e Tecnologia', 'Produtos de áudio e conectividade para automóveis'),
 ('Interior e Conforto', 'Acessórios voltados ao conforto interno do veículo'),
 ('Iluminação', 'Produtos de faróis, lâmpadas e LEDs automotivos');
 
 -- PRODUTOS
-INSERT INTO produto (nome, descricao, marca, quantidade, preco, id_categoria) VALUES
+INSERT INTO produtos (nome, descricao, marca, quantidade, preco, id_categoria) VALUES
 ('Rádio Automotivo Bluetooth', 'Rádio com conexão Bluetooth e entrada USB', 'Radiomix', 15, 350.000000, 1),
 ('Tapete Automotivo Antiderrapante', 'Conjunto de tapetes de PVC resistente à água', 'AutoLux', 20, 120.000000, 2),
 ('Lâmpada LED H7', 'Lâmpada LED branca de alta luminosidade', 'BrightCar', 30, 85.500000, 3);
