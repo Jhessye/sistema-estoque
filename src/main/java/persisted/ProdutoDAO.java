@@ -37,8 +37,9 @@ public class ProdutoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
                 p.setMarca(rs.getString("marca"));
-                p.setPreco(rs.getDouble("preco"));
                 p.setQuantidade(rs.getInt("quantidade"));
+                p.setPreco(rs.getDouble("preco"));
+                
                 
                 // Cria a categoria apenas com o id (caso queira carregar o nome depois)
                 Categoria c = new Categoria();
@@ -59,7 +60,7 @@ public class ProdutoDAO {
             return false;
         }
 
-        String sql = "INSERT INTO produtos (nome, descricao, marca, preco, quantidade, id_categoria) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO produtos (nome, descricao, marca, quantidade, preco, id_categoria) VALUES (?,?,?,?,?,?)";
 
         try (Connection conector = ModuloConexao.conector();
              PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -67,8 +68,8 @@ public class ProdutoDAO {
             executa.setString(1, produto.getNome());
             executa.setString(2, produto.getDescricao());
             executa.setString(3, produto.getMarca());
-            executa.setDouble(4, produto.getPreco());
             executa.setInt(5, produto.getQuantidade());
+            executa.setDouble(4, produto.getPreco());
             executa.setInt(6, produto.getCategoria().getIdCategoria());
 
             int linhasAfetadas = executa.executeUpdate();
@@ -113,8 +114,8 @@ public class ProdutoDAO {
                 case "nome" -> executa.setString(1, produto.getNome());
                 case "descricao" -> executa.setString(1, produto.getDescricao());
                 case "marca" -> executa.setString(1, produto.getMarca());
-                case "preco" -> executa.setDouble(1, produto.getPreco());
                 case "quantidade" -> executa.setInt(1, produto.getQuantidade());
+                case "preco" -> executa.setDouble(1, produto.getPreco());
                 case "id_categoria" -> executa.setInt(1, produto.getCategoria().getIdCategoria());
             }
 
@@ -181,8 +182,9 @@ public class ProdutoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
                 p.setMarca(rs.getString("marca"));
-                p.setPreco(rs.getDouble("preco"));
                 p.setQuantidade(rs.getInt("quantidade"));
+                p.setPreco(rs.getDouble("preco"));
+                
 
                 Categoria c = new Categoria();
                 c.setIdCategoria(rs.getInt("id_categoria"));

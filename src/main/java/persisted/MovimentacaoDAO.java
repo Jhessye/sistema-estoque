@@ -37,7 +37,7 @@ public class MovimentacaoDAO {
 
                 Produto p = new Produto();
                 p.setIdProduto(rs.getInt("id_produto"));
-                p.setQuantidade(rs.getInt("quantidade"));
+                p.setQuantidade(rs.getInt("quantidade"));//errp
                 p.setPreco(rs.getDouble("valor"));
 
                 m.setIdMovimentacao(rs.getInt("id_movimentacoes"));
