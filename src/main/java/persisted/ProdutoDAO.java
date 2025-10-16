@@ -37,10 +37,9 @@ public class ProdutoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
                 p.setMarca(rs.getString("marca"));
-                p.setPreco(rs.getDouble("preco"));
                 p.setQuantidade(rs.getInt("quantidade"));
+                p.setPreco(rs.getDouble("preco"));
                 
-                // Cria a categoria apenas com o id (caso queira carregar o nome depois)
                 Categoria c = new Categoria();
                 c.setIdCategoria(rs.getInt("id_categoria"));
                 p.setCategoria(c);
@@ -67,8 +66,8 @@ public class ProdutoDAO {
             executa.setString(1, produto.getNome());
             executa.setString(2, produto.getDescricao());
             executa.setString(3, produto.getMarca());
-            executa.setDouble(4, produto.getPreco());
             executa.setInt(5, produto.getQuantidade());
+            executa.setDouble(4, produto.getPreco());
             executa.setInt(6, produto.getCategoria().getIdCategoria());
 
             int linhasAfetadas = executa.executeUpdate();
@@ -181,8 +180,8 @@ public class ProdutoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setDescricao(rs.getString("descricao"));
                 p.setMarca(rs.getString("marca"));
-                p.setPreco(rs.getDouble("preco"));
                 p.setQuantidade(rs.getInt("quantidade"));
+                p.setPreco(rs.getDouble("preco"));
 
                 Categoria c = new Categoria();
                 c.setIdCategoria(rs.getInt("id_categoria"));
