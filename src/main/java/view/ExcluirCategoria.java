@@ -4,6 +4,16 @@
  */
 package view;
 
+import controller.CategoriaController;
+import controller.ProdutoController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Categoria;
+import model.Produto;
+import principal.TelaInicial;
+
 /**
  *
  * @author Jhessye Lorrayne
@@ -15,6 +25,32 @@ public class ExcluirCategoria extends javax.swing.JFrame {
      */
     public ExcluirCategoria() {
         initComponents();
+        carregarListaCategorias();
+        
+        this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
+        this.setResizable(false); // ← Impede redimensionamento
+        this.setTitle("Excluir Categoria");  // Título personalizado
+    }
+    
+    public void carregarListaCategorias() {
+        try {
+            listaExcluirCategoriaC.removeAllItems();
+            for (Categoria categoria : CategoriaController.mostrarCategorias("Lista")) {
+                listaExcluirCategoriaC.addItem(categoria.getNome());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar categorias: " + ex.getMessage());
+        }
+    }
+    
+    
+    public Categoria excluir() throws SQLException{
+        Categoria c = new Categoria();
+        
+        c = CategoriaController.mostrarCategorias("Lista").get(listaExcluirCategoriaC.getSelectedIndex());
+          
+        return c;
     }
 
     /**
@@ -133,11 +169,64 @@ public class ExcluirCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_listaExcluirCategoriaCActionPerformed
 
     private void btnOkExcluirCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkExcluirCategoriaActionPerformed
+try {
+            boolean excluir = true;
+            
+            Categoria c = new Categoria();
+            c = excluir(); //pega a categoria que a pessoa selecionou
+            
+            if (c == null ) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            }
+            
+            
+            for (Produto p : ProdutoController.mostrarPordutos("Lista")){
+                
+                if (c.getNome().equals(p.getNome())){
+                    excluir = false;
+                }
+                
+            }
+            
+            if (excluir){
+                CategoriaController.excluirCategoria(c);
+                //pergunta se quer continuar
+                int resposta = JOptionPane.showConfirmDialog(
+                    null, 
+                    "Categoria excluida com sucesso!\nDeseja excluir outra categoria?",
+                    "Continuar?",
+                    JOptionPane.YES_NO_OPTION
+                );
 
+                if (resposta == JOptionPane.YES_OPTION) {
+                    carregarListaCategorias();
+                } else {
+                    TelaInicial telaInicial = new TelaInicial();
+                    
+                    this.setVisible(false);
+                    telaInicial.setVisible(true);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "A categoria selecionado tem produtos agregadas\nExclua os produtos dessa categoria PRIMEIRO. ");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ExcluirCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnOkExcluirCategoriaActionPerformed
 
     private void bntVoltarExcluirCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarExcluirCategoriaActionPerformed
+        TelaInicial telaInicial = null;
+        
+        try {
+            telaInicial = new TelaInicial();
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
+        telaInicial.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_bntVoltarExcluirCategoriaActionPerformed
 
     /**

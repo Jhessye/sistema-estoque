@@ -156,21 +156,19 @@ public class InserirCategoria extends javax.swing.JFrame {
 
     private void bntOkCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkCActionPerformed
         try {
-            
-            String nome = textNomeCategoria.getText();
-            String descricao = textDescricaoCategoria.getText();
+            String nome = textNomeCategoria.getText().trim();
+            String descricao = textDescricaoCategoria.getText().trim();
 
-            if (nome == null || nome.trim().isEmpty() || descricao == null || descricao.trim().isEmpty()) {
+            if (nome.isEmpty() || descricao.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos antes de continuar.");
                 return;
             }
-
+            
             boolean cadastro = cadastrarCategoria();
 
-            if (cadastro){
-                
+            if (cadastro) {
                 int resposta = JOptionPane.showConfirmDialog(
-                    null, 
+                    null,
                     "Categoria inserida com sucesso!\nDeseja inserir outra categoria?",
                     "Continuar?",
                     JOptionPane.YES_NO_OPTION
@@ -180,37 +178,38 @@ public class InserirCategoria extends javax.swing.JFrame {
                     limparDados();
                 } else {
                     TelaInicial telaInicial = new TelaInicial();
-
                     this.setVisible(false);
                     telaInicial.setVisible(true);
                 }
+
             } else {
+                
                 JOptionPane.showMessageDialog(null, "Já existe uma categoria com esse nome ou ocorreu um erro ao cadastrar.");
             }
+
         } catch (SQLException ex) {
-            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InserirCategoria.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro no banco de dados: " + ex.getMessage());
         }
         
     }//GEN-LAST:event_bntOkCActionPerformed
 
     
-    private boolean cadastrarCategoria() throws SQLException{
-        String nome = textNomeCategoria.getText();
-        String descricao = textDescricaoCategoria.getText();
+    private boolean cadastrarCategoria() throws SQLException {
+        String nome = textNomeCategoria.getText().trim();
+        String descricao = textDescricaoCategoria.getText().trim();
 
-        // se ele ja existir
-        for (Categoria c : CategoriaController.mostrarCategorias("Banco de Dados")){
+        for (Categoria c : CategoriaController.mostrarCategorias("Banco de Dados")) {
             if (nome.equalsIgnoreCase(c.getNome())) {
-                return false;
+                return false; // ja existe
             }
         }
 
-        Categoria c = new Categoria();
-        c.setNome(nome);
-        c.setDescricao(descricao);
+        Categoria nova = new Categoria();
+        nova.setNome(nome);
+        nova.setDescricao(descricao);
 
-        CategoriaController.inserirCategoria(c);
-        return true;
+        return CategoriaController.inserirCategoria(nova);
     }
     
     private void limparDados(){

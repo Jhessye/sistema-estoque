@@ -191,36 +191,41 @@ public class VerProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_bntOkPActionPerformed
 
     private boolean verProdutosSQL() throws SQLException{
-        
-        String[] colunas = {"IdProduto", "Nome", "Descricao", "Marca", "Preco", "IdCategoria"};
+        try{
+            String[] colunas = {"IdProduto", "Quantidade", "Nome", "Descricao", "Marca", "Preco", "IdCategoria"};
 
-        DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
-        
-        tabelaPDB.setModel(modelo);
-        
-        // Preenche com dados do Banco de Dados
-        for (Produto p : ProdutoController.mostrarPordutos("Banco de Dados")){
-            Object[] linha = {p.getIdProduto(), p.getNome(), p.getDescricao(), p.getMarca(), p.getPreco(), p.getIdCategoriaP() };
-            modelo.addRow(linha);
+            DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
+
+            tabelaPDB.setModel(modelo);
+
+            // Preenche com dados do Banco de Dados
+            for (Produto p : ProdutoController.mostrarPordutos("Banco de Dados")){
+                Object[] linha = {p.getIdProduto(),p.getQuantidade(),p.getNome(),p.getDescricao(),p.getMarca(),p.getPreco(),p.getCategoria().getIdCategoria() };
+                modelo.addRow(linha);
+            }
+        }catch(SQLException ex){
+            return false;
         }
-        
-        return true;
+            return true;
     }
     
     private boolean verProdutosLista() throws SQLException{
-        String[] colunas = {"IdProduto", "Nome", "Descricao", "Marca", "Preco", "IdCategoria"};
+        try{
+            String[] colunas = {"IdProduto", "Quantidade", "Nome", "Descricao", "Marca", "Preco", "IdCategoria"};
 
-        DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
-        
-        tabelaPLista.setModel(modelo);
-        
-        // Preenche com dados da LinkedList
-        for (Produto p : ProdutoController.mostrarPordutos("Lista")){
-            Object[] linha = {p.getIdProduto(), p.getNome(), p.getDescricao(), p.getMarca(), p.getPreco(), p.getIdCategoriaP() };
-            modelo.addRow(linha);
+            DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
+
+            tabelaPDB.setModel(modelo);
+
+            // Preenche com dados da linkedlist
+            for (Produto p : ProdutoController.mostrarPordutos("Lista")){
+                Object[] linha = {p.getIdProduto(),p.getQuantidade(),p.getNome(),p.getDescricao(),p.getMarca(),p.getPreco(),p.getCategoria().getIdCategoria() };
+                modelo.addRow(linha);
+            }
+        }catch(SQLException ex){
+            return false;
         }
-        
-        return true;
+            return true;
     }
     
     /**

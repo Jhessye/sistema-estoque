@@ -159,7 +159,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
             boolean excluir = true;
             
             Produto p = new Produto();
-            p = excluir();
+            p = excluir(); //pega o produto que a pessoa selecionou
             
             if (p == null ) {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
@@ -168,7 +168,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
             //se tiver movimentações com o produto, excluir primeiro as movimentações do produto
             for (Movimentacao m : MovimentacaoController.mostrarMovimentacoes("Lista")){
                 
-                if (m.getIdProduto() == p.getIdProduto() ){
+                if (p.getNome().equals(m.getProduto().getNome())){
                     excluir = false;
                 }
                 
@@ -197,7 +197,7 @@ public class ExcluirProduto extends javax.swing.JFrame {
             }
             
         } catch (SQLException ex) {
-            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExcluirProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bntOkExcluirProdutoActionPerformed
 
@@ -205,12 +205,8 @@ public class ExcluirProduto extends javax.swing.JFrame {
     public Produto excluir() throws SQLException{
         Produto p = new Produto();
         
-        for (int i = 0; i<= listaProduto.getSelectedIndex(); i++){
-            if(i == listaProduto.getSelectedIndex()){
-                p = ProdutoController.mostrarPordutos("Lista").get(i);
-            }
-        }
-        
+        p = ProdutoController.mostrarPordutos("Lista").get(listaProduto.getSelectedIndex());
+          
         return p;
     }
     

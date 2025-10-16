@@ -4,6 +4,15 @@
  */
 package view;
 
+import controller.CategoriaController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Categoria;
+import principal.TelaInicial;
+
 /**
  *
  * @author Jhessye Lorrayne
@@ -13,8 +22,52 @@ public class VerCategoria extends javax.swing.JFrame {
     /**
      * Creates new form VerCategoria
      */
-    public VerCategoria() {
+    public VerCategoria() throws SQLException {
         initComponents();
+        verProdutosSQL();
+        verProdutosLista();
+        
+        this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
+        this.setResizable(false); // ← Impede redimensionamento
+        this.setTitle("Ver Categorias");  // Título personalizado
+    }
+    
+    private boolean verProdutosSQL() throws SQLException{
+        try{
+            String[] colunas = {"idCategoria", "Nome", "Descricao"};
+
+            DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
+
+            tabelaVerCategoriasDB.setModel(modelo);
+
+            // Preenche com dados da Lista
+            for (Categoria c : CategoriaController.mostrarCategorias("Lista")){
+                Object[] linha = {c.getIdCategoria(),c.getNome(),c.getDescricao()};
+                modelo.addRow(linha);
+            }
+        }catch(SQLException ex){
+            return false;
+        }
+            return true;
+    }
+    
+    private boolean verProdutosLista() throws SQLException{
+        try{
+            String[] colunas = {"idCategoria", "Nome", "Descricao"};
+
+            DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
+
+            tabelaVerCategoriasDB.setModel(modelo);
+
+            // Preenche com dados do Banco de Dados
+            for (Categoria c : CategoriaController.mostrarCategorias("Lista")){
+                Object[] linha = {c.getIdCategoria(),c.getNome(),c.getDescricao()};
+                modelo.addRow(linha);
+            }
+        }catch(SQLException ex){
+            return false;
+        }
+            return true;
     }
 
     /**
@@ -146,7 +199,33 @@ public class VerCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntOkPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkPActionPerformed
+        try {
+            // TODO add your handling code here:
+            boolean verSQL = verProdutosSQL();
+            boolean verLista = verProdutosLista();
 
+            if (verSQL && verLista){
+                //pergunta se quer continuar
+                int resposta = JOptionPane.showConfirmDialog(
+                    null,
+                    "Vai querer continuar vendo as categorias?",
+                    "Continuar?",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (resposta != JOptionPane.YES_OPTION) {
+                    TelaInicial telaInicial = new TelaInicial();
+
+                    this.setVisible(false);
+                    telaInicial.setVisible(true);
+                } else {
+                    
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(VerCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bntOkPActionPerformed
 
     /**
@@ -179,7 +258,11 @@ public class VerCategoria extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VerCategoria().setVisible(true);
+                try {
+                    new VerCategoria().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(VerCategoria.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
