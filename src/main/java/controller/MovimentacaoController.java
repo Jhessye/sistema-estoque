@@ -19,14 +19,14 @@ public class MovimentacaoController{
     public MovimentacaoController() {
     }
     //pensar 
-    public boolean inserirEntrada(Entrada entrada) throws SQLException{
+    public static boolean inserirEntrada(Entrada entrada) throws SQLException{
        
         MovimentacaoDAO daoM = new MovimentacaoDAO();
         
         return daoM.inserirEntrada(entrada);
     }
     
-    public boolean inserirEntrada(Saida saida) throws SQLException{
+    public static boolean inserirSaida(Saida saida) throws SQLException{
        
         MovimentacaoDAO daoM = new MovimentacaoDAO();
         
