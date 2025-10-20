@@ -71,6 +71,11 @@ public class TelaCategoria extends javax.swing.JFrame {
         bntExcluirC.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bntExcluirC.setForeground(new java.awt.Color(255, 255, 255));
         bntExcluirC.setText("EXCLUIR");
+        bntExcluirC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntExcluirCActionPerformed(evt);
+            }
+        });
 
         bntVerC.setBackground(new java.awt.Color(0, 0, 0));
         bntVerC.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -86,6 +91,11 @@ public class TelaCategoria extends javax.swing.JFrame {
         bntAlterarC.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bntAlterarC.setForeground(new java.awt.Color(255, 255, 255));
         bntAlterarC.setText("ALTERAR");
+        bntAlterarC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntAlterarCActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
@@ -163,16 +173,40 @@ public class TelaCategoria extends javax.swing.JFrame {
 
     private void bntVerCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVerCActionPerformed
         // TODO add your handling code here:
+        VerCategoria telaVerCategoria = null;
+        try {
+            telaVerCategoria = new VerCategoria();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        telaVerCategoria.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_bntVerCActionPerformed
 
     private void bntInserirCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntInserirCActionPerformed
         // TODO add your handling code here:
-        InserirCategoria telaInserirCategoria = null;
-        telaInserirCategoria = new InserirCategoria();
+        InserirCategoria telaInserirCategoria = new InserirCategoria();
         
         telaInserirCategoria.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_bntInserirCActionPerformed
+
+    private void bntExcluirCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirCActionPerformed
+        // TODO add your handling code here:
+        ExcluirCategoria telaExcluirCategoria = new ExcluirCategoria();
+        
+        telaExcluirCategoria.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bntExcluirCActionPerformed
+
+    private void bntAlterarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAlterarCActionPerformed
+        // TODO add your handling code here:
+        AtualizarCategoria telaAtualizarCategoria = new AtualizarCategoria();
+        
+        telaAtualizarCategoria.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bntAlterarCActionPerformed
 
     /**
      * @param args the command line arguments

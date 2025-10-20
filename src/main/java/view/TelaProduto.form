@@ -156,6 +156,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="ALTERAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntAlterarPActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bntExcluirP">
           <Properties>

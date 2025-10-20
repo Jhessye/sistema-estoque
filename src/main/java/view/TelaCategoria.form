@@ -143,6 +143,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="EXCLUIR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntExcluirCActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bntVerC">
           <Properties>
@@ -174,6 +177,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="ALTERAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntAlterarCActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>

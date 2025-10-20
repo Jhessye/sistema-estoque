@@ -137,6 +137,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="INSERIR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntInserirMActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bntAlterarM">
           <Properties>
@@ -151,6 +154,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="ALTERAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntAlterarMActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bntExcluirM">
           <Properties>
@@ -165,6 +171,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="EXCLUIR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntExcluirMActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bntVerM">
           <Properties>

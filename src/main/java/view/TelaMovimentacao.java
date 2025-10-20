@@ -64,16 +64,31 @@ public class TelaMovimentacao extends javax.swing.JFrame {
         bntInserirM.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bntInserirM.setForeground(new java.awt.Color(255, 255, 255));
         bntInserirM.setText("INSERIR");
+        bntInserirM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntInserirMActionPerformed(evt);
+            }
+        });
 
         bntAlterarM.setBackground(new java.awt.Color(0, 0, 0));
         bntAlterarM.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bntAlterarM.setForeground(new java.awt.Color(255, 255, 255));
         bntAlterarM.setText("ALTERAR");
+        bntAlterarM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntAlterarMActionPerformed(evt);
+            }
+        });
 
         bntExcluirM.setBackground(new java.awt.Color(0, 0, 0));
         bntExcluirM.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bntExcluirM.setForeground(new java.awt.Color(255, 255, 255));
         bntExcluirM.setText("EXCLUIR");
+        bntExcluirM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntExcluirMActionPerformed(evt);
+            }
+        });
 
         bntVerM.setBackground(new java.awt.Color(0, 0, 0));
         bntVerM.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -157,7 +172,35 @@ public class TelaMovimentacao extends javax.swing.JFrame {
 
     private void bntVerMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVerMActionPerformed
         // TODO add your handling code here:
+        VerMovimentacao telaVerMovimentacao = new VerMovimentacao();
+        
+        telaVerMovimentacao.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_bntVerMActionPerformed
+
+    private void bntInserirMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntInserirMActionPerformed
+        // TODO add your handling code here:
+        InserirMovimentacao telaInserirMovimentacao = new InserirMovimentacao();
+        
+        telaInserirMovimentacao.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bntInserirMActionPerformed
+
+    private void bntExcluirMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirMActionPerformed
+        // TODO add your handling code here:
+        ExcluirMovimentacao telaExcluirMovimentacao = new ExcluirMovimentacao();
+        
+        telaExcluirMovimentacao.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bntExcluirMActionPerformed
+
+    private void bntAlterarMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAlterarMActionPerformed
+        // TODO add your handling code here:
+        AtualizarMovimentacao telaAtualizarMovimentacao = new AtualizarMovimentacao();
+        
+        telaAtualizarMovimentacao.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bntAlterarMActionPerformed
 
     /**
      * @param args the command line arguments

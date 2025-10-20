@@ -74,6 +74,11 @@ public class TelaProduto extends javax.swing.JFrame {
         bntAlterarP.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         bntAlterarP.setForeground(new java.awt.Color(255, 255, 255));
         bntAlterarP.setText("ALTERAR");
+        bntAlterarP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntAlterarPActionPerformed(evt);
+            }
+        });
 
         bntExcluirP.setBackground(new java.awt.Color(0, 0, 0));
         bntExcluirP.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -195,12 +200,19 @@ public class TelaProduto extends javax.swing.JFrame {
 
     private void bntExcluirPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntExcluirPActionPerformed
         // TODO add your handling code here:
-        ExcluirProduto telaExcluirProduto = null;
-        telaExcluirProduto = new ExcluirProduto();
+        ExcluirProduto telaExcluirProduto = new ExcluirProduto();
         
         telaExcluirProduto.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_bntExcluirPActionPerformed
+
+    private void bntAlterarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAlterarPActionPerformed
+        // TODO add your handling code here:
+        AtualizarProduto telaAtualizarProduto = new AtualizarProduto();
+        
+        telaAtualizarProduto.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_bntAlterarPActionPerformed
 
     /**
      * @param args the command line arguments
