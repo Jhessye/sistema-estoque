@@ -4,9 +4,15 @@
  */
 package view;
 
+import controller.MovimentacaoController;
+import controller.ProdutoController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+import model.Movimentacao;
+import model.Produto;
 import principal.TelaInicial;
 
 /**
@@ -20,12 +26,99 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
      */
     public AtualizarMovimentacao() {
         initComponents();
+        carregarListaMovimentacoes();
+        criarGrupo();
+        listaProdutoM.setVisible(false);
         
         this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
         this.setResizable(false); // ← Impede redimensionamento
         this.setTitle("Atualizar Movimentacao");  // Título personalizado
     }
 
+    public void criarGrupo(){
+        ButtonGroup grupoTipo = new ButtonGroup();
+        grupoTipo.add(botaoProdutoAlterarMovimentacao);
+        grupoTipo.add(botaoDataAlterarMovimentacao);
+        grupoTipo.add(botaoQuantidadeAlterarMovimentacao);
+        
+        botaoProdutoAlterarMovimentacao.setSelected(true);
+    }
+    
+    public void carregarListaMovimentacoes() {
+        try {
+            listaAlterarMovimentacaoM.removeAllItems();
+            for (Movimentacao movimentacao : MovimentacaoController.mostrarMovimentacoes("Lista")) {
+                listaAlterarMovimentacaoM.addItem(String.valueOf(movimentacao.getIdMovimentacao()));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar categorias: " + ex.getMessage());
+        }
+    }
+    
+    public boolean atualizarMovimentacao() throws SQLException{
+        String novoValor = textNovoValorM.getText().trim();
+        
+        if (!botaoProdutoAlterarMovimentacao.isSelected() || !botaoDataAlterarMovimentacao.isSelected() || !botaoQuantidadeAlterarMovimentacao.isSelected()) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            return false;
+        }
+
+        try {
+            
+            Movimentacao movimentacaoSelecionada = MovimentacaoController.mostrarMovimentacoes("Lista")
+                    .get(listaAlterarMovimentacaoM.getSelectedIndex());
+            
+            if(botaoProdutoAlterarMovimentacao.isSelected()){
+                Produto produtoSelecionado = ProdutoController.mostrarPordutos("Lista")
+                    .get(listaProdutoM.getSelectedIndex());
+                
+                novoValor = "";
+                
+                movimentacaoSelecionada.setProduto(produtoSelecionado);
+                MovimentacaoController.alterarMovimentacao(movimentacaoSelecionada, "id_produto");
+                
+            }else if(botaoDataAlterarMovimentacao.isSelected()){
+                
+                if (novoValor==null) {
+                    JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+                    return false;
+                }
+                
+                movimentacaoSelecionada.setData(novoValor);
+                MovimentacaoController.alterarMovimentacao(movimentacaoSelecionada, "data");
+                
+            }else if(botaoQuantidadeAlterarMovimentacao.isSelected()){
+                
+                if (novoValor==null) {
+                    JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+                    return false;
+                }
+                
+                int novaQuantidade = movimentacaoSelecionada.getProduto().getQuantidade();
+                movimentacaoSelecionada.getProduto().setQuantidade(novaQuantidade);
+            }
+            
+            return true;
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Digite valores válidos!");
+            return false;
+        }
+    }
+    
+    public void carregarListaProdutos() {
+        try {
+            listaProdutoM.removeAllItems();
+            for (Produto produto : ProdutoController.mostrarPordutos("Lista")) {
+                listaProdutoM.addItem(produto.getNome());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar categorias: " + ex.getMessage());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,11 +134,12 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         listaAlterarMovimentacaoM = new javax.swing.JComboBox<>();
         textNovoValorM = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        botaoMarcaAlterarMovimentacao = new javax.swing.JRadioButton();
-        botaoTipoAlterarMovimentacao = new javax.swing.JRadioButton();
+        botaoDataAlterarMovimentacao = new javax.swing.JRadioButton();
+        botaoProdutoAlterarMovimentacao = new javax.swing.JRadioButton();
         botaoQuantidadeAlterarMovimentacao = new javax.swing.JRadioButton();
         bntOkM = new javax.swing.JButton();
         bntVoltarM = new javax.swing.JButton();
+        listaProdutoM = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,7 +151,7 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Movimentação");
+        jLabel2.setText("Movimentação (ID)");
 
         listaAlterarMovimentacaoM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaAlterarMovimentacaoM.addActionListener(new java.awt.event.ActionListener() {
@@ -76,12 +170,12 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Novo Valor");
 
-        botaoMarcaAlterarMovimentacao.setText("Marca");
+        botaoDataAlterarMovimentacao.setText("Data");
 
-        botaoTipoAlterarMovimentacao.setText("Tipo");
-        botaoTipoAlterarMovimentacao.addActionListener(new java.awt.event.ActionListener() {
+        botaoProdutoAlterarMovimentacao.setText("Produto");
+        botaoProdutoAlterarMovimentacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoTipoAlterarMovimentacaoActionPerformed(evt);
+                botaoProdutoAlterarMovimentacaoActionPerformed(evt);
             }
         });
 
@@ -112,10 +206,23 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
             }
         });
 
+        listaProdutoM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaProdutoM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listaProdutoMActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(bntOkM, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(208, 208, 208)
+                .addComponent(bntVoltarM, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -125,26 +232,18 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(156, 156, 156)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(listaAlterarMovimentacaoM, 0, 589, Short.MAX_VALUE)
-                            .addComponent(textNovoValorM)
+                            .addComponent(listaAlterarMovimentacaoM, 0, 708, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
-                                    .addComponent(botaoMarcaAlterarMovimentacao)
-                                    .addComponent(botaoTipoAlterarMovimentacao)
+                                    .addComponent(botaoDataAlterarMovimentacao)
+                                    .addComponent(botaoProdutoAlterarMovimentacao)
                                     .addComponent(botaoQuantidadeAlterarMovimentacao)
                                     .addComponent(jLabel6))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(211, 211, 211))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(bntOkM, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(435, 435, 435))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(bntVoltarM, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(listaProdutoM, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textNovoValorM))))
+                .addGap(92, 92, 92))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,24 +255,25 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listaAlterarMovimentacaoM, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botaoTipoAlterarMovimentacao)
+                .addComponent(botaoProdutoAlterarMovimentacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoMarcaAlterarMovimentacao)
+                .addComponent(botaoDataAlterarMovimentacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoQuantidadeAlterarMovimentacao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(17, 17, 17)
                 .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textNovoValorM, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(listaProdutoM, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                        .addComponent(bntOkM, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(116, 116, 116))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textNovoValorM, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bntVoltarM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))))
+                        .addGap(35, 35, 35))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(bntOkM, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -202,18 +302,58 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textNovoValorMActionPerformed
 
-    private void botaoTipoAlterarMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTipoAlterarMovimentacaoActionPerformed
+    private void botaoProdutoAlterarMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProdutoAlterarMovimentacaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botaoTipoAlterarMovimentacaoActionPerformed
+        if(botaoProdutoAlterarMovimentacao.isSelected()){
+            
+            carregarListaProdutos();
+            textNovoValorM.setVisible(false);
+            listaProdutoM.setVisible(true);
+            
+        }
+    }//GEN-LAST:event_botaoProdutoAlterarMovimentacaoActionPerformed
 
     private void botaoQuantidadeAlterarMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoQuantidadeAlterarMovimentacaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoQuantidadeAlterarMovimentacaoActionPerformed
 
     private void bntOkMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkMActionPerformed
+        try {
+            // TODO add your handling code here:
+            boolean atualizar = atualizarMovimentacao();
+            
+            if (atualizar){
+                //pergunta se quer continuar
+                int resposta = JOptionPane.showConfirmDialog(
+                    null, 
+                    "Movimentacao Atualizada com sucesso!\nDeseja atualizar outra movimentacao?",
+                    "Continuar?",
+                    JOptionPane.YES_NO_OPTION
+                );
 
+                if (resposta == JOptionPane.YES_OPTION) {
+                    criarGrupo();
+                    limparCampos(); //limpar os campos
+                } else {
+                    TelaInicial telaInicial = new TelaInicial();
+                    
+                    limparCampos(); //limpar os campos
+                    this.setVisible(false);
+                    telaInicial.setVisible(true);
+                }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bntOkMActionPerformed
 
+    public void limparCampos(){
+        textNovoValorM.setText("");
+        listaAlterarMovimentacaoM.setSelectedIndex(0);
+        listaProdutoM.setSelectedIndex(0);
+    }
+    
     private void bntVoltarMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarMActionPerformed
         TelaInicial telaInicial = null;
         
@@ -227,6 +367,11 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         telaInicial.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_bntVoltarMActionPerformed
+
+    private void listaProdutoMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaProdutoMActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_listaProdutoMActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,14 +411,15 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntOkM;
     private javax.swing.JButton bntVoltarM;
-    private javax.swing.JRadioButton botaoMarcaAlterarMovimentacao;
+    private javax.swing.JRadioButton botaoDataAlterarMovimentacao;
+    private javax.swing.JRadioButton botaoProdutoAlterarMovimentacao;
     private javax.swing.JRadioButton botaoQuantidadeAlterarMovimentacao;
-    private javax.swing.JRadioButton botaoTipoAlterarMovimentacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox<String> listaAlterarMovimentacaoM;
+    private javax.swing.JComboBox<String> listaProdutoM;
     private javax.swing.JTextField textNovoValorM;
     // End of variables declaration//GEN-END:variables
 }

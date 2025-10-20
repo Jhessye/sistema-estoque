@@ -253,6 +253,7 @@ public class AtualizarCategoria extends javax.swing.JFrame {
                 );
 
                 if (resposta == JOptionPane.YES_OPTION) {
+                    criarGrupo();
                     limparCampos(); //limpar os campos
                 } else {
                     TelaInicial telaInicial = new TelaInicial();
