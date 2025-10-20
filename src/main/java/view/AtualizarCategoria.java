@@ -191,6 +191,17 @@ public class AtualizarCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_textNovoValorCategoriaActionPerformed
 
     private void bntVoltarMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarMActionPerformed
+        TelaInicial telaInicial = null;
+        
+        try {
+            telaInicial = new TelaInicial();
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+
+        telaInicial.setVisible(true);
+        this.setVisible(false);
 
     }//GEN-LAST:event_bntVoltarMActionPerformed
 
