@@ -20,6 +20,10 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
      */
     public AtualizarMovimentacao() {
         initComponents();
+        
+        this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
+        this.setResizable(false); // ← Impede redimensionamento
+        this.setTitle("Atualizar Movimentacao");  // Título personalizado
     }
 
     /**

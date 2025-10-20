@@ -8,6 +8,7 @@ import controller.CategoriaController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import model.Categoria;
 import principal.TelaInicial;
@@ -24,6 +25,19 @@ public class AtualizarCategoria extends javax.swing.JFrame {
     public AtualizarCategoria() {
         initComponents();
         carregarListaCategorias();
+        criarGrupo();
+        
+        this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
+        this.setResizable(false); // ← Impede redimensionamento
+        this.setTitle("Atualizar Categoria");  // Título personalizado
+    }
+    
+    public void criarGrupo(){
+        ButtonGroup grupoTipo = new ButtonGroup();
+        grupoTipo.add(botaoNomeCategoria);
+        grupoTipo.add(botaoDescricaoCategoria);
+        
+        botaoNomeCategoria.setSelected(true);
     }
 
     public void carregarListaCategorias() {
@@ -36,6 +50,38 @@ public class AtualizarCategoria extends javax.swing.JFrame {
             Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Erro ao carregar categorias: " + ex.getMessage());
         }
+    }
+    
+    public boolean atualizarCategoria() throws SQLException{
+        
+        String novoValor = textNovoValorCategoria.getText().trim();
+        
+        if (novoValor == null && (!botaoNomeCategoria.isSelected() || !botaoDescricaoCategoria.isSelected())) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            return false;
+        }
+
+        try {
+            
+            Categoria categoriaSelecionada = CategoriaController.mostrarCategorias("Lista")
+                    .get(listaAtualizarCategoriaM.getSelectedIndex());
+            
+            if(botaoNomeCategoria.isSelected()){
+                categoriaSelecionada.setNome(novoValor);
+                CategoriaController.alterarCategoria(categoriaSelecionada, "nome");
+                
+            }else if(botaoDescricaoCategoria.isSelected()){
+                categoriaSelecionada.setDescricao(novoValor);
+                CategoriaController.alterarCategoria(categoriaSelecionada, "descricao");
+            } 
+            
+            return true;
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Digite valores válidos!");
+            return false;
+        }
+        
     }
     
     /**
@@ -54,10 +100,10 @@ public class AtualizarCategoria extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         botaoDescricaoCategoria = new javax.swing.JRadioButton();
         botaoNomeCategoria = new javax.swing.JRadioButton();
-        textNovoValorCategoria = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         bntVoltarM = new javax.swing.JButton();
+        textNovoValorCategoria = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,12 +144,6 @@ public class AtualizarCategoria extends javax.swing.JFrame {
             }
         });
 
-        textNovoValorCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textNovoValorCategoriaActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Categoria");
@@ -122,6 +162,12 @@ public class AtualizarCategoria extends javax.swing.JFrame {
             }
         });
 
+        textNovoValorCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textNovoValorCategoriaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -133,24 +179,22 @@ public class AtualizarCategoria extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(184, 184, 184)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(botaoDescricaoCategoria)
-                                .addComponent(listaAtualizarCategoriaM, 0, 589, Short.MAX_VALUE)
-                                .addComponent(botaoNomeCategoria)
-                                .addComponent(textNovoValorCategoria)))))
+                            .addComponent(botaoDescricaoCategoria)
+                            .addComponent(listaAtualizarCategoriaM, 0, 589, Short.MAX_VALUE)
+                            .addComponent(botaoNomeCategoria)
+                            .addComponent(textNovoValorCategoria))))
                 .addContainerGap(183, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(bntOkP, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(418, 418, 418))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(bntVoltarM, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42))))
+                .addComponent(bntOkP, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(418, 418, 418))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bntVoltarM, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,9 +211,9 @@ public class AtualizarCategoria extends javax.swing.JFrame {
                 .addComponent(botaoDescricaoCategoria)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addGap(3, 3, 3)
-                .addComponent(textNovoValorCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textNovoValorCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(bntOkP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64)
                 .addComponent(bntVoltarM, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,9 +239,40 @@ public class AtualizarCategoria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntOkPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkPActionPerformed
- 
+        try {
+            // TODO add your handling code here:
+            boolean atualizar = atualizarCategoria();
+            
+            if (atualizar){
+                //pergunta se quer continuar
+                int resposta = JOptionPane.showConfirmDialog(
+                    null, 
+                    "Categoria Atualizada com sucesso!\nDeseja atualizar outra categoria?",
+                    "Continuar?",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    limparCampos(); //limpar os campos
+                } else {
+                    TelaInicial telaInicial = new TelaInicial();
+                    
+                    limparCampos(); //limpar os campos
+                    this.setVisible(false);
+                    telaInicial.setVisible(true);
+                }
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bntOkPActionPerformed
 
+    public void limparCampos(){
+        textNovoValorCategoria.setText("");
+        listaAtualizarCategoriaM.setSelectedIndex(0);
+    }
+    
     private void botaoDescricaoCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDescricaoCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoDescricaoCategoriaActionPerformed
@@ -205,10 +280,6 @@ public class AtualizarCategoria extends javax.swing.JFrame {
     private void botaoNomeCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNomeCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoNomeCategoriaActionPerformed
-
-    private void textNovoValorCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNovoValorCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textNovoValorCategoriaActionPerformed
 
     private void bntVoltarMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarMActionPerformed
         TelaInicial telaInicial = null;
@@ -228,6 +299,10 @@ public class AtualizarCategoria extends javax.swing.JFrame {
     private void listaAtualizarCategoriaMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listaAtualizarCategoriaMActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_listaAtualizarCategoriaMActionPerformed
+
+    private void textNovoValorCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNovoValorCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textNovoValorCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
