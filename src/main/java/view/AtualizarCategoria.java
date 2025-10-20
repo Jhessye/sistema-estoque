@@ -4,9 +4,12 @@
  */
 package view;
 
+import controller.CategoriaController;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Categoria;
 import principal.TelaInicial;
 
 /**
@@ -20,8 +23,21 @@ public class AtualizarCategoria extends javax.swing.JFrame {
      */
     public AtualizarCategoria() {
         initComponents();
+        carregarListaCategorias();
     }
 
+    public void carregarListaCategorias() {
+        try {
+            listaAtualizarCategoriaM.removeAllItems();
+            for (Categoria categoria : CategoriaController.mostrarCategorias("Lista")) {
+                listaAtualizarCategoriaM.addItem(categoria.getNome());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar categorias: " + ex.getMessage());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
