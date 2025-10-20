@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import view.TelaCategoria;
 import view.TelaMovimentacao;
 import view.TelaProduto;
-import view.TelaRelatorio;
+import reports.Relatorios;
 
 
 /**
@@ -265,7 +265,7 @@ Connection conexao = null;
 
     private void bntRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRelatorioActionPerformed
         // TODO add your handling code here:
-        TelaRelatorio telaRelatorio = new TelaRelatorio();
+        Relatorios telaRelatorio = new Relatorios();
         
         telaRelatorio.setVisible(true);
         this.setVisible(false);
