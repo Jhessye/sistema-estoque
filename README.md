@@ -20,12 +20,12 @@ README.MD explicando como executar o projeto no ambiente proposto (LINUX)
 ## 🗂️ Estrutura do Projeto
 
 ### 🛢️ Banco de Dados
-- **inserts/**
-  - [`create.sql`](Inserts/create.sql): Script de **criação das tabelas**.
-  - [`insert.sql`](Inserts/insert.sql): Script de **inserção de dados fictícios**.
-- **postgres-init/**  
+- **[inserts/](banco_de_dados/Inserts)**
+  - [`create.sql`](banco_de_dados/Inserts/create.sql): Script de **criação das tabelas**.
+  - [`insert.sql`](banco_de_dados/Inserts/insert.sql): Script de **inserção de dados fictícios**.
+- **[postgres-init/](banco_de_dados/postgres-init)**  
   - Script unificado de **inicialização do banco**, contendo criação e inserção de dados.
-- **target/**  
+- **[target/](banco_de_dados/target)**  
   - Diretório utilizado pelo PostgreSQL durante a execução do container.
 
 ---
@@ -36,7 +36,7 @@ README.MD explicando como executar o projeto no ambiente proposto (LINUX)
   - **Diagrama Relacional** do banco de dados.  
   - **Diagrama de Classes** do sistema.
   
-  As principais entidades representadas são:
+  As entidades representadas são:
   - `CATEGORIA`
   - `PRODUTO`
   - `MOVIMENTACOES`
@@ -79,3 +79,5 @@ README.MD explicando como executar o projeto no ambiente proposto (LINUX)
 - ✉️ [E-mail](mailto:ljhessye@gmail.com)
 
 ---
+
+
