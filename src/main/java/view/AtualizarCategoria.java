@@ -272,6 +272,7 @@ public class AtualizarCategoria extends javax.swing.JFrame {
     public void limparCampos(){
         textNovoValorCategoria.setText("");
         listaAtualizarCategoriaM.setSelectedIndex(0);
+        criarGrupo();
     }
     
     private void botaoDescricaoCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDescricaoCategoriaActionPerformed

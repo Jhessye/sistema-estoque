@@ -48,7 +48,7 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         try {
             listaAlterarMovimentacaoM.removeAllItems();
             for (Movimentacao movimentacao : MovimentacaoController.mostrarMovimentacoes("Lista")) {
-                listaAlterarMovimentacaoM.addItem(String.valueOf(movimentacao.getIdMovimentacao()));
+                listaAlterarMovimentacaoM.addItem(String.valueOf(movimentacao.getIdMovimentacao()+" | "+movimentacao.getData()+" | "+movimentacao.getProduto()));
             }
         } catch (SQLException ex) {
             Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,7 +151,7 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Movimentação (ID)");
+        jLabel2.setText("Movimentação");
 
         listaAlterarMovimentacaoM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         listaAlterarMovimentacaoM.addActionListener(new java.awt.event.ActionListener() {
@@ -352,6 +352,7 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         textNovoValorM.setText("");
         listaAlterarMovimentacaoM.setSelectedIndex(0);
         listaProdutoM.setSelectedIndex(0);
+        criarGrupo();
     }
     
     private void bntVoltarMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarMActionPerformed
