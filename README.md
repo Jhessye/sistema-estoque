@@ -1,4 +1,4 @@
-# 🧰 Sistema de Gerenciamento de Estoque
+# Sistema de Gerenciamento de Estoque
 
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
@@ -12,14 +12,14 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 
 ---
 
-## ⚙️ Executando o projeto no Linux
+## Executando o projeto no Linux
 
 
 ---
 
-## 🗂️ Estrutura do Projeto
+## Estrutura do Projeto
 
-### 🛢️ Banco de Dados
+### Banco de Dados
 - **[inserts/](banco_de_dados/Inserts)**
   - [`create.sql`](banco_de_dados/Inserts/create.sql): Script de **criação das tabelas**.
   - [`insert.sql`](banco_de_dados/Inserts/insert.sql): Script de **inserção de dados fictícios**.
@@ -30,7 +30,7 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 
 ---
 
-### 🧩 Diagramas
+### Diagramas
 - **[diagrams/](diagrams)**  
   Contém:
   - **Diagrama Relacional** do banco de dados.  
@@ -43,7 +43,7 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 
 ---
 
-### 💻 Código-Fonte
+### Código-Fonte
 - **[src/main/java/](src/main/java)**  
   Estrutura principal do projeto Java:
 
@@ -60,7 +60,7 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 
 ---
 
-## 📚 Bibliotecas Utilizadas
+## Bibliotecas Utilizadas
 
 - **`java.util.LinkedList`**  
   Utilizada para armazenar e manipular listas dinâmicas de dados de forma eficiente.
@@ -73,11 +73,12 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 
 ---
 
-## 📬 Contato
+## Contato
 
-- 💼 [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
-- ✉️ [E-mail](mailto:ljhessye@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
+- [E-mail](mailto:ljhessye@gmail.com)
 
 ---
+
 
 
