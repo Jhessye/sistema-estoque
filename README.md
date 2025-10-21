@@ -78,7 +78,6 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
 
----
 
 
 
