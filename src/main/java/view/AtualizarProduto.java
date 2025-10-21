@@ -365,6 +365,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
     private void botaoNomeAlterarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNomeAlterarProdutoActionPerformed
         if (!textNovoValorP.isVisible()){
             textNovoValorP.setVisible(true);
+            listaAlterarCategoriaP.setVisible(false);
         }
     }//GEN-LAST:event_botaoNomeAlterarProdutoActionPerformed
 
@@ -372,6 +373,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!textNovoValorP.isVisible()){
             textNovoValorP.setVisible(true);
+            listaAlterarCategoriaP.setVisible(false);
         }
     }//GEN-LAST:event_botaoDescricaoAlterarProdutoActionPerformed
 
@@ -430,6 +432,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!textNovoValorP.isVisible()){
             textNovoValorP.setVisible(true);
+            listaAlterarCategoriaP.setVisible(false);
         }
     }//GEN-LAST:event_botaoMarcaAlterarProdutoActionPerformed
 
@@ -437,6 +440,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!textNovoValorP.isVisible()){
             textNovoValorP.setVisible(true);
+            listaAlterarCategoriaP.setVisible(false);
         }
     }//GEN-LAST:event_botaoPrecoAlterarProdutoActionPerformed
 

@@ -183,6 +183,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Data"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoDataAlterarMovimentacaoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="botaoProdutoAlterarMovimentacao">
           <Properties>

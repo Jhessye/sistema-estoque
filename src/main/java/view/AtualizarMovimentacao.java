@@ -41,7 +41,7 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         grupoTipo.add(botaoDataAlterarMovimentacao);
         grupoTipo.add(botaoQuantidadeAlterarMovimentacao);
         
-        botaoProdutoAlterarMovimentacao.setSelected(true);
+        botaoDataAlterarMovimentacao.setSelected(true);
     }
     
     public void carregarListaMovimentacoes() {
@@ -171,6 +171,11 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         jLabel6.setText("Novo Valor");
 
         botaoDataAlterarMovimentacao.setText("Data");
+        botaoDataAlterarMovimentacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoDataAlterarMovimentacaoActionPerformed(evt);
+            }
+        });
 
         botaoProdutoAlterarMovimentacao.setText("Produto");
         botaoProdutoAlterarMovimentacao.addActionListener(new java.awt.event.ActionListener() {
@@ -315,6 +320,10 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
 
     private void botaoQuantidadeAlterarMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoQuantidadeAlterarMovimentacaoActionPerformed
         // TODO add your handling code here:
+        if (!textNovoValorM.isVisible()){
+            textNovoValorM.setVisible(true);
+            listaProdutoM.setVisible(false);
+        }
     }//GEN-LAST:event_botaoQuantidadeAlterarMovimentacaoActionPerformed
 
     private void bntOkMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkMActionPerformed
@@ -373,6 +382,14 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_listaProdutoMActionPerformed
+
+    private void botaoDataAlterarMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDataAlterarMovimentacaoActionPerformed
+        // TODO add your handling code here:
+        if (!textNovoValorM.isVisible()){
+            textNovoValorM.setVisible(true);
+            listaProdutoM.setVisible(false);
+        }
+    }//GEN-LAST:event_botaoDataAlterarMovimentacaoActionPerformed
 
     /**
      * @param args the command line arguments
