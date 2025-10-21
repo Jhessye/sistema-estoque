@@ -21,7 +21,7 @@ public class RelatorioDAO {
 
     public List<Object[]> relatorioMovimentacaoPorProduto() {
         List<Object[]> resultados = new LinkedList<>(); //não tem tipo definido
-        String caminho = "sql/relatorioMovimentacaoPorProduto.sql";
+        String caminho = "/sql/relatorioMovimentacoesPorProduto.sql";
 
         try (Connection con = ModuloConexao.conector()) {
             String sql = lerArquivoSQL(caminho);
@@ -48,7 +48,7 @@ public class RelatorioDAO {
     
     public List<Object[]> relatorioMovimentacoesCategoriaProduto() {
         List<Object[]> resultados = new LinkedList<>(); //não tem tipo definido
-        String caminho = "sql/relatorioMovimentacoesCategoriaProduto.sql";
+        String caminho = "./sql/relatorioMovimentacoesCategoriaProduto.sql";
 
         try (Connection con = ModuloConexao.conector()) {
             String sql = lerArquivoSQL(caminho);

@@ -13,7 +13,7 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 ---
 
 ## ⚙️ Executando o projeto no Linux
-README.MD explicando como executar o projeto no ambiente proposto (LINUX)
+
 
 ---
 

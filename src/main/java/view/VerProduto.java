@@ -215,7 +215,7 @@ public class VerProduto extends javax.swing.JFrame {
 
             DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
 
-            tabelaPDB.setModel(modelo);
+            tabelaPLista.setModel(modelo);
 
             // Preenche com dados da linkedlist
             for (Produto p : ProdutoController.mostrarPordutos("Lista")){

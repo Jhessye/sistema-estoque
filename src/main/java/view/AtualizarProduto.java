@@ -28,6 +28,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
         initComponents();
         preencherListaProduto();
         criarGrupo();
+        listaAlterarCategoriaP.setVisible(false);
         
         this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
         this.setResizable(false); // ← Impede redimensionamento

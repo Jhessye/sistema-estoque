@@ -41,7 +41,7 @@ public class VerCategoria extends javax.swing.JFrame {
             tabelaVerCategoriasDB.setModel(modelo);
 
             // Preenche com dados da Lista
-            for (Categoria c : CategoriaController.mostrarCategorias("Lista")){
+            for (Categoria c : CategoriaController.mostrarCategorias("Banco de Dados")){
                 Object[] linha = {c.getIdCategoria(),c.getNome(),c.getDescricao()};
                 modelo.addRow(linha);
             }
@@ -57,7 +57,7 @@ public class VerCategoria extends javax.swing.JFrame {
 
             DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
 
-            tabelaVerCategoriasDB.setModel(modelo);
+            tabelaVerCategoriasLista.setModel(modelo);
 
             // Preenche com dados do Banco de Dados
             for (Categoria c : CategoriaController.mostrarCategorias("Lista")){
