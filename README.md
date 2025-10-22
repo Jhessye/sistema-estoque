@@ -14,6 +14,27 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 
 ## Executando o projeto no Linux
 
+1. Inicie o terminal (ctrl + alt + t) e execute o seguinte comando para clonar o repositório do Github e entrar dentro da pasta: 
+```
+git clone https://github.com/Jhessye/sistema-estoque.git && cd sistema-estoque
+```
+2.  Inicie o docker compose do banco de dados Postgres em modo detached com o comando:
+```
+docker compose -f banco_de_dados/docker-compose.yaml up -d
+```
+3. Vá até a pasta "run":
+```
+cd run
+```
+4. Dê permissão de execução para o arquivo usando chmod:
+```
+chmod +x Iniciar_Linux.sh
+```
+5. Usando o explorador de arquivo gráfico, vá até o script shell e execute, ou execute ele diretamente do terminal com:
+```
+./Iniciar_Linux.sh
+```
+Pronto! O programa irá aparecer na tela.
 
 ---
 
@@ -77,6 +98,7 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
