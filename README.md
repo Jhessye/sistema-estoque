@@ -42,10 +42,16 @@ Pronto! O programa irá aparecer na tela.
 
 ## Executando o projeto no Windows
 
-1. Certifique-se de que o Docker Desktop está instalado e em execução.
+1. Abra o **Prompt de Comando** ou **PowerShell** e execute o seguinte comando para clonar o repositório e entrar na pasta:
 
-2. Execute o arquivo Iniciar_Windows.bat localizado dentro da pasta run.
-Esse script iniciará automaticamente o banco de dados e abrirá
+   ```
+   git clone https://github.com/Jhessye/sistema-estoque.git && cd sistema-estoque
+   ```
+
+2. Certifique-se de que o **Docker Desktop** está instalado e em execução.
+
+3. Execute o arquivo **Iniciar_Windows.bat** localizado dentro da pasta `run`.
+   Esse script iniciará automaticamente o banco de dados e abrirá o sistema.
 
 ---
 
@@ -122,6 +128,7 @@ Esse script iniciará automaticamente o banco de dados e abrirá
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
