@@ -10,7 +10,7 @@ Ele permite o **controle de categorias, produtos e movimentações** de itens, o
 
 O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco de dados PostgreSQL** rodando em **Docker**.
 
-> **Pré-requisito**: é necessário ter o Docker instalado e em execução na máquina para que o banco de dados funcione corretamente.
+> **Pré-requisito**: é necessário ter o Docker e o git instalado e em execução na máquina para que o banco de dados funcione corretamente.
 
 ---
 
@@ -142,6 +142,7 @@ Pronto! O sistema abrirá na tela e estará pronto para uso.
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
