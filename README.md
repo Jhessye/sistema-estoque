@@ -10,6 +10,8 @@ Ele permite o **controle de categorias, produtos e movimentações** de itens, o
 
 O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco de dados PostgreSQL** rodando em **Docker**.
 
+- **Pré-requisito**: é necessário ter o Docker instalado e em execução na máquina para que o banco de dados funcione corretamente.
+
 ---
 
 ## Executando o projeto no Linux
@@ -38,6 +40,15 @@ Pronto! O programa irá aparecer na tela.
 
 ---
 
+## Executando o projeto no Windows
+
+1. Certifique-se de que o Docker Desktop está instalado e em execução.
+
+2. Execute o arquivo Iniciar_Windows.bat localizado dentro da pasta run.
+Esse script iniciará automaticamente o banco de dados e abrirá
+
+---
+
 ## Estrutura do Projeto
 
 ### Banco de Dados
@@ -62,6 +73,19 @@ Pronto! O programa irá aparecer na tela.
   - `PRODUTO`
   - `MOVIMENTACOES`
 
+---
+
+### Run
+
+- Contém os executáveis do sistema, prontos para uso após a compilação. Essa pasta permite iniciar o sistema rapidamente, sem precisar abrir o NetBeans.
+
+  | Arquivo                                            | Descrição                                                                                       |
+  | -------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+  | **Iniciar_Linux.sh**                               | Script de inicialização para Linux. Executa o `.jar` e conecta automaticamente ao banco Docker. |
+  | **Iniciar_Windows.bat**                            | Script de inicialização para Windows, responsável por abrir o sistema de forma automática.      |
+  | **projetoEstoque-1.0.0-jar-with-dependencies.jar** | Arquivo `.jar` compilado com todas as dependências necessárias para execução.                   |
+
+- Essa pasta serve como ponto central para executar o sistema em qualquer ambiente, desde que o Docker esteja instalado e ativo.
 ---
 
 ### Código-Fonte
@@ -98,6 +122,7 @@ Pronto! O programa irá aparecer na tela.
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
