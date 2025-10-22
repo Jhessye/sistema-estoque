@@ -65,7 +65,7 @@ Pronto! O programa irá aparecer na tela.
 5. Execute o arquivo **Iniciar_Windows.bat**.
    Esse script iniciará automaticamente o sistema e conectará ao banco de dados que está rodando em Docker.
 
-Pronto! O sistema abrirá na tela e estará pronto para uso.
+Pronto! O programa irá aparecer na tela.
 
 ---
 
@@ -142,6 +142,7 @@ Pronto! O sistema abrirá na tela e estará pronto para uso.
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
