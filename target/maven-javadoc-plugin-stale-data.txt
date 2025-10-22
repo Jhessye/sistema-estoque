@@ -1,0 +1,58 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+-classpath
+'C:/Users/Jhessye Lorrayne/.m2/repository/org/postgresql/postgresql/42.6.0/postgresql-42.6.0.jar'
+-encoding
+'UTF-8'
+-protected
+--release
+21
+-sourcepath
+'C:/Users/Jhessye Lorrayne/Documents/NetBeansProjects/projetoEstoque/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/Jhessye Lorrayne/Documents/NetBeansProjects/projetoEstoque/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'projetoEstoque 1.0 API'
+-use
+-version
+-windowtitle
+'projetoEstoque 1.0 API'
+conexion
+controller
+model
+persisted
+principal
+reports
+view
+C:\Users\Jhessye Lorrayne\.m2\repository\org\postgresql\postgresql\42.6.0\postgresql-42.6.0.jar = 1756852734264
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\src\main\java = 1760317981410
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\allclasses-index.html = 1761078354082
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\allpackages-index.html = 1761078354086
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\copy.svg = 1761078354161
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\element-list = 1761078353496
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\help-doc.html = 1761078354152
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\index-all.html = 1761078354135
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\index.html = 1761078353899
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\link.svg = 1761078354163
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\member-search-index.js = 1761078354094
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\module-search-index.js = 1761078354088
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\overview-summary.html = 1761078354143
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\overview-tree.html = 1761078353893
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\package-search-index.js = 1761078354089
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\script.js = 1761078354160
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\search-page.js = 1761078354172
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\search.html = 1761078354139
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\search.js = 1761078354169
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\serialized-form.html = 1761078353677
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\stylesheet.css = 1761078354157
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\tag-search-index.js = 1761078354095
+C:\Users\Jhessye Lorrayne\Documents\NetBeansProjects\projetoEstoque\target\reports\apidocs\type-search-index.js = 1761078354091
