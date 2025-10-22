@@ -10,9 +10,12 @@ Ele permite o **controle de categorias, produtos e movimentações** de itens, o
 
 O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco de dados PostgreSQL** rodando em **Docker**.
 
+> **Pré-requisito**: é necessário ter o Docker e o git instalado e em execução na máquina para que o banco de dados funcione corretamente.
+
 ---
 
 ## Executando o projeto no Linux
+
 1. Inicie o terminal (ctrl + alt + t) e execute o seguinte comando para clonar o repositório do Github e entrar dentro da pasta: 
 ```
 git clone https://github.com/Jhessye/sistema-estoque.git && cd sistema-estoque
@@ -33,6 +36,34 @@ chmod +x Iniciar_Linux.sh
 ```
 ./Iniciar_Linux.sh
 ```
+Pronto! O programa irá aparecer na tela.
+
+---
+
+## Executando o projeto no Windows
+
+1. Abra o **Prompt de Comando** ou **PowerShell** e execute o seguinte comando para clonar o repositório e entrar na pasta:
+
+   ```
+   git clone https://github.com/Jhessye/sistema-estoque.git && cd sistema-estoque
+   ```
+
+2. Certifique-se de que o **Docker Desktop** está instalado e em execução.
+
+3. Inicie o banco de dados PostgreSQL via Docker Compose (modo *detached*):
+
+   ```
+   docker compose -f banco_de_dados/docker-compose.yaml up -d
+   ```
+
+4. Acesse a pasta `run`:
+
+   ```
+   cd run
+   ```
+
+5. Execute o arquivo **Iniciar_Windows.bat**.
+   Esse script iniciará automaticamente o sistema e conectará ao banco de dados que está rodando em Docker.
 
 Pronto! O programa irá aparecer na tela.
 
@@ -62,6 +93,19 @@ Pronto! O programa irá aparecer na tela.
   - `PRODUTO`
   - `MOVIMENTACOES`
 
+---
+
+### Run
+
+- Contém os executáveis do sistema, prontos para uso após a compilação. Essa pasta permite iniciar o sistema rapidamente, sem precisar abrir o NetBeans.
+
+  | Arquivo                                            | Descrição                                                                                       |
+  | -------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+  | **Iniciar_Linux.sh**                               | Script de inicialização para Linux. Executa o `.jar` e conecta automaticamente ao banco Docker. |
+  | **Iniciar_Windows.bat**                            | Script de inicialização para Windows, responsável por abrir o sistema de forma automática.      |
+  | **projetoEstoque-1.0.0-jar-with-dependencies.jar** | Arquivo `.jar` compilado com todas as dependências necessárias para execução.                   |
+
+- Essa pasta serve como ponto central para executar o sistema em qualquer ambiente, desde que o Docker esteja instalado e ativo.
 ---
 
 ### Código-Fonte
@@ -98,6 +142,13 @@ Pronto! O programa irá aparecer na tela.
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
+
+
+
+
+
+
 
 
 
