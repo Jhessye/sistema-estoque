@@ -50,8 +50,22 @@ Pronto! O programa irá aparecer na tela.
 
 2. Certifique-se de que o **Docker Desktop** está instalado e em execução.
 
-3. Execute o arquivo **Iniciar_Windows.bat** localizado dentro da pasta `run`.
-   Esse script iniciará automaticamente o banco de dados e abrirá o sistema.
+3. Inicie o banco de dados PostgreSQL via Docker Compose (modo *detached*):
+
+   ```
+   docker compose -f banco_de_dados/docker-compose.yaml up -d
+   ```
+
+4. Acesse a pasta `run`:
+
+   ```
+   cd run
+   ```
+
+5. Execute o arquivo **Iniciar_Windows.bat**.
+   Esse script iniciará automaticamente o sistema e conectará ao banco de dados que está rodando em Docker.
+
+Pronto! O sistema abrirá na tela e estará pronto para uso.
 
 ---
 
@@ -128,6 +142,7 @@ Pronto! O programa irá aparecer na tela.
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
