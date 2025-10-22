@@ -51,7 +51,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>view.TelaInicial</mainClass>
+                            <mainClass>principal.TelaInicial</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -68,7 +68,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>view.TelaInicial</mainClass>
+                            <mainClass>principal.TelaInicial</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
