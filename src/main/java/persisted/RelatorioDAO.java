@@ -1,69 +1,47 @@
 package persisted;
 
 import conexion.ModuloConexao;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
- uuuuuuuu
- Classe responsável por gerar relatórios a partir de queries SQL externas.
- 
- Compatível com execução no NetBeans e via arquivo .jar (Windows/Linux).
- 
- Os arquivos SQL devem estar em:
- 
- src/main/resources/sql/
- 
- Exemplo: src/main/resources/sql/relatorioMovimentacaoPorProduto.sql
- 
- @author Jhessye
+ * Classe responsável por gerar relatórios a partir de queries SQL internas.
+ * 
+ * Compatível com execução no NetBeans e via arquivo .jar (Windows/Linux).
+ * 
+ * @author Jhessye
  */
 public class RelatorioDAO {
 
     /**
-     Lê o conteúdo de um arquivo SQL a partir do classpath.
-     */
-    private String lerArquivoSQL(String recurso) throws IOException {
-        // garante que o caminho comece com "/"
-        if (!recurso.startsWith("/")) {
-            recurso = "/" + recurso;
-        }
-
-        try (InputStream is = getClass().getResourceAsStream(recurso)) {
-            if (is == null) {
-                throw new IOException("Arquivo SQL não encontrado no classpath: " + recurso);
-            }
-            return new String(is.readAllBytes());
-        }
-    }
-
-    /**
-     Relatório: movimentações totais por produto.
+     * Relatório: movimentações totais por produto.
      */
     public List<Object[]> relatorioMovimentacaoPorProduto() {
         List<Object[]> resultados = new LinkedList<>();
-        String caminho = "/sql/relatorioMovimentacaoPorProduto.sql"; // caminho dentro de resources
 
-        try (Connection con = ModuloConexao.conector()) {
-            String sql = lerArquivoSQL(caminho);
-            try (PreparedStatement stmt = con.prepareStatement(sql);
-                 ResultSet rs = stmt.executeQuery()) {
+        // Query SQL diretamente no código
+        String sql = """
+            SELECT p.nome AS Produto,
+                   SUM(m.valor) AS TotalMovimentado
+            FROM movimentacoes m
+            JOIN produtos p ON p.id_produto = m.id_produto
+            GROUP BY p.nome;
+        """;
 
-                while (rs.next()) {
-                    Object[] linha = {
-                        rs.getString("Produto"),
-                        rs.getDouble("TotalMovimentado")
-                    };
-                    resultados.add(linha);
-                }
+        try (Connection con = ModuloConexao.conector();
+             PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Object[] linha = {
+                    rs.getString("Produto"),
+                    rs.getDouble("TotalMovimentado")
+                };
+                resultados.add(linha);
             }
 
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao ler arquivo SQL: " + e.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao executar relatório: " + e.getMessage());
@@ -73,32 +51,43 @@ public class RelatorioDAO {
     }
 
     /**
-     Relatório: movimentações agrupadas por categoria de produto.
+     * Relatório: movimentações agrupadas por categoria de produto.
      */
     public List<Object[]> relatorioMovimentacoesCategoriaProduto() {
         List<Object[]> resultados = new LinkedList<>();
-        String caminho = "/sql/relatorioMovimentacoesCategoriaProduto.sql"; // caminho dentro de resources
 
-        try (Connection con = ModuloConexao.conector()) {
-            String sql = lerArquivoSQL(caminho);
-            try (PreparedStatement stmt = con.prepareStatement(sql);
-                 ResultSet rs = stmt.executeQuery()) {
+        // Query SQL diretamente no código
+        String sql = """
+            SELECT 
+                m.id_movimentacoes AS idMovimentacoes,
+                m.data,
+                p.id_produto AS idProduto,
+                p.nome AS produtos,
+                p.quantidade,
+                p.preco AS valor,
+                c.id_categoria AS idCategoria,
+                c.nome AS categoria
+            FROM movimentacoes m
+            JOIN produtos p ON p.id_produto = m.id_produto
+            JOIN categorias c ON c.id_categoria = p.id_categoria;
+        """;
 
-                while (rs.next()) {
-                    Object[] linha = {
-                        rs.getInt("idMovimentacao"),
-                        rs.getDate("data"),
-                        rs.getString("produto"),
-                        rs.getInt("quantidade"),
-                        rs.getDouble("valor"),
-                        rs.getString("categoria")
-                    };
-                    resultados.add(linha);
-                }
+        try (Connection con = ModuloConexao.conector();
+             PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Object[] linha = {
+                    rs.getInt("idMovimentacoes"),
+                    rs.getDate("data"),
+                    rs.getString("produtos"),
+                    rs.getInt("quantidade"),
+                    rs.getDouble("valor"),
+                    rs.getString("categoria")
+                };
+                resultados.add(linha);
             }
 
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao ler arquivo SQL: " + e.getMessage());
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao executar relatório: " + e.getMessage());
