@@ -25,9 +25,18 @@ public class VerMovimentacao extends javax.swing.JFrame {
     public VerMovimentacao() {
         initComponents();
         
-        this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
-        this.setResizable(false); // ← Impede redimensionamento
-        this.setTitle("Ver Movimentacao");  // Título personalizado
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setTitle("Ver Movimentacao");
+        
+        // Carrega as tabelas assim que a tela abre
+        try {
+            verMovimentacoesSQL();
+            verMovimentacoesLista();
+        } catch (SQLException ex) {
+            Logger.getLogger(VerMovimentacao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Erro ao carregar movimentações: " + ex.getMessage());
+        }
     }
 
     /**
@@ -160,79 +169,59 @@ public class VerMovimentacao extends javax.swing.JFrame {
 
     private void bntOkPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkPActionPerformed
         try {
-            boolean verSQL = verMovimentacoesSQL();
-            boolean verLista = verMovimentacoesLista();
-
-            if (verSQL && verLista) {
-                // Pergunta se o usuário quer continuar
-                int resposta = JOptionPane.showConfirmDialog(
-                    null,
-                    "Deseja continuar vendo as movimentações?",
-                    "Continuar?",
-                    JOptionPane.YES_NO_OPTION
-                );
-
-                if (resposta != JOptionPane.YES_OPTION) {
-                    TelaInicial telaInicial = new TelaInicial();
-                    this.setVisible(false);
-                    telaInicial.setVisible(true);
-                }
-            }
-
-        } catch (SQLException ex) {
+            TelaInicial telaInicial = new TelaInicial();
+            this.setVisible(false);
+            telaInicial.setVisible(true);
+        } catch (Exception ex) {
             Logger.getLogger(VerMovimentacao.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Erro ao carregar movimentações: " + ex.getMessage());
         }
     }//GEN-LAST:event_bntOkPActionPerformed
 
     private boolean verMovimentacoesSQL() throws SQLException {
-    try {
-        String[] colunas = {"ID Movimentação", "Data", "Quantidade", "Valor (R$)", "ID Produto"};
-        DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
+        String[] colunas = {"ID", "Data", "Valor (R$)", "ID Produto"};
+        DefaultTableModel modelo = new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tabelaVerMovimentacoesDB.setModel(modelo);
 
-        // Dados vindos do banco
         for (Movimentacao m : MovimentacaoController.mostrarMovimentacoes("Banco de Dados")) {
+            double valor = (m.getProduto() != null) ? m.valor(m.getProduto()) : 0.0;
             Object[] linha = {
                 m.getIdMovimentacao(),
                 m.getData(),
-                m.getProduto().getQuantidade(),
-                m.getProduto().getPreco(),
-                m.getProduto().getIdProduto()
+                String.format("%.2f", valor),
+                m.getProduto() != null ? m.getProduto().getIdProduto() : "N/A"
             };
             modelo.addRow(linha);
         }
-
         return true;
-    } catch (SQLException ex) {
-        
-        return false;
     }
-}
-    
+
     private boolean verMovimentacoesLista() throws SQLException {
-    try {
-        String[] colunas = {"ID Movimentação", "Data", "Quantidade", "Valor (R$)", "ID Produto"};
-        DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
+        String[] colunas = {"ID", "Data", "Valor (R$)", "ID Produto"};
+        DefaultTableModel modelo = new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tabelaVerMovimentacoesLista.setModel(modelo);
 
         for (Movimentacao m : MovimentacaoController.mostrarMovimentacoes("Lista")) {
+            double valor = (m.getProduto() != null) ? m.valor(m.getProduto()) : 0.0;
             Object[] linha = {
                 m.getIdMovimentacao(),
                 m.getData(),
-                m.getProduto().getQuantidade(),
-                m.getProduto().getPreco(),
-                m.getProduto().getIdProduto()
+                String.format("%.2f", valor),
+                m.getProduto() != null ? m.getProduto().getIdProduto() : "N/A"
             };
             modelo.addRow(linha);
         }
-
         return true;
-    } catch (SQLException ex) {
-        
-        return false;
     }
-}
     /**
      * @param args the command line arguments
      */

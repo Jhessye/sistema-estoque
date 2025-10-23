@@ -57,45 +57,45 @@ public class InserirMovimentacao extends javax.swing.JFrame {
         }
     }
 
-    public boolean inserirMovimentacao() throws SQLException{
+    public boolean inserirMovimentacao() throws SQLException {
         String data = textDataM.getText().trim();
         String quantidades = textQuantidade.getText().trim();
-        
-        if (data.isEmpty() && quantidades.isEmpty() && (!botaoTipoAlterarEntrada.isSelected() || !botaoTipoAlterarSaida.isSelected())) {
+
+        if (data.isEmpty() || quantidades.isEmpty() ||
+            (!botaoTipoAlterarEntrada.isSelected() && !botaoTipoAlterarSaida.isSelected())) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
             return false;
         }
 
         try {
-            
             Produto produtoSelecionado = ProdutoController.mostrarPordutos("Lista")
                     .get(listaProdutoM.getSelectedIndex());
-            
-            Movimentacao m = new Movimentacao() {
-                    @Override
-                    public boolean movimenta(Produto produto) {
-                        return true;
-                    }
-            };
-                    
+
+            Movimentacao m;
+
+            if (botaoTipoAlterarEntrada.isSelected()) {
+                m = new Entrada();
+            } else {
+                m = new Saida();
+            }
+
             m.setProduto(produtoSelecionado);
-            
+
             if (data.matches("\\d{4}-\\d{2}-\\d{2}")) {
                 m.setData(data);
             } else {
                 JOptionPane.showMessageDialog(null, "Formato inválido! Use o formato AAAA-MM-DD");
                 return false;
             }
-            
+
             int quantidade = Integer.parseInt(quantidades);
-            
+            m.getProduto().setQuantidade(quantidade);
+
             boolean sucesso;
-            if (botaoTipoAlterarEntrada.isSelected()){
-                Entrada e = (Entrada)m;
-                sucesso = MovimentacaoController.inserirEntrada(e);
-            }else{
-                Saida s = (Saida)m;
-                sucesso = MovimentacaoController.inserirSaida(s);
+            if (botaoTipoAlterarEntrada.isSelected()) {
+                sucesso = MovimentacaoController.inserirEntrada((Entrada)m);
+            } else {
+                sucesso = MovimentacaoController.inserirSaida((Saida)m);
             }
 
             return sucesso;
@@ -350,6 +350,7 @@ public class InserirMovimentacao extends javax.swing.JFrame {
     public void limparCampos(){
         textDataM.setText("");
         listaProdutoM.setSelectedIndex(0);
+        textQuantidade.setText("");
     }
     
     private void botaoTipoAlterarSaidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoTipoAlterarSaidaActionPerformed

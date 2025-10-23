@@ -48,7 +48,7 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         try {
             listaAlterarMovimentacaoM.removeAllItems();
             for (Movimentacao movimentacao : MovimentacaoController.mostrarMovimentacoes("Lista")) {
-                listaAlterarMovimentacaoM.addItem(String.valueOf(movimentacao.getIdMovimentacao()+" | "+movimentacao.getData()+" | "+movimentacao.getProduto()));
+                listaAlterarMovimentacaoM.addItem(String.valueOf(movimentacao.getIdMovimentacao()+" | "+movimentacao.getData()+" | "+movimentacao.getProduto().getNome()));
             }
         } catch (SQLException ex) {
             Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
