@@ -68,8 +68,8 @@ public class ProdutoDAO {
             executa.setString(1, produto.getNome());
             executa.setString(2, produto.getDescricao());
             executa.setString(3, produto.getMarca());
-            executa.setInt(5, produto.getQuantidade());
-            executa.setDouble(4, produto.getPreco());
+            executa.setInt(4, produto.getQuantidade());      // ← Era posição 5, agora 4
+            executa.setDouble(5, produto.getPreco());        // ← Era posição 4, agora 5
             executa.setInt(6, produto.getCategoria().getIdCategoria());
 
             int linhasAfetadas = executa.executeUpdate();

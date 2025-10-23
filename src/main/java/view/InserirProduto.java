@@ -370,6 +370,7 @@ public class InserirProduto extends javax.swing.JFrame {
         textMarcaP.setText("");
         textPrecoP.setText("");
         textQuantidadeP.setText("");
+        textNomeP1.setText("");
         listaCategoriaP.setSelectedIndex(0);
     }
     
