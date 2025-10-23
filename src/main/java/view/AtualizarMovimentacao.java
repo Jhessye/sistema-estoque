@@ -58,47 +58,51 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
     
     public boolean atualizarMovimentacao() throws SQLException{
         String novoValor = textNovoValorM.getText().trim();
-        
-        if (!botaoProdutoAlterarMovimentacao.isSelected() || !botaoDataAlterarMovimentacao.isSelected() || !botaoQuantidadeAlterarMovimentacao.isSelected()) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
-            return false;
-        }
 
         try {
-            
+        
             Movimentacao movimentacaoSelecionada = MovimentacaoController.mostrarMovimentacoes("Lista")
                     .get(listaAlterarMovimentacaoM.getSelectedIndex());
-            
+        
             if(botaoProdutoAlterarMovimentacao.isSelected()){
+            
+                if (listaProdutoM.getSelectedIndex() < 0) {
+                    JOptionPane.showMessageDialog(null, "Selecione um produto!");
+                    return false;
+                }
+            
                 Produto produtoSelecionado = ProdutoController.mostrarPordutos("Lista")
                     .get(listaProdutoM.getSelectedIndex());
-                
-                novoValor = "";
-                
+            
                 movimentacaoSelecionada.setProduto(produtoSelecionado);
                 MovimentacaoController.alterarMovimentacao(movimentacaoSelecionada, "id_produto");
-                
-            }else if(botaoDataAlterarMovimentacao.isSelected()){
-                
-                if (novoValor==null) {
-                    JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            
+            } else if(botaoDataAlterarMovimentacao.isSelected()){
+            
+                if (novoValor.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Preencha a nova data!");
                     return false;
                 }
-                
+            
                 movimentacaoSelecionada.setData(novoValor);
                 MovimentacaoController.alterarMovimentacao(movimentacaoSelecionada, "data");
-                
-            }else if(botaoQuantidadeAlterarMovimentacao.isSelected()){
-                
-                if (novoValor==null) {
-                    JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            
+            } else if(botaoQuantidadeAlterarMovimentacao.isSelected()){
+            
+                if (novoValor.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Preencha a nova quantidade!");
                     return false;
                 }
-                
-                int novaQuantidade = movimentacaoSelecionada.getProduto().getQuantidade();
-                movimentacaoSelecionada.getProduto().setQuantidade(novaQuantidade);
-            }
             
+                int novaQuantidade = Integer.parseInt(novoValor);
+                movimentacaoSelecionada.getProduto().setQuantidade(novaQuantidade);
+                MovimentacaoController.alterarMovimentacao(movimentacaoSelecionada, "quantidade");
+            
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione o que deseja alterar!");
+                return false;
+            }
+        
             return true;
 
         } catch (NumberFormatException e) {

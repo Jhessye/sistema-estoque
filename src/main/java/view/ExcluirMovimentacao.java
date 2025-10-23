@@ -4,6 +4,14 @@
  */
 package view;
 
+import controller.MovimentacaoController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Movimentacao;
+import principal.TelaInicial;
+
 /**
  *
  * @author Jhessye Lorrayne
@@ -15,10 +23,27 @@ public class ExcluirMovimentacao extends javax.swing.JFrame {
      */
     public ExcluirMovimentacao() {
         initComponents();
+        carregarMovimentacoes();
         
         this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
         this.setResizable(false); // ← Impede redimensionamento
         this.setTitle("Excluir Movimentacoes");  // Título personalizado
+    }
+    
+    public void carregarMovimentacoes(){
+        try {
+            listaExcluirCategoriaM.removeAllItems();
+            for (Movimentacao movimentacao : MovimentacaoController.mostrarMovimentacoes("Lista")) {
+                listaExcluirCategoriaM.addItem(String.valueOf(movimentacao.getIdMovimentacao()+" | "+movimentacao.getData()+" | "+movimentacao.getProduto().getNome()));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar categorias: " + ex.getMessage());
+        }
+    }
+    
+    public void excluirMovimentacao(){
+        
     }
 
     /**
@@ -142,7 +167,17 @@ public class ExcluirMovimentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_listaExcluirCategoriaMActionPerformed
 
     private void bntVoltarExcluirMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarExcluirMovimentacaoActionPerformed
+        TelaInicial telaInicial = null;
+        
+        try {
+            telaInicial = new TelaInicial();
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
+        telaInicial.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_bntVoltarExcluirMovimentacaoActionPerformed
 
     private void btnOkExcluirMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkExcluirMovimentacaoActionPerformed
