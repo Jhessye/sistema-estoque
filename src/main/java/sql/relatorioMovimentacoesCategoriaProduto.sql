@@ -1,5 +1,5 @@
 SELECT 
-    m.id_movimentacoes AS idMovimentacao,
+    m.id_movimentacoes AS idMovimentacoes,
     m.data,
     p.id_produto AS idProduto,
     p.nome AS produto,
