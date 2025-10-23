@@ -24,6 +24,10 @@ public class VerMovimentacao extends javax.swing.JFrame {
      */
     public VerMovimentacao() {
         initComponents();
+        
+        this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
+        this.setResizable(false); // ← Impede redimensionamento
+        this.setTitle("Ver Movimentacao");  // Título personalizado
     }
 
     /**

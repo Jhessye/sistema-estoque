@@ -15,6 +15,10 @@ public class ExcluirMovimentacao extends javax.swing.JFrame {
      */
     public ExcluirMovimentacao() {
         initComponents();
+        
+        this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
+        this.setResizable(false); // ← Impede redimensionamento
+        this.setTitle("Excluir Movimentacoes");  // Título personalizado
     }
 
     /**

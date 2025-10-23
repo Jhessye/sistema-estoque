@@ -24,6 +24,10 @@ public class Relatorios extends javax.swing.JFrame {
         initComponents();
         relatorio1();
         relatorio2();
+        
+        this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
+        this.setResizable(false); // ← Impede redimensionamento
+        this.setTitle("Relatorios");  // Título personalizado
     }
     
     public void relatorio1(){
