@@ -46,11 +46,9 @@ public class ExcluirCategoria extends javax.swing.JFrame {
     
     
     public Categoria excluir() throws SQLException{
-        Categoria c = new Categoria();
-        
-        c = CategoriaController.mostrarCategorias("Lista").get(listaExcluirCategoriaC.getSelectedIndex());
-          
-        return c;
+        int idx = listaExcluirCategoriaC.getSelectedIndex();
+        if (idx < 0) return null; // ← evita IndexOutOfBounds
+        return CategoriaController.mostrarCategorias("Lista").get(idx);
     }
 
     /**
@@ -170,48 +168,48 @@ public class ExcluirCategoria extends javax.swing.JFrame {
 
     private void btnOkExcluirCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkExcluirCategoriaActionPerformed
         try {
-            boolean excluir = true;
-            
-            Categoria c = new Categoria();
-            c = excluir(); //pega a categoria que a pessoa selecionou
-            
-            if (c == null ) {
-                JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            Categoria c = excluir(); // pega a categoria selecionada
+
+            if (c == null) {
+                JOptionPane.showMessageDialog(null, "Selecione uma categoria.");
+                return; // ← não continua
             }
-            
-            
-            for (Produto p : ProdutoController.mostrarPordutos("Lista")){
-                
-                if (c.getNome().equals(p.getNome())){
-                    excluir = false;
+
+            boolean temProdutos = false;
+            for (Produto p : ProdutoController.mostrarPordutos("Lista")) {
+                if (p.getCategoria() != null && p.getCategoria().getIdCategoria() == c.getIdCategoria()) {
+                    temProdutos = true;
+                    break;
                 }
-                
             }
-            
-            if (excluir && CategoriaController.excluirCategoria(c)){
-                CategoriaController.excluirCategoria(c);
-                //pergunta se quer continuar
+
+            if (temProdutos) {
+                JOptionPane.showMessageDialog(null,
+                    "A categoria selecionada possui produtos agregados.\nExclua os produtos dessa categoria primeiro.");
+                return; // ← apenas retorna para a tela, sem erros
+            }
+
+            if (CategoriaController.excluirCategoria(c)) { // ← exclui apenas UMA vez
                 int resposta = JOptionPane.showConfirmDialog(
-                    null, 
-                    "Categoria excluida com sucesso!\nDeseja excluir outra categoria?",
+                    null,
+                    "Categoria excluída com sucesso!\nDeseja excluir outra categoria?",
                     "Continuar?",
                     JOptionPane.YES_NO_OPTION
                 );
-
                 if (resposta == JOptionPane.YES_OPTION) {
                     carregarListaCategorias();
                 } else {
                     TelaInicial telaInicial = new TelaInicial();
-                    
                     this.setVisible(false);
                     telaInicial.setVisible(true);
                 }
-            }else{
-                JOptionPane.showMessageDialog(null, "A categoria selecionado tem produtos agregadas\nExclua os produtos dessa categoria PRIMEIRO. ");
+            } else {
+                JOptionPane.showMessageDialog(null, "Não foi possível excluir a categoria.");
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ExcluirCategoria.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao processar exclusão: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnOkExcluirCategoriaActionPerformed
 
