@@ -25,9 +25,9 @@ public class ExcluirMovimentacao extends javax.swing.JFrame {
         initComponents();
         carregarMovimentacoes();
         
-        this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame
-        this.setResizable(false); // ← Impede redimensionamento
-        this.setTitle("Excluir Movimentacoes");  // Título personalizado
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setTitle("Excluir Movimentacoes");
     }
     
     public void carregarMovimentacoes(){
@@ -37,13 +37,15 @@ public class ExcluirMovimentacao extends javax.swing.JFrame {
                 listaExcluirCategoriaM.addItem(String.valueOf(movimentacao.getIdMovimentacao()+" | "+movimentacao.getData()+" | "+movimentacao.getProduto().getNome()));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Erro ao carregar categorias: " + ex.getMessage());
+            Logger.getLogger(ExcluirMovimentacao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao carregar movimentações: " + ex.getMessage());
         }
     }
     
-    public void excluirMovimentacao(){
-        
+    public Movimentacao excluir() throws SQLException{
+        int idx = listaExcluirCategoriaM.getSelectedIndex();
+        if (idx < 0) return null;
+        return MovimentacaoController.mostrarMovimentacoes("Lista").get(idx);
     }
 
     /**
@@ -181,7 +183,36 @@ public class ExcluirMovimentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_bntVoltarExcluirMovimentacaoActionPerformed
 
     private void btnOkExcluirMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkExcluirMovimentacaoActionPerformed
+        try {
+            Movimentacao m = excluir();
 
+            if (m == null) {
+                JOptionPane.showMessageDialog(null, "Selecione uma movimentação.");
+                return;
+            }
+
+            if (MovimentacaoController.excluirMovimentacao(m)) {
+                int resposta = JOptionPane.showConfirmDialog(
+                    null,
+                    "Movimentação excluída com sucesso!\nDeseja excluir outra movimentação?",
+                    "Continuar?",
+                    JOptionPane.YES_NO_OPTION
+                );
+                if (resposta == JOptionPane.YES_OPTION) {
+                    carregarMovimentacoes();
+                } else {
+                    TelaInicial telaInicial = new TelaInicial();
+                    this.setVisible(false);
+                    telaInicial.setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Não foi possível excluir a movimentação.");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ExcluirMovimentacao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Erro ao processar exclusão: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnOkExcluirMovimentacaoActionPerformed
 
     /**
