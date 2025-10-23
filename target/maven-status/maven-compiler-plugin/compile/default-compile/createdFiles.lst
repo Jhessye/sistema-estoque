@@ -3,6 +3,7 @@ view\ExcluirMovimentacao$4.class
 view\AtualizarProduto$5.class
 view\VerProduto$1.class
 model\Saida.class
+view\VerMovimentacao$4.class
 persisted\MovimentacaoDAO$2.class
 principal\TelaInicial$3.class
 view\InserirProduto$5.class
@@ -25,6 +26,7 @@ view\InserirMovimentacao.class
 view\AtualizarMovimentacao$9.class
 view\AtualizarMovimentacao$7.class
 view\InserirMovimentacao$1.class
+reports\Relatorios$3.class
 view\ExcluirMovimentacao$2.class
 view\TelaMovimentacao$1.class
 persisted\MovimentacaoDAO.class
@@ -72,6 +74,7 @@ view\AtualizarMovimentacao$5.class
 view\InserirMovimentacao$3.class
 view\ExcluirMovimentacao$3.class
 view\ExcluirProduto$1.class
+reports\Relatorios$4.class
 view\InserirProduto$7.class
 view\VerProduto.class
 view\TelaCategoria$3.class
@@ -106,6 +109,7 @@ view\AtualizarProduto$10.class
 view\VerCategoria$2.class
 view\AtualizarCategoria$1.class
 principal\TelaInicial$4.class
+view\VerMovimentacao$3.class
 view\ExcluirProduto$3.class
 view\VerCategoria.class
 view\VerProduto$2.class
