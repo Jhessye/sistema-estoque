@@ -45,7 +45,7 @@ public class InserirProduto extends javax.swing.JFrame {
     
     public boolean cadastrarProduto() throws SQLException {
 
-        String nome = textQuantidadeP.getText().trim();
+        String nome = textNomeP1.getText().trim();   // ← corrigido
         String descricao = textDescricaoP.getText().trim();
         String marca = textMarcaP.getText().trim();
         String precoStr = textPrecoP.getText().trim();
@@ -220,7 +220,7 @@ public class InserirProduto extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(bntOkP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(229, 229, 229))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(textPrecoP, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2)
@@ -365,12 +365,11 @@ public class InserirProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_textNomeP1ActionPerformed
 
     private void limparCampos() {
+        textNomeP1.setText("");        // ← garanta que limpa o nome
         textQuantidadeP.setText("");
         textDescricaoP.setText("");
         textMarcaP.setText("");
         textPrecoP.setText("");
-        textQuantidadeP.setText("");
-        textNomeP1.setText("");
         listaCategoriaP.setSelectedIndex(0);
     }
     

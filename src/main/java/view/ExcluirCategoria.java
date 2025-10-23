@@ -169,7 +169,7 @@ public class ExcluirCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_listaExcluirCategoriaCActionPerformed
 
     private void btnOkExcluirCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkExcluirCategoriaActionPerformed
-try {
+        try {
             boolean excluir = true;
             
             Categoria c = new Categoria();
@@ -188,7 +188,7 @@ try {
                 
             }
             
-            if (excluir){
+            if (excluir && CategoriaController.excluirCategoria(c)){
                 CategoriaController.excluirCategoria(c);
                 //pergunta se quer continuar
                 int resposta = JOptionPane.showConfirmDialog(
