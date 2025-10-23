@@ -32,27 +32,32 @@ public class Relatorios extends javax.swing.JFrame {
     
     public void relatorio1(){
         String[] colunas = {"Produto", "TotalMovimentado"};
-        DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
-        
+        DefaultTableModel modelo = new DefaultTableModel(colunas, 0){ @Override public boolean isCellEditable(int r,int c){return false;} };
         tabela1.setModel(modelo);
+
         RelatorioDAO daoR = new RelatorioDAO();
-        
-        List<Object[]> resultados = daoR.relatorioMovimentacaoPorProduto();
-        for (Object[] linha : resultados) {
-            modelo.addRow(linha);
+        for (Object[] linha : daoR.relatorioMovimentacaoPorProduto()) {
+            modelo.addRow(linha); // [produto, total]
         }
     }
-    
+
     public void relatorio2(){
-        String[] colunas = {"idMovimentacao", "data", "produto", "quantidade", "valor", "categoria"};
-        DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
-        
+        String[] colunas = {"idMovimentacao", "Data", "Produto", "Quantidade", "Valor", "Categoria"};
+        DefaultTableModel modelo = new DefaultTableModel(colunas, 0){ @Override public boolean isCellEditable(int r,int c){return false;} };
         tabela2.setModel(modelo);
-        RelatorioDAO daoR = new RelatorioDAO();
-        
-        List<Object[]> resultados = daoR.relatorioMovimentacaoPorProduto();
-        for (Object[] linha : resultados) {
-            modelo.addRow(linha);
+
+        try {
+            RelatorioDAO daoR = new RelatorioDAO();
+            java.time.format.DateTimeFormatter fmt = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+            for (Object[] linha : daoR.relatorioMovimentacoesDetalhado()) {
+                Object dataFmt = (linha[1] instanceof java.sql.Timestamp ts)
+                        ? ts.toLocalDateTime().format(fmt) : linha[1];
+                modelo.addRow(new Object[]{ linha[0], dataFmt, linha[2], linha[3], linha[4], linha[5] });
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Relatorios.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Erro ao carregar relatório detalhado: " + ex.getMessage());
         }
     }
 

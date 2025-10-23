@@ -2,97 +2,63 @@ package persisted;
 
 import conexion.ModuloConexao;
 import java.sql.*;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
-/**
- * Classe responsável por gerar relatórios a partir de queries SQL internas.
- * 
- * Compatível com execução no NetBeans e via arquivo .jar (Windows/Linux).
- * 
- * @author Jhessye
- */
 public class RelatorioDAO {
 
-    /**
-     * Relatório: movimentações totais por produto.
-     */
     public List<Object[]> relatorioMovimentacaoPorProduto() {
-        List<Object[]> resultados = new LinkedList<>();
-
-        // Query SQL diretamente no código
         String sql = """
-            SELECT p.nome AS Produto,
-                   SUM(m.valor) AS TotalMovimentado
+            SELECT p.nome AS produto,
+                   SUM(m.valor) AS total_movimentado
             FROM movimentacoes m
             JOIN produtos p ON p.id_produto = m.id_produto
-            GROUP BY p.nome;
+            GROUP BY p.nome
+            ORDER BY p.nome
         """;
-
+        List<Object[]> out = new ArrayList<>();
         try (Connection con = ModuloConexao.conector();
-             PreparedStatement stmt = con.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                Object[] linha = {
-                    rs.getString("Produto"),
-                    rs.getDouble("TotalMovimentado")
-                };
-                resultados.add(linha);
+                out.add(new Object[]{ rs.getString("produto"), rs.getInt("total_movimentado") });
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao executar relatório: " + e.getMessage());
-        }
-
-        return resultados;
+        } catch (SQLException e) { e.printStackTrace(); }
+        return out;
     }
 
-    /**
-     * Relatório: movimentações agrupadas por categoria de produto.
-     */
-    public List<Object[]> relatorioMovimentacoesCategoriaProduto() {
-        List<Object[]> resultados = new LinkedList<>();
-
-        // Query SQL diretamente no código
+    public List<Object[]> relatorioMovimentacoesDetalhado() {
         String sql = """
-            SELECT 
-                m.id_movimentacoes AS idMovimentacoes,
-                m.data,
-                p.id_produto AS idProduto,
-                p.nome AS produtos,
+            SELECT
+                m.id_movimentacoes      AS id_mov,      -- <- nome correto (plural)
+                m.data                  AS data_mov,    -- <- ajuste se seu campo for outro (ex: data_mov)
+                p.nome                  AS produto,
                 p.quantidade,
-                p.preco AS valor,
-                c.id_categoria AS idCategoria,
-                c.nome AS categoria
+                m.valor,
+                c.nome                  AS categoria
             FROM movimentacoes m
-            JOIN produtos p ON p.id_produto = m.id_produto
-            JOIN categorias c ON c.id_categoria = p.id_categoria;
+            JOIN produtos   p ON p.id_produto   = m.id_produto
+            JOIN categorias c ON c.id_categoria = p.id_categoria
+            ORDER BY m.data DESC, m.id_movimentacoes DESC
         """;
-
+        List<Object[]> out = new ArrayList<>();
         try (Connection con = ModuloConexao.conector();
-             PreparedStatement stmt = con.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                Object[] linha = {
-                    rs.getInt("idMovimentacoes"),
-                    rs.getDate("data"),
-                    rs.getString("produtos"),
+                out.add(new Object[]{
+                    rs.getInt("id_mov"),
+                    rs.getTimestamp("data_mov"),
+                    rs.getString("produto"),
                     rs.getInt("quantidade"),
-                    rs.getDouble("valor"),
+                    rs.getBigDecimal("valor"),
                     rs.getString("categoria")
-                };
-                resultados.add(linha);
+                });
             }
-
         } catch (SQLException e) {
+            // logue e retorne lista vazia para não quebrar a tela
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao executar relatório: " + e.getMessage());
         }
-
-        return resultados;
+        return out;
     }
 }
