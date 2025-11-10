@@ -10,6 +10,10 @@ package model;
  */
 public class Saida extends Movimentacao {
 
+    public Saida() {
+        super();
+    }
+    
     @Override
     public boolean movimenta(Produto produto) {
         if(produto.getQuantidade()>0){
