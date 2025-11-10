@@ -4,8 +4,6 @@
  */
 package view;
 
-import view.excluir.ExcluirMovimentacao;
-import view.atualizar.AtualizarMovimentacao;
 import principal.TelaInicial;
 import java.sql.SQLException;
 import java.util.logging.Level;
