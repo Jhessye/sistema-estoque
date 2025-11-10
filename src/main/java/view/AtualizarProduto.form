@@ -52,15 +52,10 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="botaoMarcaAlterarProduto" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="botaoNomeAlterarProduto" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="botaoDescricaoAlterarProduto" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="555" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoMarcaAlterarProduto" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoNomeAlterarProduto" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoDescricaoAlterarProduto" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoCategoriaAlterarProduto" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoPrecoAlterarProduto" min="-2" max="-2" attributes="0"/>
