@@ -89,7 +89,7 @@ Pronto! O programa irá aparecer na tela.
 - **[diagrams/](diagrams)**  
   Contém:
   - **Diagrama Relacional** do banco de dados.  
-  - **Diagrama de Classes** do sistema.
+  - **Diagrama de Classes** da camada model do sistema.
   
   As entidades representadas são:
   - `CATEGORIA`
@@ -145,6 +145,7 @@ Pronto! O programa irá aparecer na tela.
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
