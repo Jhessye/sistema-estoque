@@ -17,7 +17,6 @@ public class ModuloConexao {
             
             Class.forName(driver);
             conexao = DriverManager.getConnection(url, user, password);
-            System.out.println("PARABENS");
             return conexao;
             
         } catch (ClassNotFoundException e) {
