@@ -10,6 +10,10 @@ package model;
  */
 public class Entrada extends Movimentacao{
 
+    public Entrada() {
+        super();
+    }
+    
     @Override
     public boolean movimenta(Produto produto) {
         if(produto.getQuantidade()==0){
