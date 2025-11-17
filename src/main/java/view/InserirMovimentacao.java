@@ -90,28 +90,26 @@ public class InserirMovimentacao extends javax.swing.JFrame {
 
             int quantidade = Integer.parseInt(quantidades);
             
-            
-            // converte para positivo se usuário digitou negativo
-            quantidade = Math.abs(quantidade);
-+
-+            boolean sucesso;
-+            if (botaoTipoAlterarEntrada.isSelected()) {
-+                if (quantidade > 0 && !quantidades.isEmpty()) {
-+                    // atualiza o objeto produto em memória com a nova quantidade absoluta
-+                    m.getProduto().setQuantidadeSoma(quantidade);
-+                } else {
-+                    return false;
-+                }
-+                sucesso = MovimentacaoController.inserirEntrada((Entrada) m);
-+            } else {
-+                if (quantidade > 0 && !quantidades.isEmpty()) {
-+                    // para saída, decrementa em memória (passa valor positivo; DAO gravará)
-+                    m.getProduto().setQuantidadeSubtrai(quantidade);
-+                } else {
-+                    return false;
-+                }
-+                sucesso = MovimentacaoController.inserirSaida((Saida) m);
-+            }
+           boolean sucesso;
+           if (botaoTipoAlterarEntrada.isSelected()) {
+               if (quantidade > 0 && !quantidades.isEmpty()) {
+                    // atualiza o objeto produto em memória com a nova quantidade absoluta
+                    m.getProduto().setQuantidadeSoma(quantidade);
+                } else {
+                    return false;
+                }
+                sucesso = MovimentacaoController.inserirEntrada((Entrada) m);
+            } else {
+                if (quantidade <= 0 && !quantidades.isEmpty()) {
+                    // converte para positivo se usuário digitou negativo
+                    quantidade = Math.abs(quantidade);
+                    // para saída, decrementa em memória (passa valor positivo; DAO gravará)
+                    m.getProduto().setQuantidadeSubtrai(quantidade);
+                } else {
+                    return false;
+                }
+                sucesso = MovimentacaoController.inserirSaida((Saida) m);
+            }
              return sucesso;
 
         } catch (NumberFormatException e) {
