@@ -169,11 +169,31 @@ public class VerMovimentacao extends javax.swing.JFrame {
 
     private void bntOkPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntOkPActionPerformed
         try {
-            TelaInicial telaInicial = new TelaInicial();
-            this.setVisible(false);
-            telaInicial.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(VerMovimentacao.class.getName()).log(Level.SEVERE, null, ex);
+            // TODO add your handling code here:
+            boolean verSQL = verMovimentacoesSQL();
+            boolean verLista = verMovimentacoesLista();
+
+            if (verSQL && verLista){
+                //pergunta se quer continuar
+                int resposta = JOptionPane.showConfirmDialog(
+                    null,
+                    "Vai querer continuar vendo as movimentações?",
+                    "Continuar?",
+                    JOptionPane.YES_NO_OPTION
+                );
+
+                if (resposta != JOptionPane.YES_OPTION) {
+                    TelaInicial telaInicial = new TelaInicial();
+
+                    this.setVisible(false);
+                    telaInicial.setVisible(true);
+                } else {
+                    
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(InserirProduto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bntOkPActionPerformed
 
