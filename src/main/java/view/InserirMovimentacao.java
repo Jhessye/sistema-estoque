@@ -102,9 +102,10 @@ public class InserirMovimentacao extends javax.swing.JFrame {
                 sucesso = MovimentacaoController.inserirEntrada((Entrada)m);
             } else {
                 
-                if (quantidade <= 0 && !quantidades.isEmpty()){
-                    m.getProduto().setQuantidadeSubtrai(quantidade);
-                }else{
+                // aceitar apenas valores positivos para saída e marcar no objeto para subtração
+                if (quantidade > 0 && !quantidades.isEmpty()) {
+                    m.getProduto().setQuantidadeSubtrai(quantidade); // passe valor positivo; o DAO deve subtrair do estoque
+                } else {
                     return false;
                 }
                 sucesso = MovimentacaoController.inserirSaida((Saida)m);
