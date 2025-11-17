@@ -36,7 +36,7 @@ public class InserirMovimentacao extends javax.swing.JFrame {
         this.setTitle("Cadastrar Movimentacao");  // Título personalizado
     }
     
-    public void criarGrupo(){
+    private void criarGrupo(){
         ButtonGroup grupoTipo = new ButtonGroup();
         grupoTipo.add(botaoTipoAlterarSaida);
         grupoTipo.add(botaoTipoAlterarEntrada);
@@ -45,7 +45,7 @@ public class InserirMovimentacao extends javax.swing.JFrame {
         botaoTipoAlterarEntrada.setSelected(true);
     }
     
-    public void carregarListaProdutos() {
+    private void carregarListaProdutos() {
         try {
             listaProdutoM.removeAllItems();
             for (Produto produto : ProdutoController.mostrarPordutos("Lista")) {
@@ -93,10 +93,20 @@ public class InserirMovimentacao extends javax.swing.JFrame {
 
             boolean sucesso;
             if (botaoTipoAlterarEntrada.isSelected()) {
-                m.getProduto().setQuantidadeSoma(quantidade);
+                if (quantidade >0 && !quantidades.isEmpty() ){
+                    m.getProduto().setQuantidadeSoma(quantidade);
+                }else{
+                    return false;
+                }
+                
                 sucesso = MovimentacaoController.inserirEntrada((Entrada)m);
             } else {
-                m.getProduto().setQuantidadeSubtrai(quantidade);
+                
+                if (quantidade <= 0 && !quantidades.isEmpty()){
+                    m.getProduto().setQuantidadeSubtrai(quantidade);
+                }else{
+                    return false;
+                }
                 sucesso = MovimentacaoController.inserirSaida((Saida)m);
             }
 
