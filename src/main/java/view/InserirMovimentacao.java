@@ -90,7 +90,8 @@ public class InserirMovimentacao extends javax.swing.JFrame {
 
             int quantidade = Integer.parseInt(quantidades);
             
-
+            
+            
             boolean sucesso;
             if (botaoTipoAlterarEntrada.isSelected()) {
                 if (quantidade >0 && !quantidades.isEmpty() ){
@@ -103,7 +104,8 @@ public class InserirMovimentacao extends javax.swing.JFrame {
             } else {
                 
                 // aceitar apenas valores positivos para saída e marcar no objeto para subtração
-                if (quantidade > 0 && !quantidades.isEmpty()) {
+                if (quantidade <= 0 && !quantidades.isEmpty()) {
+                    quantidade = Math.abs(quantidade);
                     m.getProduto().setQuantidadeSubtrai(quantidade); // passe valor positivo; o DAO deve subtrair do estoque
                 } else {
                     return false;
