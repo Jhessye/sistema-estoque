@@ -18,7 +18,7 @@ public class Saida extends Movimentacao {
     public boolean movimenta(Produto produto) {
         if(produto.getQuantidade()>0){
             int novaQuantidade = produto.getQuantidade()-1;
-            produto.setQuantidade(novaQuantidade);
+            produto.setQuantidadeSubtrai(novaQuantidade);
    
         }else{
             return false;

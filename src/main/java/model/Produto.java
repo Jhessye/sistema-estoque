@@ -40,8 +40,17 @@ public class Produto {
         return quantidade;
     }
 
+    public void setQuantidadeSoma(int quantidade) {
+        this.quantidade += quantidade;
+    }
+    
+    //DAO
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+    
+    public void setQuantidadeSubtrai(int quantidade) {
+        this.quantidade -= quantidade;
     }
 
     public Categoria getCategoria() {

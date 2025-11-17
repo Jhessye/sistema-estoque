@@ -17,11 +17,11 @@ public class Entrada extends Movimentacao{
     @Override
     public boolean movimenta(Produto produto) {
         if(produto.getQuantidade()==0){
-           produto.setQuantidade(1);
+           produto.setQuantidadeSoma(1);
         }
         
         int novaQuantidade = produto.getQuantidade()+1;
-        produto.setQuantidade(novaQuantidade);
+        produto.setQuantidadeSoma(novaQuantidade);
         return true;
     }
 

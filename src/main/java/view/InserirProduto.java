@@ -74,7 +74,7 @@ public class InserirProduto extends javax.swing.JFrame {
             produto.setDescricao(descricao);
             produto.setMarca(marca);
             produto.setPreco(preco);
-            produto.setQuantidade(quantidade);
+            produto.setQuantidadeSoma(quantidade);
             produto.setCategoria(categoriaSelecionada);
 
             

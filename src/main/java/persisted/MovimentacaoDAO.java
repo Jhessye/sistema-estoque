@@ -115,6 +115,7 @@ public class MovimentacaoDAO {
         String sql = switch (atributo) {
             case "data" -> "UPDATE movimentacoes SET data=? WHERE id_movimentacoes=?";
             case "id_produto" -> "UPDATE movimentacoes SET id_produto=? WHERE id_movimentacoes=?";
+            case "quantidade" -> "UPDATE produtos SET quantidade=? WHERE id_produto=?";
             default -> null;
         };
 
@@ -127,13 +128,20 @@ public class MovimentacaoDAO {
              PreparedStatement executa = conector.prepareStatement(sql)) {
 
             switch (atributo) {
-                case "data" ->
+                case "data" -> {
                     executa.setDate(1, java.sql.Date.valueOf(movimentacao.getData()));
-                case "id_produto" ->
+                    executa.setInt(2, movimentacao.getIdMovimentacao());
+                }
+                case "id_produto" -> {
                     executa.setInt(1, movimentacao.getProduto().getIdProduto());
+                    executa.setInt(2, movimentacao.getIdMovimentacao());
+                }
+                case "quantidade" -> {
+                    executa.setInt(1, movimentacao.getProduto().getQuantidade());
+                    executa.setInt(2, movimentacao.getProduto().getIdProduto());
+                }
             }
 
-            executa.setInt(2, movimentacao.getIdMovimentacao());
             int linhas = executa.executeUpdate();
 
             if (linhas > 0) {

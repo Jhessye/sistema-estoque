@@ -14,8 +14,6 @@ import javax.swing.JOptionPane;
 import model.Movimentacao;
 import model.Produto;
 import principal.TelaInicial;
-import view.InserirCategoria;
-import view.InserirProduto;
 
 /**
  *
@@ -37,7 +35,7 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         this.setTitle("Atualizar Movimentacao");  // Título personalizado
     }
 
-    public void criarGrupo(){
+    private void criarGrupo(){
         ButtonGroup grupoTipo = new ButtonGroup();
         grupoTipo.add(botaoProdutoAlterarMovimentacao);
         grupoTipo.add(botaoDataAlterarMovimentacao);
@@ -46,7 +44,7 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
         botaoDataAlterarMovimentacao.setSelected(true);
     }
     
-    public void carregarListaMovimentacoes() {
+    private void carregarListaMovimentacoes() {
         try {
             listaAlterarMovimentacaoM.removeAllItems();
             for (Movimentacao movimentacao : MovimentacaoController.mostrarMovimentacoes("Lista")) {
@@ -97,7 +95,12 @@ public class AtualizarMovimentacao extends javax.swing.JFrame {
                 }
             
                 int novaQuantidade = Integer.parseInt(novoValor);
-                movimentacaoSelecionada.getProduto().setQuantidade(novaQuantidade);
+                if(novaQuantidade>0){
+                    movimentacaoSelecionada.getProduto().setQuantidadeSoma(novaQuantidade);
+                }else{
+                    movimentacaoSelecionada.getProduto().setQuantidadeSubtrai(novaQuantidade);
+                }
+       
                 MovimentacaoController.alterarMovimentacao(movimentacaoSelecionada, "quantidade");
             
             } else {

@@ -89,12 +89,14 @@ public class InserirMovimentacao extends javax.swing.JFrame {
             }
 
             int quantidade = Integer.parseInt(quantidades);
-            m.getProduto().setQuantidade(quantidade);
+            
 
             boolean sucesso;
             if (botaoTipoAlterarEntrada.isSelected()) {
+                m.getProduto().setQuantidadeSoma(quantidade);
                 sucesso = MovimentacaoController.inserirEntrada((Entrada)m);
             } else {
+                m.getProduto().setQuantidadeSubtrai(quantidade);
                 sucesso = MovimentacaoController.inserirSaida((Saida)m);
             }
 
