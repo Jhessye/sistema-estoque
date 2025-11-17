@@ -158,6 +158,7 @@ public class ProdutoDAO {
             int linhas = executa.executeUpdate();
             if (linhas > 0) {
                 atualizarNaLista(produto);
+                carregarLista();
                 return true;
             }
 
