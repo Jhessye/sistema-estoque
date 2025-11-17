@@ -76,11 +76,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
     
     public boolean atualizarProduto() throws SQLException{
         String novoValor = textNovoValorP.getText().trim();
-            
-        if (grupoTipo.getSelection() == null) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
-            return false;
-        }
+         
 
         try {
             
