@@ -138,9 +138,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
                 
                 Categoria categoriaSelecionada = CategoriaController.mostrarCategorias("Lista")
                     .get(listaAlterarCategoriaP.getSelectedIndex());
-                
-                novoValor = "";
-                
+                                
                 produtoSelecionado.setCategoria(categoriaSelecionada);
                 ProdutoController.alterarProduto(produtoSelecionado, "id_categoria");
             }
