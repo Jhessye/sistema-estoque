@@ -76,7 +76,6 @@ public class AtualizarProduto extends javax.swing.JFrame {
     
     public boolean atualizarProduto() throws SQLException{
         String novoValor = textNovoValorP.getText().trim();
-         
 
         try {
             
