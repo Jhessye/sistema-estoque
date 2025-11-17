@@ -76,9 +76,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
     
     public boolean atualizarProduto() throws SQLException{
         String novoValor = textNovoValorP.getText().trim();
-        
-        ButtonGroup grupoTipo = criarGrupo();
-        
+            
         if (grupoTipo.getSelection() == null) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
             return false;
@@ -91,7 +89,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
             
             if(botaoNomeAlterarProduto.isSelected()){
                 
-                if (novoValor==null) {
+                if (novoValor.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
                     return false;
                 }
