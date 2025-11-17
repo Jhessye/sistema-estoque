@@ -69,6 +69,13 @@ public class MovimentacaoDAO {
                     if (rs.next()) {
                         entrada.setIdMovimentacao(rs.getInt(1));
                         listaMovimentacao.add(entrada);
+                        // Atualiza a quantidade do produto no banco com o valor atual do objeto produto
+                        String upd = "UPDATE produtos SET quantidade=? WHERE id_produto=?";
+                        try (PreparedStatement pUpd = conector.prepareStatement(upd)) {
+                            pUpd.setInt(1, entrada.getProduto().getQuantidade());
+                            pUpd.setInt(2, entrada.getProduto().getIdProduto());
+                            pUpd.executeUpdate();
+                        }
                         return true;
                     }
                 }
@@ -99,6 +106,13 @@ public class MovimentacaoDAO {
                     if (rs.next()) {
                         saida.setIdMovimentacao(rs.getInt(1));
                         listaMovimentacao.add(saida);
+                        // Atualiza a quantidade do produto no banco com o valor atual do objeto produto
+                        String upd = "UPDATE produtos SET quantidade=? WHERE id_produto=?";
+                        try (PreparedStatement pUpd = conector.prepareStatement(upd)) {
+                            pUpd.setInt(1, saida.getProduto().getQuantidade());
+                            pUpd.setInt(2, saida.getProduto().getIdProduto());
+                            pUpd.executeUpdate();
+                        }
                         return true;
                     }
                 }
