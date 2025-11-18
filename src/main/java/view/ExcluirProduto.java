@@ -13,8 +13,6 @@ import javax.swing.JOptionPane;
 import controller.MovimentacaoController;
 import model.Movimentacao;
 import model.Produto;
-import view.InserirProduto;
-import view.TelaProduto;
 
 /**
  *

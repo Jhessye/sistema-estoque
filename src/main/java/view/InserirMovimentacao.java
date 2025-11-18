@@ -106,6 +106,7 @@ public class InserirMovimentacao extends javax.swing.JFrame {
                     // para saída, decrementa em memória (passa valor positivo; DAO gravará)
                     m.getProduto().setQuantidadeSubtrai(quantidade);
                 } else {
+                    JOptionPane.showMessageDialog(null, "Valor inválido! Para saídas, use numeros negativos.");
                     return false;
                 }
                 sucesso = MovimentacaoController.inserirSaida((Saida) m);

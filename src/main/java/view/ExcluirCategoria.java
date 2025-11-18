@@ -13,8 +13,6 @@ import javax.swing.JOptionPane;
 import model.Categoria;
 import model.Produto;
 import principal.TelaInicial;
-import view.InserirCategoria;
-import view.InserirProduto;
 
 /**
  *
@@ -34,7 +32,7 @@ public class ExcluirCategoria extends javax.swing.JFrame {
         this.setTitle("Excluir Categoria");  // Título personalizado
     }
     
-    public void carregarListaCategorias() {
+    private void carregarListaCategorias() {
         try {
             listaExcluirCategoriaC.removeAllItems();
             for (Categoria categoria : CategoriaController.mostrarCategorias("Lista")) {

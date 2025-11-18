@@ -31,7 +31,7 @@ public class InserirProduto extends javax.swing.JFrame {
         this.setTitle("Cadastrar Produto");  // Título personalizado
     }
     
-    public void carregarListaCategorias() {
+    private void carregarListaCategorias() {
         try {
             listaCategoriaP.removeAllItems();
             for (Categoria categoria : CategoriaController.mostrarCategorias("Lista")) {

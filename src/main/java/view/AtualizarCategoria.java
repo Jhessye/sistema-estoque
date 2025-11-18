@@ -12,8 +12,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import model.Categoria;
 import principal.TelaInicial;
-import view.InserirCategoria;
-import view.InserirProduto;
 
 /**
  *
@@ -34,7 +32,7 @@ public class AtualizarCategoria extends javax.swing.JFrame {
         this.setTitle("Atualizar Categoria");  // Título personalizado
     }
     
-    public void criarGrupo(){
+    private void criarGrupo(){
         ButtonGroup grupoTipo = new ButtonGroup();
         grupoTipo.add(botaoNomeCategoria);
         grupoTipo.add(botaoDescricaoCategoria);
@@ -42,7 +40,7 @@ public class AtualizarCategoria extends javax.swing.JFrame {
         botaoNomeCategoria.setSelected(true);
     }
 
-    public void carregarListaCategorias() {
+    private void carregarListaCategorias() {
         try {
             listaAtualizarCategoriaM.removeAllItems();
             for (Categoria categoria : CategoriaController.mostrarCategorias("Lista")) {

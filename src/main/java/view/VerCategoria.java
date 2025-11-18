@@ -21,6 +21,7 @@ public class VerCategoria extends javax.swing.JFrame {
 
     /**
      * Creates new form VerCategoria
+     * @throws java.sql.SQLException
      */
     public VerCategoria() throws SQLException {
         initComponents();

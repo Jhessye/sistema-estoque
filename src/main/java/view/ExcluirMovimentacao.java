@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Movimentacao;
 import principal.TelaInicial;
-import view.InserirCategoria;
 
 /**
  *
@@ -31,7 +30,7 @@ public class ExcluirMovimentacao extends javax.swing.JFrame {
         this.setTitle("Excluir Movimentacoes");
     }
     
-    public void carregarMovimentacoes(){
+    private void carregarMovimentacoes(){
         try {
             listaExcluirCategoriaM.removeAllItems();
             for (Movimentacao movimentacao : MovimentacaoController.mostrarMovimentacoes("Lista")) {

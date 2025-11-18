@@ -14,8 +14,6 @@ import javax.swing.JOptionPane;
 import model.Categoria;
 import model.Produto;
 import principal.TelaInicial;
-import view.InserirCategoria;
-import view.InserirProduto;
 
 /**
  *
@@ -37,7 +35,7 @@ public class AtualizarProduto extends javax.swing.JFrame {
         this.setTitle("Atualizar Produtos");  // Título personalizado
     }
     
-    public ButtonGroup criarGrupo(){
+    private ButtonGroup criarGrupo(){
         ButtonGroup grupoTipo = new ButtonGroup();
         grupoTipo.add(botaoNomeAlterarProduto);
         grupoTipo.add(botaoMarcaAlterarProduto);
@@ -272,13 +270,10 @@ public class AtualizarProduto extends javax.swing.JFrame {
                         .addGap(353, 353, 353))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(botaoMarcaAlterarProduto)
-                                    .addComponent(botaoNomeAlterarProduto)
-                                    .addComponent(botaoDescricaoAlterarProduto))
-                                .addGap(555, 555, 555))
+                            .addComponent(jLabel3)
+                            .addComponent(botaoMarcaAlterarProduto)
+                            .addComponent(botaoNomeAlterarProduto)
+                            .addComponent(botaoDescricaoAlterarProduto)
                             .addComponent(jLabel6)
                             .addComponent(botaoCategoriaAlterarProduto)
                             .addComponent(botaoPrecoAlterarProduto)
@@ -319,13 +314,9 @@ public class AtualizarProduto extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(textNovoValorP, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(listaAlterarCategoriaP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(textNovoValorP, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listaAlterarCategoriaP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(bntOkM, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
@@ -357,16 +348,18 @@ public class AtualizarProduto extends javax.swing.JFrame {
 
     private void botaoNomeAlterarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNomeAlterarProdutoActionPerformed
         if (!textNovoValorP.isVisible()){
-            textNovoValorP.setVisible(true);
+            
             listaAlterarCategoriaP.setVisible(false);
+            textNovoValorP.setVisible(true);
         }
     }//GEN-LAST:event_botaoNomeAlterarProdutoActionPerformed
 
     private void botaoDescricaoAlterarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDescricaoAlterarProdutoActionPerformed
         // TODO add your handling code here:
         if (!textNovoValorP.isVisible()){
-            textNovoValorP.setVisible(true);
+            
             listaAlterarCategoriaP.setVisible(false);
+            textNovoValorP.setVisible(true);
         }
     }//GEN-LAST:event_botaoDescricaoAlterarProdutoActionPerformed
 
@@ -424,16 +417,18 @@ public class AtualizarProduto extends javax.swing.JFrame {
     private void botaoMarcaAlterarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMarcaAlterarProdutoActionPerformed
         // TODO add your handling code here:
         if (!textNovoValorP.isVisible()){
-            textNovoValorP.setVisible(true);
             listaAlterarCategoriaP.setVisible(false);
+            textNovoValorP.setVisible(true);
+            
         }
     }//GEN-LAST:event_botaoMarcaAlterarProdutoActionPerformed
 
     private void botaoPrecoAlterarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPrecoAlterarProdutoActionPerformed
         // TODO add your handling code here:
         if (!textNovoValorP.isVisible()){
-            textNovoValorP.setVisible(true);
+            
             listaAlterarCategoriaP.setVisible(false);
+            textNovoValorP.setVisible(true);
         }
     }//GEN-LAST:event_botaoPrecoAlterarProdutoActionPerformed
 
