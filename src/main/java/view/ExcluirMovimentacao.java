@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Entrada;
 import model.Movimentacao;
 import principal.TelaInicial;
 
@@ -45,6 +46,7 @@ public class ExcluirMovimentacao extends javax.swing.JFrame {
     public Movimentacao excluir() throws SQLException{
         int idx = listaExcluirCategoriaM.getSelectedIndex();
         if (idx < 0) return null;
+        
         return MovimentacaoController.mostrarMovimentacoes("Lista").get(idx);
     }
 
@@ -194,7 +196,7 @@ public class ExcluirMovimentacao extends javax.swing.JFrame {
             if (MovimentacaoController.excluirMovimentacao(m)) {
                 int resposta = JOptionPane.showConfirmDialog(
                     null,
-                    "Movimentação excluída com sucesso!\nDeseja excluir outra movimentação?",
+                    "Movimentação excluída com sucesso!\nLembre-se que ao excluir o valor do produto n é alterado.\nDeseja excluir outra movimentação?",
                     "Continuar?",
                     JOptionPane.YES_NO_OPTION
                 );

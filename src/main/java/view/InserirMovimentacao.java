@@ -22,7 +22,6 @@ import principal.TelaInicial;
  * @author Jhessye Lorrayne
  */
 public class InserirMovimentacao extends javax.swing.JFrame {
-
     /**
      * Creates new form InserirMovimentacao
      */
@@ -56,12 +55,23 @@ public class InserirMovimentacao extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao carregar categorias: " + ex.getMessage());
         }
     }
+    
+    public int quantMovimentacao() {
+        String quantidades = textQuantidade.getText().trim();
+
+        if (quantidades.isEmpty()) {
+            return 0;
+        }
+
+        return Integer.parseInt(quantidades);
+    }
+
 
     public boolean inserirMovimentacao() throws SQLException {
         String data = textDataM.getText().trim();
-        String quantidades = textQuantidade.getText().trim();
+        int quantidade = quantMovimentacao();
 
-        if (data.isEmpty() || quantidades.isEmpty() ||
+        if (data.isEmpty() || quantidade == 0 ||
             (!botaoTipoAlterarEntrada.isSelected() && !botaoTipoAlterarSaida.isSelected())) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
             return false;
@@ -88,11 +98,10 @@ public class InserirMovimentacao extends javax.swing.JFrame {
                 return false;
             }
 
-            int quantidade = Integer.parseInt(quantidades);
             
            boolean sucesso;
            if (botaoTipoAlterarEntrada.isSelected()) {
-               if (quantidade > 0 && !quantidades.isEmpty()) {
+               if (quantidade > 0) {
                     // atualiza o objeto produto em memória com a nova quantidade absoluta
                     m.getProduto().setQuantidadeSoma(quantidade);
                 } else {
@@ -100,7 +109,7 @@ public class InserirMovimentacao extends javax.swing.JFrame {
                 }
                 sucesso = MovimentacaoController.inserirEntrada((Entrada) m);
             } else {
-                if (quantidade <= 0 && !quantidades.isEmpty()) {
+                if (quantidade <= 0) {
                     // converte para positivo se usuário digitou negativo
                     quantidade = Math.abs(quantidade);
                     // para saída, decrementa em memória (passa valor positivo; DAO gravará)
