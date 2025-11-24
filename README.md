@@ -8,7 +8,7 @@
 Este projeto é um **sistema de gerenciamento de estoque** desenvolvido para uma loja de manutenção de automóveis.  
 Ele permite o **controle de categorias, produtos e movimentações** de itens, oferecendo funcionalidades completas de **cadastro, atualização, exclusão e consulta**.  
 
-O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco de dados PostgreSQL** rodando em **Docker**.
+O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco de dados MongoDB** rodando em **Docker**.
 
 > **Pré-requisito**: é necessário ter o Docker e o git instalado e em execução na máquina para que o banco de dados funcione corretamente.
 > **JDK 21.**
@@ -145,6 +145,7 @@ Pronto! O programa irá aparecer na tela.
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
