@@ -1,4 +1,5 @@
 # Sistema de Gerenciamento de Estoque
+# ATENÇÃO!!! Essa eh a versão em POSTGRES do projeto. Para instruções de como executar a versão em MONGODB acesse a branch MongoDB.
 
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
@@ -145,6 +146,7 @@ Pronto! O programa irá aparecer na tela.
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
