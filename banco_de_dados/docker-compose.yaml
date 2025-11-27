@@ -1,22 +1,18 @@
 services:
-  postgres:
-    image: postgres:16
-    container_name: estocar_postgres
+  mongo:
+    image: mongo:6.0
+    container_name: estocar_mongo
     restart: always
-    environment:
-      POSTGRES_DB: estocar
-      POSTGRES_USER: estocar_user
-      POSTGRES_PASSWORD: "123321"
     ports:
-      - "5432:5432"
+      - "27017:27017"
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./postgres-init/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - mongodata:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U estocar_user -d estocar"]
+      test: ["CMD-SHELL", "mongosh --eval \"db.adminCommand('ping')\" --quiet"]
       interval: 10s
       timeout: 5s
       retries: 5
 volumes:
-  pgdata:
+  mongodata:
     driver: local

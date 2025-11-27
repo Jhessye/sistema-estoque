@@ -5,7 +5,7 @@
 package principal;
 
 import java.awt.Color; //cores
-import java.sql.Connection;
+import com.mongodb.client.MongoClient;
 import conexion.ModuloConexao;
 import controller.CategoriaController;
 import controller.ProdutoController;
@@ -25,14 +25,14 @@ import reports.Relatorios;
  * @author Jhessye Lorrayne
  */
 public class TelaInicial extends javax.swing.JFrame {
-Connection conexao = null;
+MongoClient conexao = null;
     /**
      * Creates new form TelaInicial
      * @throws java.sql.SQLException
      */
     public TelaInicial() throws SQLException {
         initComponents();
-        conexao = ModuloConexao.conector(); //inicia a conexao
+        conexao = ModuloConexao.getClient(); //inicia a conexao MongoDB
         carregarResgistrosTela();
         
         this.setLocationRelativeTo(null); // ← Esta linha centraliza o JFrame

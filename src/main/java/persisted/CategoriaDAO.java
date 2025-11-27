@@ -1,223 +1,159 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package persisted;
 
 import conexion.ModuloConexao;
 import model.Categoria;
-import java.sql.*;
+import java.sql.SQLException;
 import java.util.*;
 import javax.swing.JOptionPane;
-
+import org.bson.Document;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 
 public class CategoriaDAO {
-    
+
     private LinkedList<Categoria> listaCategorias = new LinkedList<>();
-    
-    public CategoriaDAO() throws SQLException{
-        carregarLista();
+
+    public CategoriaDAO() throws SQLException {
+        try {
+            carregarLista();
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
     }
-    
-    private void carregarLista() throws SQLException{
+
+    private void carregarLista() {
         listaCategorias.clear();
-        String sql = "SELECT * FROM categorias";
-        
-        try (Connection conector = ModuloConexao.conector(); //conecta com o banco
-            PreparedStatement executa = conector.prepareStatement(sql);
-            ResultSet rs = executa.executeQuery()){
-            
-            while (rs.next()) { //pra todos os produtos do banco
-                Categoria c = new Categoria();
-                c.setIdCategoria(rs.getInt("id_categoria"));
-                c.setNome(rs.getString("nome"));
-                c.setDescricao(rs.getString("descricao"));
-                listaCategorias.add(c);
-            }
-            
-        }catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar categorias");
-        }
-        
-    }
-    
-    public boolean inserirCategoria(Categoria categoria){
-        if (listaCategorias.contains(categoria)){ //verifica se ja existe essa categoria
-            JOptionPane.showMessageDialog(null, "Esse produto ja existe");
-            return false;
-        }else{
-            String sql = "INSERT INTO categorias (nome, descricao) VALUES (?,?)";
-
-            try (Connection conector = ModuloConexao.conector(); //conecta com o banco
-                PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
-
-                executa.setString(1, categoria.getNome());
-                executa.setString(2, categoria.getDescricao());
-
-                int linhasAfetadas = executa.executeUpdate();
-
-                if (linhasAfetadas > 0) { //se ele conseguir executar
-                    try (ResultSet rs = executa.getGeneratedKeys()) { //rs vai receber o id gerado
-                        if (rs.next()) { //vai no ultimo inserido e ve se tem coisa la, se tiver
-                            categoria.setIdCategoria(rs.getInt(1)); // pega o ID gerado e coloca no objeto
-                            listaCategorias.add(categoria);
-                            return true;
-                        }
-                    }
-                }
-
-            }catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
-            return false;
+        MongoCollection<Document> col = ModuloConexao.getCollection("categorias");
+        for (Document d : col.find()) {
+            Categoria c = new Categoria();
+            c.setIdCategoria(d.getInteger("id_categoria", 0));
+            c.setNome(d.getString("nome"));
+            c.setDescricao(d.getString("descricao"));
+            listaCategorias.add(c);
         }
     }
-    
-    public Categoria buscarPorId(int idCategoria) throws SQLException {
-        String sql = "SELECT * FROM categorias WHERE id_categoria = ?";
-        Categoria categoria = null;
 
-        try (Connection con = ModuloConexao.conector();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setInt(1, idCategoria);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    categoria = new Categoria();
-                    categoria.setIdCategoria(rs.getInt("id_categoria"));
-                    categoria.setNome(rs.getString("nome"));
-                    categoria.setDescricao(rs.getString("descricao"));
-                }
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao buscar categoria por ID: " + e.getMessage());
-            throw e;
-        }
-
-        return categoria;
-    }
-
-    
-    public boolean atualizarCategoria(Categoria categoria, String atributo) {
-        String sql = null;
-
-        switch(atributo) {
-            case "nome" -> sql = "UPDATE categorias SET nome=? WHERE id_categoria=?";
-        
-            case "descricao" -> sql = "UPDATE categorias SET descricao=? WHERE id_categoria=?";
-            
-            default -> {
-                JOptionPane.showMessageDialog(null, "Atributo inválido!");
+    public boolean inserirCategoria(Categoria categoria) {
+        try {
+            // Checa existência por nome
+            MongoCollection<Document> col = ModuloConexao.getCollection("categorias");
+            Document found = col.find(Filters.eq("nome", categoria.getNome())).first();
+            if (found != null) {
+                JOptionPane.showMessageDialog(null, "Essa categoria já existe");
                 return false;
             }
+
+            int nextId = ModuloConexao.getNextSequence("categorias");
+            Document d = new Document("id_categoria", nextId)
+                    .append("nome", categoria.getNome())
+                    .append("descricao", categoria.getDescricao());
+
+            col.insertOne(d);
+            categoria.setIdCategoria(nextId);
+            listaCategorias.add(categoria);
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao inserir categoria: " + e.getMessage());
+            return false;
         }
-
-        try (Connection conector = ModuloConexao.conector(); //conecta com o banco
-             PreparedStatement executa = conector.prepareStatement(sql)) {
-
-            switch(atributo) {
-                case "nome" -> executa.setString(1, categoria.getNome());
-                
-                case "descricao" -> executa.setString(1, categoria.getDescricao());
-            }
-
-            //o id do produto
-            executa.setInt(2, categoria.getIdCategoria());
-
-            int linhas = executa.executeUpdate(); //executa
-
-            if (linhas > 0) {
-                atualizarNaLista(categoria);
-                return true;
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao atualizar a categoria: " + e.getMessage());
-        }
-        return false;
     }
 
-    //atualizar na lista
+    public Categoria buscarPorId(int idCategoria) throws SQLException {
+        try {
+            MongoCollection<Document> col = ModuloConexao.getCollection("categorias");
+            Document d = col.find(Filters.eq("id_categoria", idCategoria)).first();
+            if (d == null) return null;
+            Categoria c = new Categoria();
+            c.setIdCategoria(d.getInteger("id_categoria", 0));
+            c.setNome(d.getString("nome"));
+            c.setDescricao(d.getString("descricao"));
+            return c;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar categoria por ID: " + e.getMessage());
+            throw new SQLException(e);
+        }
+    }
+
+    public boolean atualizarCategoria(Categoria categoria, String atributo) {
+        try {
+            MongoCollection<Document> col = ModuloConexao.getCollection("categorias");
+            switch (atributo) {
+                case "nome" -> {
+                    col.updateOne(Filters.eq("id_categoria", categoria.getIdCategoria()), Updates.set("nome", categoria.getNome()));
+                }
+                case "descricao" -> {
+                    col.updateOne(Filters.eq("id_categoria", categoria.getIdCategoria()), Updates.set("descricao", categoria.getDescricao()));
+                }
+                default -> {
+                    JOptionPane.showMessageDialog(null, "Atributo inválido!");
+                    return false;
+                }
+            }
+            atualizarNaLista(categoria);
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar a categoria: " + e.getMessage());
+            return false;
+        }
+    }
+
     private void atualizarNaLista(Categoria categoria) {
         for (int i = 0; i < listaCategorias.size(); i++) {
-            if (listaCategorias.get(i).getIdCategoria() == categoria.getIdCategoria()) { //se o id for igual a do produto atualizado
-                listaCategorias.set(i, categoria); //coloca nessa posicao os valores novos
+            if (listaCategorias.get(i).getIdCategoria() == categoria.getIdCategoria()) {
+                listaCategorias.set(i, categoria);
                 break;
             }
         }
     }
-    
-    public boolean removerCategoria (Categoria categoria) {
-        String sql = "DELETE FROM categorias WHERE id_categoria=?";
 
-        try (Connection conexao = ModuloConexao.conector();
-             PreparedStatement executa = conexao.prepareStatement(sql)) {
-
-            executa.setInt(1, categoria.getIdCategoria());
-
-            int linhas = executa.executeUpdate();
-            
-            if (linhas > 0) {
-                //remove da lista tambm
-                listaCategorias.remove(categoria);
-                return true;
-            }
-
-        } catch (SQLException e) {
+    public boolean removerCategoria(Categoria categoria) {
+        try {
+            MongoCollection<Document> col = ModuloConexao.getCollection("categorias");
+            col.deleteOne(Filters.eq("id_categoria", categoria.getIdCategoria()));
+            listaCategorias.remove(categoria);
+            return true;
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao remover categoria: " + e.getMessage());
+            return false;
         }
-        return false;
     }
-    
+
     public LinkedList<Categoria> verCategoriasLista() throws SQLException {
-        //copia
-        carregarLista();
-        return new LinkedList<Categoria>(listaCategorias);
+        try {
+            carregarLista();
+            return new LinkedList<>(listaCategorias);
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
     }
-    
-    public LinkedList<Categoria> verCategoriasSQL() throws SQLException { //devolve em forma de lista
-        LinkedList<Categoria> categorias = new LinkedList<>();
-        String sql = "SELECT * FROM categorias";
 
-        try (Connection conector = ModuloConexao.conector(); 
-             PreparedStatement executa = conector.prepareStatement(sql);
-             ResultSet rs = executa.executeQuery()) {
-
-            while (rs.next()) {
+    public LinkedList<Categoria> verCategoriasSQL() throws SQLException {
+        try {
+            LinkedList<Categoria> categorias = new LinkedList<>();
+            MongoCollection<Document> col = ModuloConexao.getCollection("categorias");
+            for (Document d : col.find()) {
                 Categoria c = new Categoria();
-                c.setIdCategoria(rs.getInt("id_categoria"));
-                c.setNome(rs.getString("nome"));
-                c.setDescricao(rs.getString("descricao"));
+                c.setIdCategoria(d.getInteger("id_categoria", 0));
+                c.setNome(d.getString("nome"));
+                c.setDescricao(d.getString("descricao"));
                 categorias.add(c);
             }
-        } catch (SQLException e) {
+            return categorias;
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao consultar categorias: " + e.getMessage());
-            throw e;
+            throw new SQLException(e);
         }
-
-        return categorias;
     }
-    
-    public int quantidadeRegistrosCategoria() throws SQLException{
-        
-        int totalLinhas = 0;
-        String sql = "SELECT COUNT(*) AS total_linhas FROM categorias";
 
-        try (Connection conector = ModuloConexao.conector(); 
-             PreparedStatement executa = conector.prepareStatement(sql);
-             ResultSet rs = executa.executeQuery()) {
-
-            while (rs.next()) {
-                totalLinhas = rs.getInt("total_linhas");
-            }
-        } catch (SQLException e) {
+    public int quantidadeRegistrosCategoria() throws SQLException {
+        try {
+            MongoCollection<Document> col = ModuloConexao.getCollection("categorias");
+            return (int) col.countDocuments();
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao pegar registros de categorias: " + e.getMessage());
-            throw e;
+            throw new SQLException(e);
         }
-        
-        return totalLinhas;
     }
-    
+
 }
