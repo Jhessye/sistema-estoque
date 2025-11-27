@@ -23,7 +23,7 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 ```
 git clone --branch MongoDB https://github.com/Jhessye/sistema-estoque.git && cd sistema-estoque
 ```
-2.  Inicie o docker compose do banco de dados Postgres em modo detached com o comando:
+2.  Inicie o docker compose do banco de dados MongoDB em modo detached com o comando:
 ```
 docker compose -f banco_de_dados/docker-compose.yaml up -d
 ```
@@ -53,7 +53,7 @@ Pronto! O programa irá aparecer na tela.
 
 2. Certifique-se de que o **Docker Desktop** está instalado e em execução.
 
-3. Inicie o banco de dados PostgreSQL via Docker Compose (modo *detached*):
+3. Inicie o banco de dados MongoDB via Docker Compose (modo *detached*):
 
    ```
    docker compose -f banco_de_dados/docker-compose.yaml up -d
@@ -134,7 +134,7 @@ Pronto! O programa irá aparecer na tela.
   Utilizada para armazenar e manipular listas dinâmicas de dados de forma eficiente.
   
 - **`java.sql.SQLException`**  
-  Responsável por tratar **exceções SQL**, garantindo a estabilidade do sistema.
+  Responsável por tratar **exceções NoSQL**, garantindo a estabilidade do sistema.
   
 - **`javax.swing.JOptionPane`**  
   Usada para criar **pop-ups interativos** (confirmações, mensagens e avisos) nas interfaces gráficas.
@@ -145,6 +145,7 @@ Pronto! O programa irá aparecer na tela.
 
 - [LinkedIn](https://www.linkedin.com/in/jhessye-lorrayne-924733243/)  
 - [E-mail](mailto:ljhessye@gmail.com)
+
 
 
 
