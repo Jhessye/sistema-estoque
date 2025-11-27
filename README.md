@@ -21,7 +21,7 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 
 1. Inicie o terminal (ctrl + alt + t) e execute o seguinte comando para clonar o repositório do Github e entrar dentro da pasta: 
 ```
-git clone https://github.com/Jhessye/sistema-estoque.git && cd sistema-estoque
+git clone --branch MongoDB https://github.com/Jhessye/sistema-estoque.git && cd sistema-estoque
 ```
 2.  Inicie o docker compose do banco de dados Postgres em modo detached com o comando:
 ```
