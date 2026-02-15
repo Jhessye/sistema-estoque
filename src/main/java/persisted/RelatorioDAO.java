@@ -1,63 +1,61 @@
 package persisted;
 
 import conexion.ModuloConexao;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.Document;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.AggregateIterable;
 
 public class RelatorioDAO {
 
     public List<Object[]> relatorioMovimentacaoPorProduto() {
-        String sql = """
-            SELECT p.nome AS produto,
-                   SUM(m.valor) AS total_movimentado
-            FROM movimentacoes m
-            JOIN produtos p ON p.id_produto = m.id_produto
-            GROUP BY p.nome
-            ORDER BY p.nome
-        """;
+        MongoCollection<Document> movCol = ModuloConexao.getCollection("movimentacoes");
+        List<Document> pipeline = new ArrayList<>();
+        pipeline.add(new Document("$lookup", new Document("from", "produtos").append("localField", "id_produto").append("foreignField", "id_produto").append("as", "produto")));
+        pipeline.add(new Document("$unwind", "$produto"));
+        pipeline.add(new Document("$group", new Document("_id", "$produto.nome").append("total", new Document("$sum", "$valor"))));
+        pipeline.add(new Document("$project", new Document("produto", "$_id").append("total_movimentado", "$total")));
+        pipeline.add(new Document("$sort", new Document("produto", 1)));
+
+        AggregateIterable<Document> agg = movCol.aggregate(pipeline);
         List<Object[]> out = new ArrayList<>();
-        try (Connection con = ModuloConexao.conector();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                out.add(new Object[]{ rs.getString("produto"), rs.getInt("total_movimentado") });
-            }
-        } catch (SQLException e) { e.printStackTrace(); }
+        for (Document d : agg) {
+            String produto = d.getString("produto");
+            Number total = (Number) d.get("total_movimentado");
+            out.add(new Object[] { produto, total == null ? 0 : total.doubleValue() });
+        }
         return out;
     }
 
     public List<Object[]> relatorioMovimentacoesDetalhado() {
-        String sql = """
-            SELECT
-                m.id_movimentacoes      AS id_mov,      -- <- nome correto (plural)
-                m.data                  AS data_mov,    -- <- ajuste se seu campo for outro (ex: data_mov)
-                p.nome                  AS produto,
-                p.quantidade,
-                m.valor,
-                c.nome                  AS categoria
-            FROM movimentacoes m
-            JOIN produtos   p ON p.id_produto   = m.id_produto
-            JOIN categorias c ON c.id_categoria = p.id_categoria
-            ORDER BY m.data DESC, m.id_movimentacoes DESC
-        """;
+        MongoCollection<Document> movCol = ModuloConexao.getCollection("movimentacoes");
+        List<Document> pipeline = new ArrayList<>();
+        pipeline.add(new Document("$lookup", new Document("from", "produtos").append("localField", "id_produto").append("foreignField", "id_produto").append("as", "produto")));
+        pipeline.add(new Document("$unwind", "$produto"));
+        pipeline.add(new Document("$lookup", new Document("from", "categorias").append("localField", "produto.id_categoria").append("foreignField", "id_categoria").append("as", "categoria")));
+        pipeline.add(new Document("$unwind", new Document("path", "$categoria").append("preserveNullAndEmptyArrays", true)));
+        pipeline.add(new Document("$project", new Document()
+                .append("id_mov", "$id_movimentacoes")
+                .append("data_mov", "$data")
+                .append("produto", "$produto.nome")
+                .append("quantidade", "$produto.quantidade")
+                .append("valor", "$valor")
+                .append("categoria", "$categoria.nome")
+        ));
+        pipeline.add(new Document("$sort", new Document("data_mov", -1).append("id_mov", -1)));
+
+        AggregateIterable<Document> agg = movCol.aggregate(pipeline);
         List<Object[]> out = new ArrayList<>();
-        try (Connection con = ModuloConexao.conector();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                out.add(new Object[]{
-                    rs.getInt("id_mov"),
-                    rs.getTimestamp("data_mov"),
-                    rs.getString("produto"),
-                    rs.getInt("quantidade"),
-                    rs.getBigDecimal("valor"),
-                    rs.getString("categoria")
-                });
-            }
-        } catch (SQLException e) {
-            // logue e retorne lista vazia para não quebrar a tela
-            e.printStackTrace();
+        for (Document d : agg) {
+            out.add(new Object[] {
+                d.getInteger("id_mov"),
+                d.getString("data_mov"),
+                d.getString("produto"),
+                d.getInteger("quantidade", 0),
+                d.get("valor"),
+                d.getString("categoria")
+            });
         }
         return out;
     }

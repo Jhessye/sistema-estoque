@@ -1,13 +1,17 @@
 package persisted;
 
 import conexion.ModuloConexao;
-import java.sql.*;
-import java.util.LinkedList;  
+import java.sql.SQLException;
+import java.util.LinkedList;
 import javax.swing.JOptionPane;
-import model.Movimentacao;   
+import model.Movimentacao;
 import model.Produto;
 import model.Entrada;
 import model.Saida;
+import org.bson.Document;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 
 public class MovimentacaoDAO {
 
@@ -15,158 +19,120 @@ public class MovimentacaoDAO {
     private ProdutoDAO produtoDAO = new ProdutoDAO(); // precisamos dele para buscar o produto
 
     public MovimentacaoDAO() throws SQLException {
-        carregarListaMovimentacao();
+        try {
+            carregarListaMovimentacao();
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
     }
 
-    private void carregarListaMovimentacao() throws SQLException {
+    private void carregarListaMovimentacao() {
         listaMovimentacao.clear();
-        String sql = "SELECT id_movimentacoes, data, valor, id_produto FROM movimentacoes";
+        MongoCollection<Document> col = ModuloConexao.getCollection("movimentacoes");
+        for (Document d : col.find()) {
+            Movimentacao m = new Movimentacao() {
+                @Override
+                public boolean movimenta(Produto produto) {
+                    return true;
+                }
+            };
 
-        try (Connection conector = ModuloConexao.conector();
-             PreparedStatement executa = conector.prepareStatement(sql);
-             ResultSet rs = executa.executeQuery()) {
-
-            while (rs.next()) {
-                Movimentacao m = new Movimentacao() {
-                    @Override
-                    public boolean movimenta(Produto produto) {
-                        return true;
-                    }
-                };
-
-                int idProduto = rs.getInt("id_produto");
-                Produto p = produtoDAO.buscarPorId(idProduto);
-
-                m.setIdMovimentacao(rs.getInt("id_movimentacoes"));
-                m.setProduto(p);
-                m.setData(rs.getDate("data").toString());
-
-                listaMovimentacao.add(m);
+            int idProduto = d.getInteger("id_produto", 0);
+            Produto p = null;
+            try {
+                p = produtoDAO.buscarPorId(idProduto);
+            } catch (SQLException ex) {
+                // ignora, p pode ser nulo
             }
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar movimentações: " + e.getMessage());
-            throw e;
+            m.setIdMovimentacao(d.getInteger("id_movimentacoes", 0));
+            m.setProduto(p);
+            Object dataObj = d.get("data");
+            String dataStr = "";
+            if (dataObj instanceof java.util.Date) {
+                dataStr = new java.text.SimpleDateFormat("yyyy-MM-dd").format((java.util.Date) dataObj);
+            } else if (dataObj != null) {
+                dataStr = dataObj.toString();
+            }
+            m.setData(dataStr);
+
+            listaMovimentacao.add(m);
         }
     }
     
     public boolean inserirEntrada(Entrada entrada) {
-        String sql = "INSERT INTO movimentacoes (data, valor, id_produto) VALUES (?,?,?)";
-
-        try (Connection conector = ModuloConexao.conector();
-             PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
+        try {
+            MongoCollection<Document> col = ModuloConexao.getCollection("movimentacoes");
             double valorCalculado = entrada.valor(entrada.getProduto());
 
-            executa.setDate(1, java.sql.Date.valueOf(entrada.getData()));
-            executa.setDouble(2, valorCalculado);
-            executa.setInt(3, entrada.getProduto().getIdProduto());
+            int nextId = ModuloConexao.getNextSequence("movimentacoes");
+            Document d = new Document("id_movimentacoes", nextId)
+                    .append("data", entrada.getData())
+                    .append("valor", valorCalculado)
+                    .append("id_produto", entrada.getProduto().getIdProduto());
 
-            int linhasAfetadas = executa.executeUpdate();
+            col.insertOne(d);
+            entrada.setIdMovimentacao(nextId);
+            listaMovimentacao.add(entrada);
 
-            if (linhasAfetadas > 0) {
-                try (ResultSet rs = executa.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        entrada.setIdMovimentacao(rs.getInt(1));
-                        listaMovimentacao.add(entrada);
-                        // Atualiza a quantidade do produto no banco com o valor atual do objeto produto
-                        String upd = "UPDATE produtos SET quantidade=? WHERE id_produto=?";
-                        try (PreparedStatement pUpd = conector.prepareStatement(upd)) {
-                            pUpd.setInt(1, entrada.getProduto().getQuantidade());
-                            pUpd.setInt(2, entrada.getProduto().getIdProduto());
-                            pUpd.executeUpdate();
-                        }
-                        return true;
-                    }
-                }
-            }
+            // Atualiza quantidade do produto
+            MongoCollection<Document> prodCol = ModuloConexao.getCollection("produtos");
+            prodCol.updateOne(Filters.eq("id_produto", entrada.getProduto().getIdProduto()), Updates.set("quantidade", entrada.getProduto().getQuantidade()));
 
-        } catch (SQLException e) {
+            return true;
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao inserir entrada: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     public boolean inserirSaida(Saida saida) {
-        String sql = "INSERT INTO movimentacoes (data, valor, id_produto) VALUES (?,?,?)";
-
-        try (Connection conector = ModuloConexao.conector();
-             PreparedStatement executa = conector.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
+        try {
+            MongoCollection<Document> col = ModuloConexao.getCollection("movimentacoes");
             double valorCalculado = saida.valor(saida.getProduto());
 
-            executa.setDate(1, java.sql.Date.valueOf(saida.getData()));
-            executa.setDouble(2, valorCalculado);
-            executa.setInt(3, saida.getProduto().getIdProduto());
+            int nextId = ModuloConexao.getNextSequence("movimentacoes");
+            Document d = new Document("id_movimentacoes", nextId)
+                    .append("data", saida.getData())
+                    .append("valor", valorCalculado)
+                    .append("id_produto", saida.getProduto().getIdProduto());
 
-            int linhasAfetadas = executa.executeUpdate();
+            col.insertOne(d);
+            saida.setIdMovimentacao(nextId);
+            listaMovimentacao.add(saida);
 
-            if (linhasAfetadas > 0) {
-                try (ResultSet rs = executa.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        saida.setIdMovimentacao(rs.getInt(1));
-                        listaMovimentacao.add(saida);
-                        // Atualiza a quantidade do produto no banco com o valor atual do objeto produto
-                        String upd = "UPDATE produtos SET quantidade=? WHERE id_produto=?";
-                        try (PreparedStatement pUpd = conector.prepareStatement(upd)) {
-                            pUpd.setInt(1, saida.getProduto().getQuantidade());
-                            pUpd.setInt(2, saida.getProduto().getIdProduto());
-                            pUpd.executeUpdate();
-                        }
-                        return true;
-                    }
-                }
-            }
+            // Atualiza quantidade do produto
+            MongoCollection<Document> prodCol = ModuloConexao.getCollection("produtos");
+            prodCol.updateOne(Filters.eq("id_produto", saida.getProduto().getIdProduto()), Updates.set("quantidade", saida.getProduto().getQuantidade()));
 
-        } catch (SQLException e) {
+            return true;
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao inserir saida: " + e.getMessage());
-        }
-        return false;
-    }
-
-    
-    public boolean atualizarMovimentacao(Movimentacao movimentacao, String atributo) {
-        String sql = switch (atributo) {
-            case "data" -> "UPDATE movimentacoes SET data=? WHERE id_movimentacoes=?";
-            case "id_produto" -> "UPDATE movimentacoes SET id_produto=? WHERE id_movimentacoes=?";
-            case "quantidade" -> "UPDATE produtos SET quantidade=? WHERE id_produto=?";
-            default -> null;
-        };
-
-        if (sql == null) {
-            JOptionPane.showMessageDialog(null, "Atributo inválido!");
             return false;
         }
+    }
 
-        try (Connection conector = ModuloConexao.conector();
-             PreparedStatement executa = conector.prepareStatement(sql)) {
-
+    public boolean atualizarMovimentacao(Movimentacao movimentacao, String atributo) {
+        try {
+            MongoCollection<Document> col = ModuloConexao.getCollection("movimentacoes");
             switch (atributo) {
-                case "data" -> {
-                    executa.setDate(1, java.sql.Date.valueOf(movimentacao.getData()));
-                    executa.setInt(2, movimentacao.getIdMovimentacao());
-                }
-                case "id_produto" -> {
-                    executa.setInt(1, movimentacao.getProduto().getIdProduto());
-                    executa.setInt(2, movimentacao.getIdMovimentacao());
-                }
+                case "data" -> col.updateOne(Filters.eq("id_movimentacoes", movimentacao.getIdMovimentacao()), Updates.set("data", movimentacao.getData()));
+                case "id_produto" -> col.updateOne(Filters.eq("id_movimentacoes", movimentacao.getIdMovimentacao()), Updates.set("id_produto", movimentacao.getProduto().getIdProduto()));
                 case "quantidade" -> {
-                    executa.setInt(1, movimentacao.getProduto().getQuantidade());
-                    executa.setInt(2, movimentacao.getProduto().getIdProduto());
+                    MongoCollection<Document> prodCol = ModuloConexao.getCollection("produtos");
+                    prodCol.updateOne(Filters.eq("id_produto", movimentacao.getProduto().getIdProduto()), Updates.set("quantidade", movimentacao.getProduto().getQuantidade()));
+                }
+                default -> {
+                    JOptionPane.showMessageDialog(null, "Atributo inválido!");
+                    return false;
                 }
             }
-
-            int linhas = executa.executeUpdate();
-
-            if (linhas > 0) {
-                atualizarNaLista(movimentacao);
-                return true;
-            }
-
-        } catch (SQLException e) {
+            atualizarNaLista(movimentacao);
+            return true;
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar movimentação: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     private void atualizarNaLista(Movimentacao movimentacao) {
@@ -179,35 +145,23 @@ public class MovimentacaoDAO {
     }
    
     public boolean removerMovimentacao(Movimentacao movimentacao) {
-        String sql = "DELETE FROM movimentacoes WHERE id_movimentacoes=?";
-
-        try (Connection con = ModuloConexao.conector();
-             PreparedStatement stmt = con.prepareStatement(sql)) {
-
-            stmt.setInt(1, movimentacao.getIdMovimentacao());
-
-            int linhas = stmt.executeUpdate();
-            if (linhas > 0) {
-                listaMovimentacao.remove(movimentacao);
-                return true;
-            }
-
-        } catch (SQLException e) {
+        try {
+            MongoCollection<Document> col = ModuloConexao.getCollection("movimentacoes");
+            col.deleteOne(Filters.eq("id_movimentacoes", movimentacao.getIdMovimentacao()));
+            listaMovimentacao.remove(movimentacao);
+            return true;
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao remover movimentação: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
   
     public LinkedList<Movimentacao> verMovimentacaoSQL() throws SQLException {
-        LinkedList<Movimentacao> movimentacoes = new LinkedList<>();
-        String sql = "SELECT id_movimentacoes, data, valor, id_produto FROM movimentacoes";
-
-        try (Connection conector = ModuloConexao.conector();
-             PreparedStatement executa = conector.prepareStatement(sql);
-             ResultSet rs = executa.executeQuery()) {
-
-            while (rs.next()) {
+        try {
+            LinkedList<Movimentacao> movimentacoes = new LinkedList<>();
+            MongoCollection<Document> col = ModuloConexao.getCollection("movimentacoes");
+            for (Document d : col.find()) {
                 Movimentacao m = new Movimentacao() {
                     @Override
                     public boolean movimenta(Produto produto) {
@@ -215,21 +169,27 @@ public class MovimentacaoDAO {
                     }
                 };
 
-                int idProduto = rs.getInt("id_produto");
+                int idProduto = d.getInteger("id_produto", 0);
                 Produto p = produtoDAO.buscarPorId(idProduto);
 
-                m.setIdMovimentacao(rs.getInt("id_movimentacoes"));
+                m.setIdMovimentacao(d.getInteger("id_movimentacoes", 0));
                 m.setProduto(p);
-                m.setData(rs.getDate("data").toString());
+                Object dataObj = d.get("data");
+                String dataStr = "";
+                if (dataObj instanceof java.util.Date) {
+                    dataStr = new java.text.SimpleDateFormat("yyyy-MM-dd").format((java.util.Date) dataObj);
+                } else if (dataObj != null) {
+                    dataStr = dataObj.toString();
+                }
+                m.setData(dataStr);
 
                 movimentacoes.add(m);
             }
-        } catch (SQLException e) {
+            return movimentacoes;
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao consultar movimentações: " + e.getMessage());
-            throw e;
+            throw new SQLException(e);
         }
-
-        return movimentacoes;
     }
 
     public LinkedList<Movimentacao> verMovimentacaoLista() {
@@ -238,22 +198,12 @@ public class MovimentacaoDAO {
 
     //tela inical
     public int quantidadeRegistrosMovimentacao() throws SQLException {
-        int totalLinhas = 0;
-        String sql = "SELECT COUNT(*) AS total_linhas FROM movimentacoes";
-
-        try (Connection conector = ModuloConexao.conector();
-             PreparedStatement executa = conector.prepareStatement(sql);
-             ResultSet rs = executa.executeQuery()) {
-
-            if (rs.next()) {
-                totalLinhas = rs.getInt("total_linhas");
-            }
-
-        } catch (SQLException e) {
+        try {
+            MongoCollection<Document> col = ModuloConexao.getCollection("movimentacoes");
+            return (int) col.countDocuments();
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao pegar registros de movimentações: " + e.getMessage());
-            throw e;
+            throw new SQLException(e);
         }
-
-        return totalLinhas;
     }
 }

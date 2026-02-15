@@ -21,11 +21,11 @@
     </properties>
 
     <dependencies>
-        <!-- Driver JDBC PostgreSQL -->
+        <!-- MongoDB Driver -->
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.11.0</version>
         </dependency>
     </dependencies>
 

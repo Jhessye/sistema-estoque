@@ -8,7 +8,7 @@
 Este projeto é um **sistema de gerenciamento de estoque** desenvolvido para uma loja de manutenção de automóveis.  
 Ele permite o **controle de categorias, produtos e movimentações** de itens, oferecendo funcionalidades completas de **cadastro, atualização, exclusão e consulta**.  
 
-O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco de dados PostgreSQL** rodando em **Docker**.
+O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco de dados MongoDB** rodando em **Docker**.
 
 > **Pré-requisito**: é necessário ter o Docker e o git instalado e em execução na máquina para que o banco de dados funcione corretamente.
 > **JDK 21.**
@@ -23,9 +23,9 @@ O sistema foi desenvolvido em **Java (NetBeans)**, com integração a um **banco
 
 1. Inicie o terminal (ctrl + alt + t) e execute o seguinte comando para clonar o repositório do Github e entrar dentro da pasta: 
 ```
-git clone https://github.com/Jhessye/sistema-estoque.git && cd sistema-estoque
+git clone --branch MongoDB https://github.com/Jhessye/sistema-estoque.git && cd sistema-estoque
 ```
-2.  Inicie o docker compose do banco de dados Postgres em modo detached com o comando:
+2.  Inicie o docker compose do banco de dados MongoDB em modo detached com o comando:
 ```
 docker compose -f banco_de_dados/docker-compose.yaml up -d
 ```
@@ -55,7 +55,7 @@ Pronto! O programa irá aparecer na tela.
 
 2. Certifique-se de que o **Docker Desktop** está instalado e em execução.
 
-3. Inicie o banco de dados PostgreSQL via Docker Compose (modo *detached*):
+3. Inicie o banco de dados MongoDB via Docker Compose (modo *detached*):
 
    ```
    docker compose -f banco_de_dados/docker-compose.yaml up -d
@@ -136,7 +136,7 @@ Pronto! O programa irá aparecer na tela.
   Utilizada para armazenar e manipular listas dinâmicas de dados de forma eficiente.
   
 - **`java.sql.SQLException`**  
-  Responsável por tratar **exceções SQL**, garantindo a estabilidade do sistema.
+  Responsável por tratar **exceções NoSQL**, garantindo a estabilidade do sistema.
   
 - **`javax.swing.JOptionPane`**  
   Usada para criar **pop-ups interativos** (confirmações, mensagens e avisos) nas interfaces gráficas.
